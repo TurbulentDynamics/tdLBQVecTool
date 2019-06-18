@@ -8,6 +8,67 @@
 
 /* Begin PBXBuildFile section */
 		229EBEC622B926BC0008AD43 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEC522B926BC0008AD43 /* main.swift */; };
+		229EBED322B927220008AD43 /* QvecDims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBECC22B927220008AD43 /* QvecDims.swift */; };
+		229EBED522B927220008AD43 /* InputFilesV4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBECE22B927220008AD43 /* InputFilesV4.swift */; };
+		229EBED622B927220008AD43 /* typeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBECF22B927220008AD43 /* typeAlias.swift */; };
+		229EBED722B927220008AD43 /* PostProcessingDims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBED022B927220008AD43 /* PostProcessingDims.swift */; };
+		229EBED822B927220008AD43 /* BaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBED122B927220008AD43 /* BaseHandler.swift */; };
+		229EBED922B927220008AD43 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBED222B927220008AD43 /* HelperFunctions.swift */; };
+		229EBEE422B9297F0008AD43 /* tdQvecPostProcessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEE322B9297F0008AD43 /* tdQvecPostProcessTests.swift */; };
+		229EBEED22B929AE0008AD43 /* LinuxMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEE922B929AE0008AD43 /* LinuxMain.swift */; };
+		229EBEEF22B929AE0008AD43 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEEB22B929AE0008AD43 /* XCTestManifests.swift */; };
+		229EBEF022B929AE0008AD43 /* TDQvecLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEEC22B929AE0008AD43 /* TDQvecLibTests.swift */; };
+		229EBF2822B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF322B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */; };
+		229EBF2922B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF422B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */; };
+		229EBF2A22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF522B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */; };
+		229EBF2B22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF622B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */; };
+		229EBF2C22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF722B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */; };
+		229EBF2D22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF822B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */; };
+		229EBF2E22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF922B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */; };
+		229EBF2F22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEFA22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */; };
+		229EBF3022B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEFB22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */; };
+		229EBF3122B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEFC22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */; };
+		229EBF3222B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEFD22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */; };
+		229EBF3322B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEFE22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */; };
+		229EBF3422B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEFF22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */; };
+		229EBF3522B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0022B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */; };
+		229EBF3622B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0122B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */; };
+		229EBF3722B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0222B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */; };
+		229EBF3822B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0322B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */; };
+		229EBF3922B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0522B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */; };
+		229EBF3A22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0622B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */; };
+		229EBF3B22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0722B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */; };
+		229EBF3C22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0822B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */; };
+		229EBF3D22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0922B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */; };
+		229EBF3E22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0A22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */; };
+		229EBF3F22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0B22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */; };
+		229EBF4022B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0C22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */; };
+		229EBF4122B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0D22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */; };
+		229EBF4222B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0E22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */; };
+		229EBF4322B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF0F22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */; };
+		229EBF4422B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1022B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */; };
+		229EBF4522B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1122B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */; };
+		229EBF4622B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1222B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */; };
+		229EBF4722B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1322B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */; };
+		229EBF4822B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1422B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */; };
+		229EBF4922B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1522B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */; };
+		229EBF4A22B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1722B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */; };
+		229EBF4B22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1822B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */; };
+		229EBF4C22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1922B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */; };
+		229EBF4D22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1A22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */; };
+		229EBF4E22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1B22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */; };
+		229EBF4F22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1C22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */; };
+		229EBF5022B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1D22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */; };
+		229EBF5122B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1E22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */; };
+		229EBF5222B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF1F22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */; };
+		229EBF5322B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2022B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */; };
+		229EBF5422B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2122B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */; };
+		229EBF5522B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2222B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */; };
+		229EBF5622B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2322B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */; };
+		229EBF5722B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2422B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */; };
+		229EBF5822B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2522B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */; };
+		229EBF5922B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2622B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */; };
+		229EBF5A22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2722B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +86,82 @@
 /* Begin PBXFileReference section */
 		229EBEC222B926BC0008AD43 /* tdQvecPostProcess */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tdQvecPostProcess; sourceTree = BUILT_PRODUCTS_DIR; };
 		229EBEC522B926BC0008AD43 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		229EBECC22B927220008AD43 /* QvecDims.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QvecDims.swift; sourceTree = "<group>"; };
+		229EBECE22B927220008AD43 /* InputFilesV4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFilesV4.swift; sourceTree = "<group>"; };
+		229EBECF22B927220008AD43 /* typeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = typeAlias.swift; sourceTree = "<group>"; };
+		229EBED022B927220008AD43 /* PostProcessingDims.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostProcessingDims.swift; sourceTree = "<group>"; };
+		229EBED122B927220008AD43 /* BaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseHandler.swift; sourceTree = "<group>"; };
+		229EBED222B927220008AD43 /* HelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		229EBEDB22B9274F0008AD43 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		229EBEDC22B9274F0008AD43 /* XYZ_planes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = XYZ_planes.jpg; sourceTree = "<group>"; };
+		229EBEE122B9297F0008AD43 /* tdQvecPostProcessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tdQvecPostProcessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		229EBEE322B9297F0008AD43 /* tdQvecPostProcessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tdQvecPostProcessTests.swift; sourceTree = "<group>"; };
+		229EBEE522B9297F0008AD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		229EBEE922B929AE0008AD43 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
+		229EBEEB22B929AE0008AD43 /* XCTestManifests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		229EBEEC22B929AE0008AD43 /* TDQvecLibTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDQvecLibTests.swift; sourceTree = "<group>"; };
+		229EBEF322B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Post_Processing_Dims_dims.0.0.0.V4.json; sourceTree = "<group>"; };
+		229EBEF422B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.0.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBEF522B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.0.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBEF622B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBEF722B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.1.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBEF822B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBEF922B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBEFA22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBEFB22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBEFC22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.0.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBEFD22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.0.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBEFE22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.0.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBEFF22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.1.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0022B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.1.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF0122B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF0222B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0322B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0522B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Post_Processing_Dims_dims.0.0.0.V4.json; sourceTree = "<group>"; };
+		229EBF0622B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.0.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF0722B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.0.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF0822B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF0922B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.1.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF0A22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0B22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0C22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0D22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0E22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.0.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF0F22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.0.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF1022B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.0.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF1122B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.1.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF1222B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.1.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF1322B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF1422B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF1522B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF1722B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Post_Processing_Dims_dims.0.0.0.V4.json; sourceTree = "<group>"; };
+		229EBF1822B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.0.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF1922B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.0.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF1A22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF1B22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.1.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF1C22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF1D22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF1E22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF1F22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF2022B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.0.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF2122B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.0.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF2222B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.0.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF2322B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.1.1.0.V4.bin.json; sourceTree = "<group>"; };
+		229EBF2422B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.1.1.0.V4.bin; sourceTree = "<group>"; };
+		229EBF2522B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.1.V4.bin; sourceTree = "<group>"; };
+		229EBF2622B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
+		229EBF2722B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		229EBEBF22B926BC0008AD43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		229EBEDE22B9297F0008AD43 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,7 +174,11 @@
 		229EBEB922B926BC0008AD43 = {
 			isa = PBXGroup;
 			children = (
+				229EBEDB22B9274F0008AD43 /* README.md */,
+				229EBEDC22B9274F0008AD43 /* XYZ_planes.jpg */,
 				229EBEC422B926BC0008AD43 /* tdQvecPostProcess */,
+				229EBEF122B92A4D0008AD43 /* TinyTestData */,
+				229EBEE222B9297F0008AD43 /* tdQvecPostProcessTests */,
 				229EBEC322B926BC0008AD43 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				229EBEC222B926BC0008AD43 /* tdQvecPostProcess */,
+				229EBEE122B9297F0008AD43 /* tdQvecPostProcessTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,9 +195,109 @@
 		229EBEC422B926BC0008AD43 /* tdQvecPostProcess */ = {
 			isa = PBXGroup;
 			children = (
+				229EBECF22B927220008AD43 /* typeAlias.swift */,
+				229EBED122B927220008AD43 /* BaseHandler.swift */,
+				229EBED222B927220008AD43 /* HelperFunctions.swift */,
+				229EBECE22B927220008AD43 /* InputFilesV4.swift */,
+				229EBED022B927220008AD43 /* PostProcessingDims.swift */,
+				229EBECC22B927220008AD43 /* QvecDims.swift */,
 				229EBEC522B926BC0008AD43 /* main.swift */,
 			);
 			path = tdQvecPostProcess;
+			sourceTree = "<group>";
+		};
+		229EBEE222B9297F0008AD43 /* tdQvecPostProcessTests */ = {
+			isa = PBXGroup;
+			children = (
+				229EBEE922B929AE0008AD43 /* LinuxMain.swift */,
+				229EBEEC22B929AE0008AD43 /* TDQvecLibTests.swift */,
+				229EBEEB22B929AE0008AD43 /* XCTestManifests.swift */,
+				229EBEE322B9297F0008AD43 /* tdQvecPostProcessTests.swift */,
+				229EBEE522B9297F0008AD43 /* Info.plist */,
+			);
+			path = tdQvecPostProcessTests;
+			sourceTree = "<group>";
+		};
+		229EBEF122B92A4D0008AD43 /* TinyTestData */ = {
+			isa = PBXGroup;
+			children = (
+				229EBEF222B92A4D0008AD43 /* plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28 */,
+				229EBF0422B92A4D0008AD43 /* plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29 */,
+				229EBF1622B92A4D0008AD43 /* plot_slice.XZplane.V_4.Q_4.step_00000050.cut_30 */,
+			);
+			path = TinyTestData;
+			sourceTree = "<group>";
+		};
+		229EBEF222B92A4D0008AD43 /* plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28 */ = {
+			isa = PBXGroup;
+			children = (
+				229EBEF322B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */,
+				229EBEF422B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */,
+				229EBEF522B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */,
+				229EBEF622B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */,
+				229EBEF722B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */,
+				229EBEF822B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */,
+				229EBEF922B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */,
+				229EBEFA22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */,
+				229EBEFB22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */,
+				229EBEFC22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */,
+				229EBEFD22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */,
+				229EBEFE22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */,
+				229EBEFF22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */,
+				229EBF0022B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */,
+				229EBF0122B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */,
+				229EBF0222B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */,
+				229EBF0322B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */,
+			);
+			path = plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28;
+			sourceTree = "<group>";
+		};
+		229EBF0422B92A4D0008AD43 /* plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29 */ = {
+			isa = PBXGroup;
+			children = (
+				229EBF0522B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */,
+				229EBF0622B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */,
+				229EBF0722B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */,
+				229EBF0822B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */,
+				229EBF0922B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */,
+				229EBF0A22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */,
+				229EBF0B22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */,
+				229EBF0C22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */,
+				229EBF0D22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */,
+				229EBF0E22B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */,
+				229EBF0F22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */,
+				229EBF1022B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */,
+				229EBF1122B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */,
+				229EBF1222B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */,
+				229EBF1322B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */,
+				229EBF1422B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */,
+				229EBF1522B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */,
+			);
+			path = plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29;
+			sourceTree = "<group>";
+		};
+		229EBF1622B92A4D0008AD43 /* plot_slice.XZplane.V_4.Q_4.step_00000050.cut_30 */ = {
+			isa = PBXGroup;
+			children = (
+				229EBF1722B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */,
+				229EBF1822B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */,
+				229EBF1922B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */,
+				229EBF1A22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin */,
+				229EBF1B22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin */,
+				229EBF1C22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json */,
+				229EBF1D22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json */,
+				229EBF1E22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json */,
+				229EBF1F22B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json */,
+				229EBF2022B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json */,
+				229EBF2122B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin */,
+				229EBF2222B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin */,
+				229EBF2322B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json */,
+				229EBF2422B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin */,
+				229EBF2522B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */,
+				229EBF2622B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */,
+				229EBF2722B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */,
+			);
+			path = plot_slice.XZplane.V_4.Q_4.step_00000050.cut_30;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +320,23 @@
 			productReference = 229EBEC222B926BC0008AD43 /* tdQvecPostProcess */;
 			productType = "com.apple.product-type.tool";
 		};
+		229EBEE022B9297F0008AD43 /* tdQvecPostProcessTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 229EBEE622B9297F0008AD43 /* Build configuration list for PBXNativeTarget "tdQvecPostProcessTests" */;
+			buildPhases = (
+				229EBEDD22B9297F0008AD43 /* Sources */,
+				229EBEDE22B9297F0008AD43 /* Frameworks */,
+				229EBEDF22B9297F0008AD43 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tdQvecPostProcessTests;
+			productName = tdQvecPostProcessTests;
+			productReference = 229EBEE122B9297F0008AD43 /* tdQvecPostProcessTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +348,9 @@
 				ORGANIZATIONNAME = "Turbulent Dynamics";
 				TargetAttributes = {
 					229EBEC122B926BC0008AD43 = {
+						CreatedOnToolsVersion = 11.0;
+					};
+					229EBEE022B9297F0008AD43 = {
 						CreatedOnToolsVersion = 11.0;
 					};
 				};
@@ -111,9 +369,71 @@
 			projectRoot = "";
 			targets = (
 				229EBEC122B926BC0008AD43 /* tdQvecPostProcess */,
+				229EBEE022B9297F0008AD43 /* tdQvecPostProcessTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		229EBEDF22B9297F0008AD43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				229EBF5922B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */,
+				229EBF2822B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */,
+				229EBF5122B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json in Resources */,
+				229EBF4122B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json in Resources */,
+				229EBF5422B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin in Resources */,
+				229EBF5722B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin in Resources */,
+				229EBF3122B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json in Resources */,
+				229EBF5822B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */,
+				229EBF3722B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */,
+				229EBF4F22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json in Resources */,
+				229EBF3222B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin in Resources */,
+				229EBF3622B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */,
+				229EBF4922B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */,
+				229EBF3422B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json in Resources */,
+				229EBF3A22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin in Resources */,
+				229EBF3822B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */,
+				229EBF3F22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json in Resources */,
+				229EBF4622B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin in Resources */,
+				229EBF4022B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json in Resources */,
+				229EBF4C22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */,
+				229EBF4822B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */,
+				229EBF4522B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json in Resources */,
+				229EBF5022B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json in Resources */,
+				229EBF5A22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */,
+				229EBF3022B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json in Resources */,
+				229EBF3322B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin in Resources */,
+				229EBF2E22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin.json in Resources */,
+				229EBF5222B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin.json in Resources */,
+				229EBF2A22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */,
+				229EBF3C22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin in Resources */,
+				229EBF3522B92A4D0008AD43 /* Qvec.node.1.1.0.V4.bin in Resources */,
+				229EBF4E22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin in Resources */,
+				229EBF2F22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json in Resources */,
+				229EBF3B22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */,
+				229EBF4222B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json in Resources */,
+				229EBF3922B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */,
+				229EBF4D22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin in Resources */,
+				229EBF3D22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin in Resources */,
+				229EBF5522B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin in Resources */,
+				229EBF5322B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json in Resources */,
+				229EBF5622B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin.json in Resources */,
+				229EBF2C22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin in Resources */,
+				229EBF2B22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin in Resources */,
+				229EBF4A22B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */,
+				229EBF2D22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json in Resources */,
+				229EBF4322B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin in Resources */,
+				229EBF4B22B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin in Resources */,
+				229EBF3E22B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin.json in Resources */,
+				229EBF2922B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin in Resources */,
+				229EBF4422B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin in Resources */,
+				229EBF4722B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		229EBEBE22B926BC0008AD43 /* Sources */ = {
@@ -121,6 +441,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				229EBEC622B926BC0008AD43 /* main.swift in Sources */,
+				229EBED922B927220008AD43 /* HelperFunctions.swift in Sources */,
+				229EBED722B927220008AD43 /* PostProcessingDims.swift in Sources */,
+				229EBED322B927220008AD43 /* QvecDims.swift in Sources */,
+				229EBED622B927220008AD43 /* typeAlias.swift in Sources */,
+				229EBED522B927220008AD43 /* InputFilesV4.swift in Sources */,
+				229EBED822B927220008AD43 /* BaseHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		229EBEDD22B9297F0008AD43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				229EBEE422B9297F0008AD43 /* tdQvecPostProcessTests.swift in Sources */,
+				229EBEEF22B929AE0008AD43 /* XCTestManifests.swift in Sources */,
+				229EBEF022B929AE0008AD43 /* TDQvecLibTests.swift in Sources */,
+				229EBEED22B929AE0008AD43 /* LinuxMain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +595,40 @@
 			};
 			name = Release;
 		};
+		229EBEE722B9297F0008AD43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = tdQvecPostProcessTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = TD.tdQvecPostProcessTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		229EBEE822B9297F0008AD43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = tdQvecPostProcessTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = TD.tdQvecPostProcessTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -275,6 +646,15 @@
 			buildConfigurations = (
 				229EBECA22B926BC0008AD43 /* Debug */,
 				229EBECB22B926BC0008AD43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		229EBEE622B9297F0008AD43 /* Build configuration list for PBXNativeTarget "tdQvecPostProcessTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				229EBEE722B9297F0008AD43 /* Debug */,
+				229EBEE822B9297F0008AD43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
