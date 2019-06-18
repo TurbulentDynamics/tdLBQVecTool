@@ -9,11 +9,7 @@
 
 
 typealias tNi = Int32
-typealias  let_tNi = Int32
 
-
-
-typealias tQvec_Double = Double
 typealias tQvec = Float
 typealias tForce = Float
 
@@ -32,15 +28,11 @@ extension Double: DefaultValuable {
 }
 
 typealias t3d = Int
-typealias let_t3d = Int
 
 
 typealias tGeomShape = Float
-typealias let_tGeomShape = Float
-
 
 typealias tGeomIndex = Int32
-
 
 typealias tStep = Int;
 

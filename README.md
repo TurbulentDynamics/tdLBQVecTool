@@ -6,8 +6,7 @@ Turbulent Dynamics specialises in running high-resolution fluid dynamics simulat
 
 ## Get Started
 ```
-swift build
-git clone https://github.com/TurbulentDynamics/TD_Rushton_Sample_Output_Qvec.git
+git clone --recursive https://github.com/TurbulentDynamics/TD_Rushton_Sample_Output_Qvec.git
 
 ./td_Qvec_post_process -v -d TD_Rushton_Sample_Output_Qvec/plot_slice.XZplane.V_4.Q_4.step_00000200.cut_70 
 

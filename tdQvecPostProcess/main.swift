@@ -8,13 +8,9 @@
 import Foundation
 
 
-
-print("hello")
-
-
 let help: Bool = CommandLine.arguments.contains("-h")
 if help {
-    print("USAGE: td_Qvec_post_process [options] <directories>")
+    print("USAGE: tdQvecPostProcess [options] <directories>")
     print("-o overwrite files")
     print("-v make vorticity files")
     print("-u make ux uy uz files")
@@ -38,6 +34,26 @@ for d in CommandLine.arguments.dropFirst() {
     }
 }
 
-print(dirs)
 
+//dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050"]
+
+
+
+
+//let a = Bundle.path(forResource: "/plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28/Qvec.F3.node.1.1.1.V4.bin.json",
+//                    ofType: "json", inDirectory: "TinyTestData")
+//print(a)
+
+
+
+let home = FileManager.default.homeDirectoryForCurrentUser
+
+let dataPath = "Workspace/xcode/tdQvecPostProcess/TinyTestData/"
+let dataUrl = home.appendingPathComponent(dataPath)
+
+let jsonFile = "/plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28/Qvec.F3.node.1.1.1.V4.bin.json"
+let jsonUrl = dataUrl.appendingPathComponent(jsonFile)
+
+let dim2 = try qVecDim(fromURL: jsonUrl)
+print(dim2)
 

@@ -1,124 +1,135 @@
 //
-//  main.swift
+//  PostProcessingDims.swift
 //  TDQvecLib
 //
-//  Created by Nile Ó Broin on 24/01/2019.
-//  Copyright © 2019 Nile Ó Broin. All rights reserved.
+//  Created by Niall Ó Broin on 24/01/2019.
+//  Copyright © 2019 Niall Ó Broin. All rights reserved.
 //
 
 import Foundation
 
+//https://app.quicktype.io/#
+struct ppDim: Codable {
+    let qOutputLength, cutAt: Int
+    let dirname: String
+    let fileHeight, fileWidth: Int
+    let function: String
+    let gridX, gridY, gridZ, initialRho: Int
+    let name: String
+    let ngx, ngy, ngz: Int
+    let note: String
+    let reMNondimensional, step: Int
+    let teta: Double
+    let totalHeight, totalWidth: Int
+    let uav: Double
 
-extension Post_Processing_Dims : DefaultValuable {
-    static func defaultValue() -> Post_Processing_Dims {
-        return Post_Processing_Dims()
+    enum CodingKeys: String, CodingKey {
+        case qOutputLength = "Q_output_length"
+        case cutAt = "cut_at"
+        case dirname
+        case fileHeight = "file_height"
+        case fileWidth = "file_width"
+        case function
+        case gridX = "grid_x"
+        case gridY = "grid_y"
+        case gridZ = "grid_z"
+        case initialRho = "initial_rho"
+        case name, ngx, ngy, ngz, note
+        case reMNondimensional = "re_m_nondimensional"
+        case step, teta
+        case totalHeight = "total_height"
+        case totalWidth = "total_width"
+        case uav
     }
 }
 
 
+extension ppDim {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(ppDim.self, from: data)
+    }
 
-struct Post_Processing_Dims: Codable {
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
 
-    var name: String = ""
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
 
-    var function: String = ""
-    var dirname: String = "."
-    var cut_at: tNi = 0
-    var Q_output_length: Int = 0
-    var note: String = ""
+    func with(
+        qOutputLength: Int? = nil,
+        cutAt: Int? = nil,
+        dirname: String? = nil,
+        fileHeight: Int? = nil,
+        fileWidth: Int? = nil,
+        function: String? = nil,
+        gridX: Int? = nil,
+        gridY: Int? = nil,
+        gridZ: Int? = nil,
+        initialRho: Int? = nil,
+        name: String? = nil,
+        ngx: Int? = nil,
+        ngy: Int? = nil,
+        ngz: Int? = nil,
+        note: String? = nil,
+        reMNondimensional: Int? = nil,
+        step: Int? = nil,
+        teta: Double? = nil,
+        totalHeight: Int? = nil,
+        totalWidth: Int? = nil,
+        uav: Double? = nil
+        ) -> ppDim {
+        return ppDim(
+            qOutputLength: qOutputLength ?? self.qOutputLength,
+            cutAt: cutAt ?? self.cutAt,
+            dirname: dirname ?? self.dirname,
+            fileHeight: fileHeight ?? self.fileHeight,
+            fileWidth: fileWidth ?? self.fileWidth,
+            function: function ?? self.function,
+            gridX: gridX ?? self.gridX,
+            gridY: gridY ?? self.gridY,
+            gridZ: gridZ ?? self.gridZ,
+            initialRho: initialRho ?? self.initialRho,
+            name: name ?? self.name,
+            ngx: ngx ?? self.ngx,
+            ngy: ngy ?? self.ngy,
+            ngz: ngz ?? self.ngz,
+            note: note ?? self.note,
+            reMNondimensional: reMNondimensional ?? self.reMNondimensional,
+            step: step ?? self.step,
+            teta: teta ?? self.teta,
+            totalHeight: totalHeight ?? self.totalHeight,
+            totalWidth: totalWidth ?? self.totalWidth,
+            uav: uav ?? self.uav
+        )
+    }
 
-    var ngx: t3d = 0
-    var ngy: t3d = 0
-    var ngz: t3d = 0
-    var grid_x: tNi = 0
-    var grid_y: tNi = 0
-    var grid_z: tNi = 0
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
 
-    var file_height: tNi = 0
-    var file_width: tNi = 0
-    var total_height: tNi = 0
-    var total_width: tNi = 0
-
-    var step: tStep = 0
-    var teta: tGeomShape = 0.0
-    var initial_rho: tQvec = 0.0
-    var re_m_nondimensional: tQvec = 0.0
-    var uav: tQvec = 0.0
-
-    init(){
-
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
 
-
-
-class HandlePPDims: BaseHandler<Post_Processing_Dims>{
-
-    override init()
-    {
-        super.init()
+func newJSONDecoder() -> JSONDecoder {
+    let decoder = JSONDecoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        decoder.dateDecodingStrategy = .iso8601
     }
+    return decoder
+}
 
-    override init( _dim: Post_Processing_Dims)
-    {
-        super.init(_dim: _dim)
-        dim = _dim;
+func newJSONEncoder() -> JSONEncoder {
+    let encoder = JSONEncoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        encoder.dateEncodingStrategy = .iso8601
     }
-
-
-    func set_dims(ngx: t3d, ngy: t3d, ngz: t3d, x: tNi, y: tNi, z: tNi){
-
-        dim.ngx = ngx
-        dim.ngy = ngy
-        dim.ngz = ngz
-
-        dim.grid_x = x
-        dim.grid_y = y
-        dim.grid_z = z
-    }
-
-
-    func set_height_width(file_height: tNi,  file_width: tNi, total_height: tNi, total_width: tNi){
-
-        dim.file_height = file_height
-        dim.file_width = file_width
-
-        dim.total_height = total_height
-        dim.total_width = total_width
-    }
-
-
-    func set_running(step: tStep,  teta: tGeomShape){
-        dim.teta = teta
-        dim.step = step
-    }
-
-
-    func set_flow(initial_rho: tQvec, re_m_nondimensional: tQvec,  uav: tGeomShape){
-        dim.initial_rho = initial_rho
-        dim.re_m_nondimensional = re_m_nondimensional
-        dim.uav = uav
-    }
-
-
-    func set_note(note: String){
-        dim.note = note
-    }
-
-
-
-    func set_plot(function: String, dirname: String, Q_output_length: Int = 4, cut_at: tNi = 0){
-        dim.function = function
-        dim.dirname = dirname
-        dim.cut_at = cut_at
-        dim.Q_output_length = Q_output_length
-    }
-
-
-
-
-
-
-
+    return encoder
 }

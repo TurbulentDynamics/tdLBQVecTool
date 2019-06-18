@@ -17,7 +17,6 @@
 		229EBEE422B9297F0008AD43 /* tdQvecPostProcessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEE322B9297F0008AD43 /* tdQvecPostProcessTests.swift */; };
 		229EBEED22B929AE0008AD43 /* LinuxMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEE922B929AE0008AD43 /* LinuxMain.swift */; };
 		229EBEEF22B929AE0008AD43 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEEB22B929AE0008AD43 /* XCTestManifests.swift */; };
-		229EBEF022B929AE0008AD43 /* TDQvecLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEEC22B929AE0008AD43 /* TDQvecLibTests.swift */; };
 		229EBF2822B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF322B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */; };
 		229EBF2922B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF422B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */; };
 		229EBF2A22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBEF522B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */; };
@@ -99,7 +98,6 @@
 		229EBEE522B9297F0008AD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		229EBEE922B929AE0008AD43 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
 		229EBEEB22B929AE0008AD43 /* XCTestManifests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
-		229EBEEC22B929AE0008AD43 /* TDQvecLibTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDQvecLibTests.swift; sourceTree = "<group>"; };
 		229EBEF322B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Post_Processing_Dims_dims.0.0.0.V4.json; sourceTree = "<group>"; };
 		229EBEF422B92A4D0008AD43 /* Qvec.node.0.1.0.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.node.0.1.0.V4.bin; sourceTree = "<group>"; };
 		229EBEF522B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.0.1.1.V4.bin; sourceTree = "<group>"; };
@@ -196,8 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				229EBECF22B927220008AD43 /* typeAlias.swift */,
-				229EBED122B927220008AD43 /* BaseHandler.swift */,
 				229EBED222B927220008AD43 /* HelperFunctions.swift */,
+				229EBED122B927220008AD43 /* BaseHandler.swift */,
 				229EBECE22B927220008AD43 /* InputFilesV4.swift */,
 				229EBED022B927220008AD43 /* PostProcessingDims.swift */,
 				229EBECC22B927220008AD43 /* QvecDims.swift */,
@@ -210,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				229EBEE922B929AE0008AD43 /* LinuxMain.swift */,
-				229EBEEC22B929AE0008AD43 /* TDQvecLibTests.swift */,
 				229EBEEB22B929AE0008AD43 /* XCTestManifests.swift */,
 				229EBEE322B9297F0008AD43 /* tdQvecPostProcessTests.swift */,
 				229EBEE522B9297F0008AD43 /* Info.plist */,
@@ -456,7 +453,6 @@
 			files = (
 				229EBEE422B9297F0008AD43 /* tdQvecPostProcessTests.swift in Sources */,
 				229EBEEF22B929AE0008AD43 /* XCTestManifests.swift in Sources */,
-				229EBEF022B929AE0008AD43 /* TDQvecLibTests.swift in Sources */,
 				229EBEED22B929AE0008AD43 /* LinuxMain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
