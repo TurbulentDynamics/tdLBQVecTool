@@ -9,9 +9,9 @@ import Foundation
 
 
 //Saved to Disk in C
-//struct tDisk_colrow_Q19_V4 {
+//struct tDisk_colrow_Q4_V4 {
 //    uint16_t col, row;
-//    float s[19];
+//    float s[4];
 //};
 
 
@@ -27,6 +27,25 @@ struct tDisk_colrow_Q4_V4 {
     }
 }
 
+
+
+//Saved to Disk in C
+//struct tDisk_grid_colrow_Q19_V4 {
+//    uint16_t col, row;
+//    uint16_t gridx, gridy, gridz;
+//    float s[19];
+//};
+
+
+struct tDisk_grid_colrow_Q19_V4 {
+    let col: Int = 0
+    let row: Int = 0
+    let gridx: Int = 0
+    let gridy: Int = 0
+    let gridz: Int = 0
+    let s = Array(repeating: 0.0, count: 19)
+
+}
 
 
 
@@ -71,23 +90,17 @@ struct tDisk_colrow_Q4_V4 {
 
 
 
-func loadBuffer(binFileURL: URL, count: Int){
-
-    let rData = try! Data(contentsOf: binFileURL)
-    print(rData)
-
-}
-
 
 
 
 func loadBuffer<T>(binFileURL: URL, count: Int) -> [T]{
 
-    let rData = try! Data(contentsOf: binFileURL)
-    print(rData)
+//    let rData = try! Data(contentsOf: binFileURL)
+//    print(rData)
 
     //TODO "cast" the rData to an array of structs T
 
-    return rData
+    
+    return [T]
 
 }
