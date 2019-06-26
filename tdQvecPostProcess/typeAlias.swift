@@ -6,33 +6,23 @@
 //  Copyright © 2019 Niall P. O'Byrnes. All rights reserved.
 //
 
-
+typealias t3d = Int
 
 typealias tNi = Int32
 
+typealias tPP = Float
+
 typealias tQvec = Float
+
 typealias tForce = Float
 
-extension Float: DefaultValuable {
-
-    static func defaultValue() -> Float {
-        return 0.0
-    }
-}
-
-extension Double: DefaultValuable {
-
-    static func defaultValue() -> Double {
-        return 0.0
-    }
-}
-
-typealias t3d = Int
 
 
 typealias tGeomShape = Float
 
 typealias tGeomIndex = Int32
+
+
 
 typealias tStep = Int;
 

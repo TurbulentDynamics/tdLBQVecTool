@@ -8,8 +8,9 @@
 import Foundation
 
 
-//https://app.quicktype.io?share=KpTZBH2uBIG8zOBEHkTS
 struct qVecDim: Codable {
+    //https://app.quicktype.io#
+
     let qDataType: String
     let qOutputLength, binFileSizeInStructs: Int
     let coordsType: String
