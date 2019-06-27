@@ -30,7 +30,7 @@ import Foundation
 
 
 
-struct Slice2D <tPP>{
+struct Slice2D <tPP> {
     let nRow: Int, nCol: Int
     let nRowg: Int, nColg: Int
 
@@ -50,7 +50,7 @@ struct Slice2D <tPP>{
 
 
 
-struct Slice2DPlanes <tPP>{
+struct Slice2DPlanes <tPP> {
     let nRow: Int, nCol: Int
     let nRowg: Int, nColg: Int
     let nPlane: Int
@@ -79,34 +79,3 @@ struct Slice2DPlanes <tPP>{
 
 
 
-//final class tDisk_colrow_Q4_V4: Serializable, CustomStringConvertible {
-//    var i: Int = 0, j: Int = 0
-//    var s: Float = Float(repeating: 0.0, count: 4)
-//
-//    override func read( from file: UnsafeMutablePointer<FILE>) {
-//        read(value: &col, from: file)
-//        read(value: &row, from: file)
-//
-//        read(array: &s, from: file)
-//    }
-//
-//    var description: String { return String("c:\(col) r:\(row) s:\(s) ")}
-//
-//
-//}
-//
-//
-//
-//func malloc_and_load<tDisk: Serializable>(q: tQvecDim, qVecPath: String) -> Matrix1D<tDisk> {
-//
-//    var tmp = Matrix1D<tDisk>(rows: Int(q.bin_file_size_in_structs))
-//    let fp: UnsafeMutablePointer<FILE>! = fopen(qvec_path.c_str(), "r");
-//
-//    for index in 0..<tmp.rows {
-//        tmp[index].read(from: fp)
-//    }
-//
-//    fclose(fp);
-//
-//    return tmp;
-//}

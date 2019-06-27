@@ -8,38 +8,48 @@
 import Foundation
 
 
-//let help: Bool = CommandLine.arguments.contains("-h")
-//if help {
-//    print("USAGE: tdQvecPostProcess [options] <directories>")
-//    print("-o overwrite files")
-//    print("-v make vorticity files")
-//    print("-u make ux uy uz files")
-//    print("-p print verbose")
-//    exit(0)
-//}
-//
-//
-//let print_log: Bool = CommandLine.arguments.contains("-p")
-//let overwrite: Bool = CommandLine.arguments.contains("-o")
-//
-//let uxuyuz: Bool = CommandLine.arguments.contains("-u")
-//let vort: Bool = CommandLine.arguments.contains("-v")
-//
-////String temporal_data_points_path = CommandLine.contains("-t")
-//
-//var dirs = [String]()
-//for d in CommandLine.arguments.dropFirst() {
-//    if !d.hasPrefix("-") {
-//        dirs.append(d)
-//    }
-//}
+let help: Bool = CommandLine.arguments.contains("-h")
+if help {
+    print("USAGE: tdQvecPostProcess [options] <directories>")
+    print("-o overwrite files")
+    print("-v make vorticity files")
+    print("-u make ux uy uz files")
+    print("-p print verbose")
+    exit(0)
+}
+
+
+let print_log: Bool = CommandLine.arguments.contains("-p")
+let overwrite: Bool = CommandLine.arguments.contains("-o")
+
+let uxuyuz: Bool = CommandLine.arguments.contains("-u")
+let vort: Bool = CommandLine.arguments.contains("-v")
+
+//String temporal_data_points_path = CommandLine.contains("-t")
+
+
+
+let calcs = ["ux": uxuyuz, "uy": uxuyuz, "uz": uxuyuz, "vorticity": vort]
+
+
+
+var dirs = [String]()
+for d in CommandLine.arguments.dropFirst() {
+    if !d.hasPrefix("-") {
+        dirs.append(d)
+    }
+}
 
 
 //dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050"]
 
 
-//var pp = postProcess(rootDir: "Workspace/xcode/tdQvecPostProcess/TinyTestData/")
-//try pp.load(withDir: "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28")
+var pp = postProcess(rootDir: "Workspace/xcode/tdQvecPostProcess/TinyTestData/")
+try pp.load(withDir: "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28")
+
+
+
+
 //pp.calc_log_vort()
 //pp.write_all()
 
@@ -65,8 +75,18 @@ print(dim.binFileSizeInStructs)
 let binFileURL = rootURL.appendingPathComponent(fileName)
 
 
+let buffer = Buffer(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
+buffer.load()
 
-let array = loadBuffer<tDisk_colrow_Q4_V4>(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
+//let array = loadBuffer<tDisk_colrow_Q4_V4>(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
 
 
-let array = loadBuffer<tDisk_grid_colrow_Q19_V4>(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
+//let array = loadBuffer<tDisk_grid_colrow_Q19_V4>(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
+
+
+
+
+
+
+
+
