@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2236022B22C2B8F6006C179D /* qVecPostProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022A22C2B8F6006C179D /* qVecPostProcess.swift */; };
 		2236022F22C3BFCE006C179D /* loadBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022E22C3BFCE006C179D /* loadBuffer.swift */; };
+		2236024922C4FB72006C179D /* testLoadBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236024722C4F4F6006C179D /* testLoadBuffer.c */; };
+		2236024B22C4FB8C006C179D /* cTestData.text in Resources */ = {isa = PBXBuildFile; fileRef = 2236024A22C4FB8C006C179D /* cTestData.text */; };
 		226E7B4522BA567800F26D9D /* Matrices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E7B4422BA567800F26D9D /* Matrices.swift */; };
 		229EBEC622B926BC0008AD43 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEC522B926BC0008AD43 /* main.swift */; };
 		229EBED322B927220008AD43 /* QvecDims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBECC22B927220008AD43 /* QvecDims.swift */; };
@@ -88,6 +90,7 @@
 		2236022A22C2B8F6006C179D /* qVecPostProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qVecPostProcess.swift; sourceTree = "<group>"; };
 		2236022E22C3BFCE006C179D /* loadBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loadBuffer.swift; sourceTree = "<group>"; };
 		2236024722C4F4F6006C179D /* testLoadBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = testLoadBuffer.c; sourceTree = "<group>"; };
+		2236024A22C4FB8C006C179D /* cTestData.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = cTestData.text; path = tdQvecPostProcessTests/cTestData.text; sourceTree = SOURCE_ROOT; };
 		226E7B4422BA567800F26D9D /* Matrices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrices.swift; sourceTree = "<group>"; };
 		226E7B4722BA5AF400F26D9D /* contour_Q4.ipynb */ = {isa = PBXFileReference; lastKnownFileType = text; path = contour_Q4.ipynb; sourceTree = "<group>"; };
 		229EBEC222B926BC0008AD43 /* tdQvecPostProcess */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tdQvecPostProcess; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,7 +219,6 @@
 				226E7B4422BA567800F26D9D /* Matrices.swift */,
 				2236022A22C2B8F6006C179D /* qVecPostProcess.swift */,
 				2236022E22C3BFCE006C179D /* loadBuffer.swift */,
-				2236024722C4F4F6006C179D /* testLoadBuffer.c */,
 				229EBEC522B926BC0008AD43 /* main.swift */,
 			);
 			path = tdQvecPostProcess;
@@ -228,6 +230,8 @@
 				229EBEE922B929AE0008AD43 /* LinuxMain.swift */,
 				229EBEEB22B929AE0008AD43 /* XCTestManifests.swift */,
 				229EBEE322B9297F0008AD43 /* tdQvecPostProcessTests.swift */,
+				2236024A22C4FB8C006C179D /* cTestData.text */,
+				2236024722C4F4F6006C179D /* testLoadBuffer.c */,
 				229EBEE522B9297F0008AD43 /* Info.plist */,
 			);
 			path = tdQvecPostProcessTests;
@@ -429,6 +433,7 @@
 				229EBF4E22B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin in Resources */,
 				229EBF2F22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin.json in Resources */,
 				229EBF3B22B92A4D0008AD43 /* Qvec.F3.node.0.1.1.V4.bin in Resources */,
+				2236024B22C4FB8C006C179D /* cTestData.text in Resources */,
 				229EBF4222B92A4D0008AD43 /* Qvec.node.0.1.1.V4.bin.json in Resources */,
 				229EBF3922B92A4D0008AD43 /* Post_Processing_Dims_dims.0.0.0.V4.json in Resources */,
 				229EBF4D22B92A4D0008AD43 /* Qvec.F3.node.1.1.0.V4.bin in Resources */,
@@ -475,6 +480,7 @@
 				229EBEE422B9297F0008AD43 /* tdQvecPostProcessTests.swift in Sources */,
 				229EBEEF22B929AE0008AD43 /* XCTestManifests.swift in Sources */,
 				229EBEED22B929AE0008AD43 /* LinuxMain.swift in Sources */,
+				2236024922C4FB72006C179D /* testLoadBuffer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

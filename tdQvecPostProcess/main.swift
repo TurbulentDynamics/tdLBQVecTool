@@ -75,14 +75,9 @@ print(dim.binFileSizeInStructs)
 let binFileURL = rootURL.appendingPathComponent(fileName)
 
 
-let buffer = Buffer(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
-buffer.load()
+let buff = Buffer(binFileURL: binFileURL, with: dim)
 
-//let array = loadBuffer<tDisk_colrow_Q4_V4>(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
-
-
-//let array = loadBuffer<tDisk_grid_colrow_Q19_V4>(binFileURL: binFileURL, count: dim.binFileSizeInStructs)
-
+buff.load()
 
 
 
