@@ -44,40 +44,31 @@ for d in CommandLine.arguments.dropFirst() {
 //dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050"]
 
 
-var pp = postProcess(rootDir: "Workspace/xcode/tdQvecPostProcess/TinyTestData/")
-try pp.load(withDir: "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28")
-
-
-
-
-//pp.calc_log_vort()
-//pp.write_all()
-
 
 //=========================================================
 
-
 let home = FileManager.default.homeDirectoryForCurrentUser
+let dataDirURL = home.appendingPathComponent("Workspace/xcode/tdQvecPostProcess/TinyTestData/")
 
-let rootURL = home.appendingPathComponent("Workspace/xcode/tdQvecPostProcess/TinyTestData/plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28")
 
+let dir = "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29"
 
 let fileName = "Qvec.node.0.1.1.V4.bin"
 
-let jsonURL = rootURL.appendingPathComponent(fileName + ".json")
-let dim = try qVecDim(fromURL: jsonURL)
-
-//This dim holds information on the binary file "Qvec.node.0.1.1.V4.bin"
-print(dim)
-print(dim.binFileSizeInStructs)
 
 
-let binFileURL = rootURL.appendingPathComponent(fileName)
 
+let buff = Buffer(withDataDir: dataDirURL)
 
-let buff = Buffer(binFileURL: binFileURL, with: dim)
+//Should return the whole layer as one [row][col][q] array
+let layer = try buff.load(fromDir: dir, file: fileName)
 
-buff.load()
+//TODO FIX THIS
+let Qvec = "Qvec.node.*.bin$"
+let layerQvec = try buff.load(fromDir: dir, regex: Qvec)
+
+let F3 = "Qvec.F3.node.*.bin$"
+let layerF3 = try buff.load(fromDir: dir, regex: F3)
 
 
 

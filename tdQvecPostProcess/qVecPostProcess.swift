@@ -9,10 +9,8 @@ import Foundation
 
 
 
-class postProcess {
+class qVecPostProcess {
 
-    //    var rho, ux, uy, uz: Slice2DPlanes<tPP>
-    //    var uxyz_log_vort: Slice2DPlanes<tPP>
 
     let rootURL: URL
 
@@ -23,19 +21,21 @@ class postProcess {
     }
 
 
-    func loadPPDim(withDir dir: String, ppDimJson: String = "Post_Processing_Dims_dims.0.0.0.V4.json") throws -> ppDim {
+    func loadPPDim(atDir dir: String, ppDimJson: String = "Post_Processing_Dims_dims.0.0.0.V4.json") throws -> ppDim {
 
         let jsonURL = rootURL.appendingPathComponent(dir).appendingPathComponent(ppDimJson)
 //        print("Loading PPDim \(jsonURL)")
-        return try ppDim(fromURL: jsonURL)
+        return try ppDim(jsonURL)
     }
 
 
     func loadQvecDim(withDir dir: String, jsonFile: String) throws -> qVecDim {
 
+        //TODO check if not json then try append .json
+
         let jsonURL = rootURL.appendingPathComponent(dir).appendingPathComponent(jsonFile)
 //        print("Loading Qvec \(jsonURL)")
-        return try qVecDim(fromURL: jsonURL)
+        return try qVecDim(jsonURL)
     }
 
 

@@ -57,7 +57,7 @@ extension ppDim {
         try self.init(data: data)
     }
 
-    init(fromURL url: URL) throws {
+    init(_ url: URL) throws {
         try self.init(data: try Data(contentsOf: url))
     }
 

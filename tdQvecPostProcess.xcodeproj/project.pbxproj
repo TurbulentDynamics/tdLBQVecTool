@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		2236022F22C3BFCE006C179D /* loadBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022E22C3BFCE006C179D /* loadBuffer.swift */; };
 		2236024922C4FB72006C179D /* testLoadBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236024722C4F4F6006C179D /* testLoadBuffer.c */; };
 		2236024B22C4FB8C006C179D /* cTestData.text in Resources */ = {isa = PBXBuildFile; fileRef = 2236024A22C4FB8C006C179D /* cTestData.text */; };
+		2236025122C62F57006C179D /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 2236025022C62F57006C179D /* Logging */; };
 		226E7B4522BA567800F26D9D /* Matrices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E7B4422BA567800F26D9D /* Matrices.swift */; };
 		229EBEC622B926BC0008AD43 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBEC522B926BC0008AD43 /* main.swift */; };
 		229EBED322B927220008AD43 /* QvecDims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EBECC22B927220008AD43 /* QvecDims.swift */; };
@@ -165,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2236025122C62F57006C179D /* Logging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +337,9 @@
 			dependencies = (
 			);
 			name = tdQvecPostProcess;
+			packageProductDependencies = (
+				2236025022C62F57006C179D /* Logging */,
+			);
 			productName = tdQvecPostProcess;
 			productReference = 229EBEC222B926BC0008AD43 /* tdQvecPostProcess */;
 			productType = "com.apple.product-type.tool";
@@ -384,6 +389,9 @@
 				Base,
 			);
 			mainGroup = 229EBEB922B926BC0008AD43;
+			packageReferences = (
+				2236024F22C62F57006C179D /* XCRemoteSwiftPackageReference "swift-log" */,
+			);
 			productRefGroup = 229EBEC322B926BC0008AD43 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -698,6 +706,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2236024F22C62F57006C179D /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2236025022C62F57006C179D /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2236024F22C62F57006C179D /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 229EBEBA22B926BC0008AD43 /* Project object */;
 }

@@ -10,24 +10,6 @@ import Foundation
 
 
 
-//activityIndicator.startAnimating()
-//DispatchQueue.global(qos: .userInitiated).async {
-//    do {
-//        try Disk.save(largeData, to: .documents, as: "Movies/spiderman.mp4")
-//    } catch {
-//        // ...
-//    }
-//    DispatchQueue.main.async {
-//        activityIndicator.stopAnimating()
-//        // ...
-//    }
-//}
-
-
-
-
-
-
 
 
 struct Slice2D <tPP> {

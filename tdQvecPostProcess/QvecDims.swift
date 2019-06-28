@@ -41,14 +41,14 @@ extension qVecDim {
         self = try newJSONDecoder().decode(qVecDim.self, from: data)
     }
 
-    init(fromJSON json: String, using encoding: String.Encoding = .utf8) throws {
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
         guard let data = json.data(using: encoding) else {
             throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
         }
         try self.init(data: data)
     }
 
-    init(fromURL url: URL) throws {
+    init(_ url: URL) throws {
         try self.init(data: try Data(contentsOf: url))
     }
 
