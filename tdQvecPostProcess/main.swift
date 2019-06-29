@@ -7,6 +7,11 @@
 
 import Foundation
 
+import Logging
+let logger = Logger(label: "com.example.BestExampleApp.main")
+
+
+
 
 let help: Bool = CommandLine.arguments.contains("-h")
 if help {
@@ -53,25 +58,26 @@ let dataDirURL = home.appendingPathComponent("Workspace/xcode/tdQvecPostProcess/
 
 let dir = "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29"
 
-let fileName = "Qvec.node.0.1.1.V4.bin"
+
+//
+//let buff = Buffer(withDataDir: dataDirURL)
+//
+////Should return the whole layer as one [row][col][q] array
+//let fileName = "Qvec.node.0.1.1.V4.bin"
+//let layer = try buff.load(fromDir: dir, file: fileName)
+//
+//let Qvec = "^Qvec.node.*.bin$"
+//let layerQvec = try buff.load(fromDir: dir, regex: Qvec)
+//
+//let F3 = "^Qvec.F3.node.*.bin$"
+//let layerF3 = try buff.load(fromDir: dir, regex: F3)
 
 
 
 
-let buff = Buffer(withDataDir: dataDirURL)
 
-//Should return the whole layer as one [row][col][q] array
-let layer = try buff.load(fromDir: dir, file: fileName)
-
-//TODO FIX THIS
-let Qvec = "Qvec.node.*.bin$"
-let layerQvec = try buff.load(fromDir: dir, regex: Qvec)
-
-let F3 = "Qvec.F3.node.*.bin$"
-let layerF3 = try buff.load(fromDir: dir, regex: F3)
-
-
-
+let pp = qVecPostProcess(withDataDir: dataDirURL)
+try pp.load(fromDir: dir)
 
 
 

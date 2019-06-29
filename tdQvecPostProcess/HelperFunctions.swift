@@ -11,22 +11,6 @@ import Foundation
 
 
 
-func printError(_ text: String) {
-    print("ERROR: ", text)
-}
-
-func printLog(_ text: String) {
-    print("NOTE: ", text)
-}
-
-
-
-
-func sizeof<T>(_ t: T) -> Int {
-    return MemoryLayout<T>.size
-}
-
-
 
 
 

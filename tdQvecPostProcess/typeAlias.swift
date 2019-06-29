@@ -10,18 +10,17 @@ typealias t3d = Int
 
 typealias tNi = Int32
 
-typealias tPP = Float
 
-typealias tQvec = Float
 
-typealias tForce = Float
+typealias tQvec = Float32
+
+typealias tForce = Float32
 
 
 
 typealias tGeomShape = Float
 
 typealias tGeomIndex = Int32
-
 
 
 typealias tStep = Int;

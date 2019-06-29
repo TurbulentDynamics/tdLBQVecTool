@@ -8,23 +8,42 @@
 import Foundation
 
 
+struct velocity {
+    var rho:Float32
+    var ux:Float32
+    var uy:Float32
+    var uz:Float32
+    //    var vort: Float32
+
+    init(){
+        rho = 0.0
+        ux = 0.0
+        uy = 0.0
+        uz = 0.0
+        //        vort = 0.0
+    }
+}
+
+
+
+
 
 class qVecPostProcess {
 
 
-    let rootURL: URL
+    let rootDataDir: URL
 
-    init(rootDir: String){
-        let home = FileManager.default.homeDirectoryForCurrentUser
-
-        self.rootURL = home.appendingPathComponent(rootDir)
+    init(withDataDir: URL) {
+        self.rootDataDir = withDataDir
     }
+
+
 
 
     func loadPPDim(atDir dir: String, ppDimJson: String = "Post_Processing_Dims_dims.0.0.0.V4.json") throws -> ppDim {
 
-        let jsonURL = rootURL.appendingPathComponent(dir).appendingPathComponent(ppDimJson)
-//        print("Loading PPDim \(jsonURL)")
+        let jsonURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(ppDimJson)
+        //        print("Loading PPDim \(jsonURL)")
         return try ppDim(jsonURL)
     }
 
@@ -33,57 +52,116 @@ class qVecPostProcess {
 
         //TODO check if not json then try append .json
 
-        let jsonURL = rootURL.appendingPathComponent(dir).appendingPathComponent(jsonFile)
-//        print("Loading Qvec \(jsonURL)")
+        let jsonURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(jsonFile)
+        //        print("Loading Qvec \(jsonURL)")
         return try qVecDim(jsonURL)
     }
 
 
 
+    func load(fromDir dir: String) throws {
 
-    func loadQvecBinFile(withDir dir: String, fileName: String) throws {
+        let ppDimDir = rootDataDir.appendingPathComponent(dir).appendingPathComponent("Post_Processing_Dims_dims.0.0.0.V4.json")
+        let dim = try ppDim(ppDimDir)
 
-        let qVecDim = try loadQvecDim(withDir: dir, jsonFile: fileName + ".json")
-        print(qVecDim.binFileSizeInStructs, qVecDim.structName)
+        let nColg = dim.gridX + 2
+        let nRowg = dim.gridX + 2
 
-        let QvecURL = rootURL.appendingPathComponent(dir).appendingPathComponent(fileName)
-        print(QvecURL)
+        let num_layers = 3;
+        //        if (vort && plotname == "rotational_capture") num_layers = 5;
+        //        else if (vort) num_layers = 3;
 
-        //Need to allocate memory and load form Disk
+        let Qvec = "^Qvec.node.*.bin$"
+        let F3 = "^Qvec.F3.node.*.bin$"
 
-
-//        try loadBuffer<tDisk_colrow_Q4_V4>(url: QvecURL, numStructs: 10)
-
-
-
-    }
-
+        let buff = Buffer(withDataDir: dataDirURL)
 
 
-    //    func initMatrices(nRow: Int, nCol: Int, nPlane: Int){
-    //
-    //        var rho = Slice2DPlanes<tPP>(nRow: nRow, nCol: nCol, nPlane: nPlane, val: 0.0)
-    //        var ux = Slice2DPlanes<tPP>(nRow: nRow, nCol: nCol, nPlane: nPlane, val: 0.0)
-    //        var uy = Slice2DPlanes<tPP>(nRow: nRow, nCol: nCol, nPlane: nPlane, val: 0.0)
-    //        var uz = Slice2DPlanes<tPP>(nRow: nRow, nCol: nCol, nPlane: nPlane, val: 0.0)
-    //
-    //        var uxyz_log_vort = Slice2DPlanes<tPP>(nRow: nRow, nCol: nCol, nPlane: nPlane, val: 0.0)
-    //
-    //    }
+        var u = Array(repeating: Array(repeating: Array(repeating: velocity(), count: nRowg), count: nColg), count: num_layers)
+
+
+        //Dispatch to GCD????
+        for layer in 0..<num_layers {
 
 
 
+            //Dir should change for layers
+            let Q4diskBuffer =  try buff.load(fromDir: dir, regex: Qvec)
+            let F3diskBuffer =  try buff.load(fromDir: dir, regex: F3)
+
+
+            for col in 0..<dim.totalWidth {
+                for row in 0..<dim.totalHeight {
+
+                    let rho = Q4diskBuffer[col][row][0]
+                    u[layer][col][row].rho = rho
+                    u[layer][col][row].ux = (Q4diskBuffer[col][row][1] + 0.5 * F3diskBuffer[col][row][0]) / rho
+                    u[layer][col][row].uy = (Q4diskBuffer[col][row][2] + 0.5 * F3diskBuffer[col][row][1]) / rho
+                    u[layer][col][row].uz = (Q4diskBuffer[col][row][3] + 0.5 * F3diskBuffer[col][row][2]) / rho
+
+                }
+            }
+        }
+
+        //----------- After all layers set up
+
+        var vort = Array(repeating: Array(repeating: Float32(), count: nRowg), count: nColg)
+
+
+        for c in 1..<dim.totalHeight - 1 {
+            for r in 1..<dim.totalWidth - 1 {
+
+
+                //                let uxx = 0.5 * (u[0][c + 1][r    ].ux - u[0][c - 1][r    ].ux)
+                let uxy = 0.5 * (u[0][c    ][r + 1].ux - u[0][c    ][r - 1].ux)
+                let uxz = 0.5 * (u[2][c    ][r    ].ux - u[1][c    ][r    ].ux)
+
+                let uyx = 0.5 * (u[0][c + 1][r    ].uy - u[0][c - 1][r    ].uy)
+                //                let uyy = 0.5 * (u[0][c    ][r + 1].uy - u[0][c    ][r - 1].uy)
+                let uyz = 0.5 * (u[2][c    ][r    ].uy - u[1][c    ][r    ].uy)
+
+                let uzx = 0.5 * (u[0][c + 1][r    ].uz - u[0][c - 1][r    ].uz)
+                let uzy = 0.5 * (u[0][c    ][r + 1].uz - u[0][c    ][r - 1].uz)
+                //                let uzz = 0.5 * (u[2][c    ][r    ].uz - u[1][c    ][r    ].uz)
+
+
+                let uyz_uzy = uyz - uzy
+                let uzx_uxz = uzx - uxz
+                let uxy_uyx = uxy - uyx
+
+
+                vort[c][r] = log(uyz_uzy * uyz_uzy + uzx_uxz * uzx_uxz + uxy_uyx * uxy_uyx)
+            }
+        }
 
 
 
 
-    func load(withDir dir: String) throws {
-        let fileName = "/Qvec.node.0.1.1.V4.bin"
+        //------------Write file with border
+        let border = 2
 
-        try loadQvecBinFile(withDir: dir, fileName: fileName)
+        var writeBuffer = Array(repeating: Float32(), count: ((dim.totalWidth - border) * (dim.totalHeight - border)))
+
+        for c in border..<dim.totalHeight - border {
+            for r in border..<dim.totalWidth - border {
+
+                writeBuffer[ c * (dim.totalHeight - border) + r ] = vort[c][r]
+            }
+        }
+
+
+        let url = rootDataDir.appendingPathComponent(dir).appendingPathComponent("file.vort.bin")
+        let wData = Data(bytes: &writeBuffer, count: writeBuffer.count * MemoryLayout<Float32>.stride)
+        try! wData.write(to: url)
+
+
+
+
+
     }
 
 
 
 }
+
 

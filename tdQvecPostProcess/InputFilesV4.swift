@@ -10,6 +10,8 @@ import Foundation
 
 
 
+
+
 class InputFilesV4 {
 
     let version = 4
@@ -146,22 +148,22 @@ class InputFilesV4 {
                     if let range = Range(range[0].range(at: 1), in: delta_load_dir) {
                         delta_load_dir.replaceSubrange(range, with: deltaAsString)
 
-                        printLog("get_dir_delta() (DEBUG) - converted \(delta) \(dir) -> \(delta_load_dir)")
+                        logger.info("get_dir_delta() (DEBUG) - converted \(delta) \(dir) -> \(delta_load_dir)")
                     }
                     else {
-                        printError("get_dir_delta() - cannot detect range \(range[0].range(at: 1)) in \(delta_load_dir)")
+                        logger.error("get_dir_delta() - cannot detect range \(range[0].range(at: 1)) in \(delta_load_dir)")
                     }
                 }
                 else {
-                    printError("get_dir_delta() - cannot convert Int \(lastIndexAsString) to String")
+                    logger.error("get_dir_delta() - cannot convert Int \(lastIndexAsString) to String")
                 }
             }
             else {
-                printError("get_dir_delta() - cannot instantiate Regular expression range: \(range[0].range(at: 1)) in load_dir \(delta_load_dir)")
+                logger.error("get_dir_delta() - cannot instantiate Regular expression range: \(range[0].range(at: 1)) in load_dir \(delta_load_dir)")
             }
         }
         else {
-            printError("get_dir_delta() - cannot instantiate Regular expression pattern: \(pattern)")
+            logger.error("get_dir_delta() - cannot instantiate Regular expression pattern: \(pattern)")
         }
         //    std::cout << "String" << load_dir << " Delta String   " << delta_load_dir << std::endl;
 

@@ -6,8 +6,6 @@
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
 //
 import Foundation
-import Logging
-let logger = Logger(label: "com.example.BestExampleApp.main")
 
 
 
@@ -70,8 +68,6 @@ class Buffer {
 
     fileprivate func loadAndAllocate(dir: String, fileNames: [String]) throws -> [[[Float32]]] {
 
-        print(fileNames)
-
         let ppDimDir = rootDataDir.appendingPathComponent(dir).appendingPathComponent("Post_Processing_Dims_dims.0.0.0.V4.json")
         let dirDim = try ppDim(ppDimDir)
 
@@ -81,6 +77,7 @@ class Buffer {
         var plane = Array(repeating: Array(repeating: Array(repeating: Float32(0.0), count: dirDim.qOutputLength), count: nRowg), count: nColg)
 
 
+        //TODO Dispatch to GCD
         for binFile in fileNames {
 
             let jsonBinURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(binFile + ".json")
@@ -95,7 +92,10 @@ class Buffer {
             var qOutputLength = dim.qOutputLength
             if dim.structName == "tDisk_colrow_Q3_V4" {
                 qOutputLength = 3
+            } else if dim.structName == "tDisk_colrow_Q4_V4" {
+                qOutputLength = 4
             }
+
 
 
             let binFileURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(binFile)
