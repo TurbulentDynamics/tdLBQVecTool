@@ -1,10 +1,10 @@
 import XCTest
 
-import TDQvecPostProcessTests
-import TDQvecLibTests
+import TDQVecPostProcessTests
+import TDQVecLibTests
 
 var tests = [XCTestCaseEntry]()
-tests += TDQvecPostProcessTests.allTests()
-tests += TDQvecLibTests.allTests()
+tests += TDQVecPostProcessTests.allTests()
+tests += TDQVecLibTests.allTests()
 
 XCTMain(tests)

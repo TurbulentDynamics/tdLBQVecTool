@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  TDQvecLib
+//  TDQVecLib
 //
 //  Created by Niall Ó Broin on 24/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
@@ -9,6 +9,13 @@
 import Foundation
 
 
+enum diskErrors: Error {
+    case fileNotFound
+    case directoryNotFound
+    case fileNotReadable
+    case fileNotJsonParsable
+    case NotImplementedYet
+}
 
 
 
@@ -16,24 +23,202 @@ class InputFilesV4 {
 
     let version = 4
 
+    let dataDirURL: URL
 
-    private func get_Qvec_fileroot(_ dir: String, _ name: String, _ idi: t3d, _ idj: t3d, _ idk: t3d) -> String {
+//    var setDir: URL
+
+    init(withDataDir: String) throws {
+
+        let home = FileManager.default.homeDirectoryForCurrentUser
+        self.dataDirURL = home.appendingPathComponent(withDataDir)
+
+        //        if !self.dataDirURL.isURL {
+        //            throw diskErrors.directoryNotFound
+        //        }
+    }
+
+
+    init(withDataDir: URL) {
+        self.dataDirURL = withDataDir
+    }
+
+
+    private func format(step: Int) -> String {
+        //    sstream << std::setw(8) << std::setfill('0') << patch::to_string(step);
+        return String(format: "%08d", step)
+    }
+
+    private func formatDirRoot(name: String = "plot", type: dirType, QLength: Int, step: Int) -> String {
+        return "(name).\(type).V_\(version).Q_\(QLength).step_\(format(step: step))"
+    }
+
+
+
+//    func loadDir(_ loadDir: String){
+//        dir = dataDirURL.appendPathComponent(loadDir)
+//    }
+//
+//    func mkDir() throws -> URL {
+//    }
+//
+//    func mkXYPlaneDir(name: String = "plot", QLength: Int, step: Int, atK:Int) throws -> URL {
+//    }
+
+
+
+    func getXYPlaneDirURL(name: String = "plot", QLength: Int, step: Int, atK:Int) throws -> URL {
+
+        let root = formatDirRoot(name: name, type: dirType.XYplane, QLength: QLength, step: step)
+        let dir = "\(root).cut_\(atK)"
+        let url = dataDirURL.appendingPathComponent(dir)
+        return url
+    }
+
+//    func isXYPlane() -> Bool {
+//        return setDir.lastPathComponent.contains(".XYPlane.")
+//    }
+
+
+
+    func getXZPlaneDirURL(name: String = "plot", QLength: Int, step: Int, atJ:Int) throws -> URL {
+
+        let root = formatDirRoot(name: name, type: dirType.XZplane, QLength: QLength, step: step)
+        let dir = "\(root).cut_\(atJ)"
+        let url = dataDirURL.appendingPathComponent(dir)
+        return url
+
+    }
+
+
+    func getYZPlaneDirURL(name: String = "plot", QLength: Int, step: Int, atI:Int) throws -> URL {
+
+        let root = formatDirRoot(name: name, type: dirType.YZplane, QLength: QLength, step: step)
+        let dir = "\(root).cut_\(atI)"
+        let url = dataDirURL.appendingPathComponent(dir)
+        return url
+
+    }
+
+
+    func getVolumeDirURL(name: String = "volume", QLength: Int, step: Int) throws -> URL {
+
+        let dir = formatDirRoot(name: name, type: dirType.volume, QLength: QLength, step: step)
+        let url = dataDirURL.appendingPathComponent(dir)
+        return url
+
+    }
+
+    func getCaptureAtBladeAngleDirURL(step: Int, angle: Int, bladeId: Int, QLength: Int, name: String="plot") throws -> URL {
+
+        let root = formatDirRoot(name: name, type: dirType.rotational, QLength: QLength, step: step)
+        let dir = "\(root).angle_\(angle).blade_id_\(bladeId)"
+        let url = dataDirURL.appendingPathComponent(dir)
+        return url
+    }
+
+    func getAxisWhenBladeAngleDirURL(step: Int, angle: Int, QLength: Int, name: String="plot") throws -> URL {
+
+        let root = formatDirRoot(name: name, type: dirType.YZplane, QLength: QLength, step: step)
+        let dir = "\(root).angle_\(angle)"
+
+        let url = dataDirURL.appendingPathComponent(dir)
+        return url
+    }
+
+
+
+    func getRotatingSectorDir(step: Int, angle: Int, QLength: Int, name: String="plot") {
+    }
+
+
+    //----------------------------------------------Working on directories
+
+
+    func getName(fromDir dir: String) -> String? {
+        return dir.components(separatedBy: ".")[0]
+    }
+
+    func getDirType(fromDir dir: String) -> dirType? {
+
+        if dir.contains("XYplane") {return .XYplane}
+        else if dir.contains("XZplane") {return dirType.XZplane}
+        else if dir.contains("YZplane") {return dirType.YZplane}
+        else if dir.contains("volume") {return dirType.volume}
+        else if dir.contains("XYplane") {return dirType.rotational}
+            //else if dir.contains("sector") {return dirType.sector}
+        else {
+            return nil
+        }
+    }
+
+    func getVersion(fromDir dir: String) -> Int? {
+
+        if let result = dir.range(of: #"V_[0-9]"#, options: .regularExpression){
+            let i = dir[result].index(dir[result].startIndex, offsetBy: 2)
+            return Int(dir[result][i...])
+        } else {
+            return nil
+        }
+    }
+
+
+    func getQLength(fromDir: String) -> Int? {
+        if let result = dir.range(of: #"Q_[0-9]"#, options: .regularExpression){
+            let i = dir[result].index(dir[result].startIndex, offsetBy: 2)
+            return Int(dir[result][i...])
+        } else {
+            return nil
+        }
+    }
+
+
+    func getStep(fromDir: String) -> Int? {
+        if let result = fromDir.range(of: #"step_[0-9]"#, options: .regularExpression){
+            let i = fromDir[result].index(fromDir[result].startIndex, offsetBy: 5)
+            return Int(fromDir[result][i...])
+        } else {
+            return nil
+        }
+    }
+
+    func getCut(fromDir: String) -> Int? {
+        if let result = fromDir.range(of: #"cut_[0-9]"#, options: .regularExpression){
+            let i = fromDir[result].index(fromDir[result].startIndex, offsetBy: 4)
+            return Int(fromDir[result][i...])
+        } else {
+            return nil
+        }
+    }
+
+    func getDirDeltaURL(delta: Int, fromDir: String) -> URL? {
+        if let cut = getCut(fromDir: dir) {
+            let newDir = fromDir.replacingOccurrences(of: #"cut_([0-9])"#, with: "cut_\(cut)", options: .regularExpression)
+
+            let url = dataDirURL.appendingPathComponent(newDir)
+            return url
+        } else {
+            return nil
+        }
+    }
+
+
+
+    //------------------------Working with the bin and bin.json files
+
+
+
+
+    private func formatQVecFileRoot(_ dir: String, _ name: String, _ idi: Int, _ idj: Int, _ idk: Int) -> String {
         return "\(dir)/\(name).node.\(idi).\(idj).\(idk).V\(version)"
     }
 
+    func getQVecBinURL(dir: String, name: String, idi: Int, idj: Int, idk: Int) -> String {
 
-    func get_Qvec_bin_filename(dir: String, name: String, idi: t3d, idj: t3d, idk: t3d) -> String {
-
-        return get_Qvec_fileroot(dir, name, idi, idj, idk) + ".bin"
+        return "\(formatQVecFileRoot(dir, name, idi, idj, idk)).bin"
     }
 
-    //    func get_my_Qvec_filename(dir: String, name: String) {
-    //        return get_Qvec_filename(dir: dir, name: name, idi: node.idi, idj: node.idj, idk: node.idk);
-    //    }
-
-    func get_node010_Qvec_bin_filename(dir: String, name: String) -> String {
-
-        return get_Qvec_bin_filename(dir: dir, name: name, idi: 0, idj: 1, idk: 0)
+    func getNode000QVecBinURL(dir: String, name: String) -> String {
+        return getQVecBinURL(dir: dir, name: name, idi: 0, idj: 0, idk: 0)
     }
 
 
@@ -41,168 +226,6 @@ class InputFilesV4 {
 
 
 
-
-
-    private func get_dir_start(_ dir_root: String, _ name: String, _ plot_type: String, _ Q_length: Int, _ step: tStep) -> String {
-
-        return "\(dir_root)/\(name).\(plot_type).V_\(version).Q_\(Q_length).step_" + format_step(step)
-    }
-
-    private func format_step(_ step: tStep) -> String {
-        return String(format: "%02d", step)
-    }
-
-
-    func get_XY_plane_dir(step: tStep, at_k: tNi, Q_length: Int, name: String="plot", dir_root: String=".") -> String {
-
-        return get_dir_start(dir_root, name, "XYplane", Q_length, step) + ".cut_\(at_k)"
-    }
-
-    //Formally Axis
-    func get_XZ_plane_dir(step: tStep, at_j: tNi, Q_length: Int, name: String="plot", dir_root: String=".") -> String {
-
-        return get_dir_start(dir_root, name, "XZplane", Q_length, step) + ".cut_\(at_j)"
-    }
-
-    //Formally Slice
-    func get_YZ_plane_dir(step: tStep, at_i: tNi, Q_length: Int, name: String="plot", dir_root: String=".") -> String {
-
-        return get_dir_start(dir_root, name, "YZplane", Q_length, step) + ".cut_\(at_i)"
-    }
-
-    func get_volume_dir(step: tStep, Q_length: Int, name: String="plot", dir_root: String=".") -> String {
-        return get_dir_start(dir_root, name, "volume", Q_length, step)
-    }
-
-
-
-    func get_capture_at_blade_angle_dir(step: tStep, angle: Int, blade_id: Int, Q_length: Int, name: String="plot_", dir_root: String=".") -> String {
-
-        return get_dir_start(dir_root, name, "rotational_capture", Q_length, step) + ".angle_\(angle).blade_id_\(blade_id)"
-    }
-
-
-    func get_axis_when_blade_angle_dir(step: tStep, angle: Int, Q_length: Int, name: String="plot", dir_root: String=".") -> String {
-
-        return get_dir_start(dir_root, name, "YZplane", Q_length, step) + ".angle_\(angle)"
-    }
-
-
-
-    func get_rotating_sector_dir(step: tStep, angle: Int, Q_length: Int, name: String="plot", dir_root: String=".") -> String {
-
-        return "Not Implemented Yet"
-    }
-
-
-
-
-
-    //TODO
-    func get_version_from_directory(dir: String) -> tNi {return 0}
-    func get_name_from_directory(dir: String) -> String {return "Not Implemented"}
-    func get_step_from_directory(dir: String) -> tNi {return 0}
-
-
-
-    func get_plot_type_from_directory(dir: String) -> String? {
-
-        if dir.contains("XYplane") {return "XYplane"}
-        if dir.contains("XZplane") {return "XZplane"}
-        if dir.contains("YZplane") {return "YZplane"}
-        if dir.contains("volume") {return "volume"}
-        if dir.contains("rotational_capture") {return "rotational_capture"}
-        //        if dir.contains("sector") {return "sector"}
-
-        return nil
-    }
-
-
-
-
-    func plot_type_in_dir(plot_type: String, dir: String) -> Bool {
-        return dir.contains(plot_type)
-    }
-
-
-
-
-    func get_dir_delta(delta: Int, dir: String)  -> String{
-
-
-        if (!plot_type_in_dir(plot_type: "cut", dir: dir)) {
-            return "not_found"
-        }
-
-
-        var delta_load_dir: String = dir
-
-        let pattern = "cut_(.*)"
-        if let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive]) {
-
-            let range = regex.matches(in: delta_load_dir, options: [], range: NSMakeRange(0, delta_load_dir.count))
-            if let tx = Range(range[0].range(at: 1), in: delta_load_dir) {
-                let lastIndexAsString = delta_load_dir[tx]
-                if let lastIndex = Int(String(lastIndexAsString)) {
-                    let deltaAsString = String(lastIndex + delta)
-                    if let range = Range(range[0].range(at: 1), in: delta_load_dir) {
-                        delta_load_dir.replaceSubrange(range, with: deltaAsString)
-
-                        logger.info("get_dir_delta() (DEBUG) - converted \(delta) \(dir) -> \(delta_load_dir)")
-                    }
-                    else {
-                        logger.error("get_dir_delta() - cannot detect range \(range[0].range(at: 1)) in \(delta_load_dir)")
-                    }
-                }
-                else {
-                    logger.error("get_dir_delta() - cannot convert Int \(lastIndexAsString) to String")
-                }
-            }
-            else {
-                logger.error("get_dir_delta() - cannot instantiate Regular expression range: \(range[0].range(at: 1)) in load_dir \(delta_load_dir)")
-            }
-        }
-        else {
-            logger.error("get_dir_delta() - cannot instantiate Regular expression pattern: \(pattern)")
-        }
-        //    std::cout << "String" << load_dir << " Delta String   " << delta_load_dir << std::endl;
-
-        return delta_load_dir;
-    }
-
-
-
-
-    func get_name(){}
-
-
-
-    func get_base_filepath(dir: String, idi: t3d, idj: t3d, idk: t3d) -> String {
-        return "\(dir)/\(get_name())_dims.\(idi).\(idj).\(idk)"
-    }
-
-
-    func get_filepath(dir: String, idi: t3d, idj: t3d, idk: t3d) -> String {
-        return get_base_filepath(dir:dir, idi:idi, idj:idj, idk:idk) + ".V4.json";
-    }
-
-
-    func get_bin_filepath_v3(dir: String, idi: t3d, idj: t3d, idk: t3d) -> String {
-        return get_base_filepath(dir:dir, idi:idi, idj:idj, idk:idk) + ".V3.bin";
-    }
-
-
-
-
-    func path_exists(_ filepath: String) -> Bool {
-        let fileManager = FileManager.default
-        return fileManager.fileExists(atPath: filepath)
-    }
-
-
-    func file_exists(_ filepath: String) -> Bool {
-        return path_exists(filepath);
-    }
 
 
 

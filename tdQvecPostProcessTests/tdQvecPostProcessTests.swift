@@ -1,7 +1,7 @@
 import XCTest
 import class Foundation.Bundle
 
-final class TDQvecPostProcessTests: XCTestCase {
+final class TDQVecPostProcessTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
@@ -12,7 +12,7 @@ final class TDQvecPostProcessTests: XCTestCase {
             return
         }
 
-        let fooBinary = productsDirectory.appendingPathComponent("TDQvecPostProcess")
+        let fooBinary = productsDirectory.appendingPathComponent("TDQVecPostProcess")
 
         let process = Process()
         process.executableURL = fooBinary
@@ -62,14 +62,14 @@ let jsonString = """
 "idi" : 1,
 "idj" : 1,
 "idk" : 1,
-"name" : "Qvec_Dims",
+"name" : "QVec_Dims",
 "ngx" : 2,
 "ngy" : 2,
 "ngz" : 2,
 "struct_name" : "tDisk_colrow_Q3_V4"
 }
 """
-let dim = try qVecDim(fromJSON: jsonString)
+let dim = try QVecDim(fromJSON: jsonString)
 print(dim)
 
 
@@ -78,12 +78,12 @@ print(dim)
 
 let home = FileManager.default.homeDirectoryForCurrentUser
 
-let dataPath = "Workspace/xcode/tdQvecPostProcess/TinyTestData/"
+let dataPath = "Workspace/xcode/tdQVecPostProcess/TinyTestData/"
 let dataUrl = home.appendingPathComponent(dataPath)
 
-let jsonFile = "/plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28/Qvec.F3.node.1.1.1.V4.bin.json"
+let jsonFile = "/plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28/QVec.F3.node.1.1.1.V4.bin.json"
 let jsonUrl = dataUrl.appendingPathComponent(jsonFile)
 
-let dim2 = try qVecDim(fromURL: jsonUrl)
+let dim2 = try QVecDim(fromURL: jsonUrl)
 print(dim2)
 

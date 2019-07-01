@@ -1,21 +1,20 @@
 //
 //  main.swift
-//  TDQvecLib
+//  TDQVecLib
 //
 //  Created by Niall Ó Broin on 30/04/2019.
 //
 
 import Foundation
 
-import Logging
-let logger = Logger(label: "com.example.BestExampleApp.main")
+
 
 
 
 
 let help: Bool = CommandLine.arguments.contains("-h")
 if help {
-    print("USAGE: tdQvecPostProcess [options] <directories>")
+    print("USAGE: tdQVecPostProcess [options] <directories>")
     print("-o overwrite files")
     print("-v make vorticity files")
     print("-u make ux uy uz files")
@@ -46,37 +45,37 @@ for d in CommandLine.arguments.dropFirst() {
 }
 
 
-//dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050"]
-
+dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29"]
+let dir = dirs[0]
 
 
 //=========================================================
 
-let home = FileManager.default.homeDirectoryForCurrentUser
-let dataDirURL = home.appendingPathComponent("Workspace/xcode/tdQvecPostProcess/TinyTestData/")
+let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/TinyTestData/")
 
 
-let dir = "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29"
+
+
 
 
 //
 //let buff = Buffer(withDataDir: dataDirURL)
 //
 ////Should return the whole layer as one [row][col][q] array
-//let fileName = "Qvec.node.0.1.1.V4.bin"
+//let fileName = "QVec.node.0.1.1.V4.bin"
 //let layer = try buff.load(fromDir: dir, file: fileName)
 //
-//let Qvec = "^Qvec.node.*.bin$"
-//let layerQvec = try buff.load(fromDir: dir, regex: Qvec)
+//let QVec = "^QVec.node.*.bin$"
+//let layerQVec = try buff.load(fromDir: dir, regex: QVec)
 //
-//let F3 = "^Qvec.F3.node.*.bin$"
+//let F3 = "^QVec.F3.node.*.bin$"
 //let layerF3 = try buff.load(fromDir: dir, regex: F3)
 
 
 
 
 
-let pp = qVecPostProcess(withDataDir: dataDirURL)
+let pp = QVecPostProcess(withDataDirURL: disk.dataDirURL)
 try pp.load(fromDir: dir)
 
 

@@ -1,6 +1,6 @@
 //
-//  mqVecPostProcess.swift
-//  tdQvecPostProcess
+//  mQVecPostProcess.swift
+//  tdQVecPostProcess
 //
 //  Created by Niall Ó Broin on 23/06/2019.
 //
@@ -8,86 +8,102 @@
 import Foundation
 
 
+
 struct velocity {
     var rho:Float32
     var ux:Float32
     var uy:Float32
     var uz:Float32
-    //    var vort: Float32
 
     init(){
         rho = 0.0
         ux = 0.0
         uy = 0.0
         uz = 0.0
-        //        vort = 0.0
     }
+}
+
+enum dirType {
+    case XYplane
+    case XZplane
+    case YZplane
+    case rotational
+    case volume
 }
 
 
 
+class QVecPostProcess {
 
 
-class qVecPostProcess {
+    let defaultPPDimName: String = "Post_Processing_Dims_dims.0.0.0.V4.json"
 
+    let dataDirURL: URL
 
-    let rootDataDir: URL
-
-    init(withDataDir: URL) {
-        self.rootDataDir = withDataDir
+    init(withDataDirURL: URL) {
+        self.dataDirURL = withDataDirURL
     }
 
 
 
 
-    func loadPPDim(atDir dir: String, ppDimJson: String = "Post_Processing_Dims_dims.0.0.0.V4.json") throws -> ppDim {
+    func loadPPDim(atDir dir: String, ppDimJson: String? = nil) throws -> ppDim {
+        let ppDimJson = ppDimJson ?? self.defaultPPDimName
 
-        let jsonURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(ppDimJson)
-        //        print("Loading PPDim \(jsonURL)")
+        let jsonURL = dataDirURL.appendingPathComponent(dir).appendingPathComponent(ppDimJson)
+        logger.info("Loading PPDim \(jsonURL)")
         return try ppDim(jsonURL)
     }
 
 
-    func loadQvecDim(withDir dir: String, jsonFile: String) throws -> qVecDim {
+    func loadQVecDim(withDir dir: String, jsonFile: String) throws -> QVecDim {
 
         //TODO check if not json then try append .json
 
-        let jsonURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(jsonFile)
-        //        print("Loading Qvec \(jsonURL)")
-        return try qVecDim(jsonURL)
+        let jsonURL = dataDirURL.appendingPathComponent(dir).appendingPathComponent(jsonFile)
+        logger.info("Loading QVec \(jsonURL)")
+        return try QVecDim(jsonURL)
     }
 
 
+    func load(fromDir loadDir: String) throws {
 
-    func load(fromDir dir: String) throws {
-
-        let ppDimDir = rootDataDir.appendingPathComponent(dir).appendingPathComponent("Post_Processing_Dims_dims.0.0.0.V4.json")
+        let ppDimDir = dataDirURL.appendingPathComponent(dir).appendingPathComponent(defaultPPDimName)
         let dim = try ppDim(ppDimDir)
 
         let nColg = dim.gridX + 2
         let nRowg = dim.gridX + 2
 
+
+
         let num_layers = 3;
         //        if (vort && plotname == "rotational_capture") num_layers = 5;
         //        else if (vort) num_layers = 3;
 
-        let Qvec = "^Qvec.node.*.bin$"
-        let F3 = "^Qvec.F3.node.*.bin$"
-
-        let buff = Buffer(withDataDir: dataDirURL)
-
+        let buff = loadBuffer(withDataDirURL: dataDirURL)
+        let disk = InputFilesV4(withDataDir: dataDirURL)
 
         var u = Array(repeating: Array(repeating: Array(repeating: velocity(), count: nRowg), count: nColg), count: num_layers)
 
 
-        //Dispatch to GCD????
+        //TODO Dispatch to GCD????
         for layer in 0..<num_layers {
 
+            var dir = disk.getDirDeltaURL(delta: 0, fromDir: loadDir)
+
+            if layer == 1 {
+                dir = disk.getDirDeltaURL(delta: +1, fromDir: loadDir)
+            } else if layer == 2 {
+                dir = disk.getDirDeltaURL(delta: -1, fromDir: loadDir)
+            }
+
+            let QVec = "^QVec.node.*.bin$"
+            let F3 = "^QVec.F3.node.*.bin$"
 
 
             //Dir should change for layers
-            let Q4diskBuffer =  try buff.load(fromDir: dir, regex: Qvec)
-            let F3diskBuffer =  try buff.load(fromDir: dir, regex: F3)
+            let Q4diskBuffer =  try buff.loadFiles(fromDir: dir!, regex: QVec)
+            let F3diskBuffer =  try buff.loadFiles(fromDir: dir!, regex: F3)
 
 
             for col in 0..<dim.totalWidth {
@@ -107,22 +123,22 @@ class qVecPostProcess {
 
         var vort = Array(repeating: Array(repeating: Float32(), count: nRowg), count: nColg)
 
+        let ignoreBorderCells = 2
+        for c in ignoreBorderCells..<dim.totalHeight - ignoreBorderCells {
+            for r in ignoreBorderCells..<dim.totalWidth - ignoreBorderCells {
 
-        for c in 1..<dim.totalHeight - 1 {
-            for r in 1..<dim.totalWidth - 1 {
 
-
-                //                let uxx = 0.5 * (u[0][c + 1][r    ].ux - u[0][c - 1][r    ].ux)
+                //let uxx = 0.5 * (u[0][c + 1][r    ].ux - u[0][c - 1][r    ].ux)
                 let uxy = 0.5 * (u[0][c    ][r + 1].ux - u[0][c    ][r - 1].ux)
                 let uxz = 0.5 * (u[2][c    ][r    ].ux - u[1][c    ][r    ].ux)
 
                 let uyx = 0.5 * (u[0][c + 1][r    ].uy - u[0][c - 1][r    ].uy)
-                //                let uyy = 0.5 * (u[0][c    ][r + 1].uy - u[0][c    ][r - 1].uy)
+                //let uyy = 0.5 * (u[0][c    ][r + 1].uy - u[0][c    ][r - 1].uy)
                 let uyz = 0.5 * (u[2][c    ][r    ].uy - u[1][c    ][r    ].uy)
 
                 let uzx = 0.5 * (u[0][c + 1][r    ].uz - u[0][c - 1][r    ].uz)
                 let uzy = 0.5 * (u[0][c    ][r + 1].uz - u[0][c    ][r - 1].uz)
-                //                let uzz = 0.5 * (u[2][c    ][r    ].uz - u[1][c    ][r    ].uz)
+                //let uzz = 0.5 * (u[2][c    ][r    ].uz - u[1][c    ][r    ].uz)
 
 
                 let uyz_uzy = uyz - uzy
@@ -150,12 +166,9 @@ class qVecPostProcess {
         }
 
 
-        let url = rootDataDir.appendingPathComponent(dir).appendingPathComponent("file.vort.bin")
+        let url = dataDirURL.appendingPathComponent(dir).appendingPathComponent("file.vort.bin")
         let wData = Data(bytes: &writeBuffer, count: writeBuffer.count * MemoryLayout<Float32>.stride)
         try! wData.write(to: url)
-
-
-
 
 
     }

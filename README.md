@@ -1,4 +1,4 @@
-# TURBULENT Dynamics Qvec Post Processing
+# TURBULENT Dynamics QVec Post Processing
 
 
 Turbulent Dynamics specialises in running high-resolution fluid dynamics simulations on supercomputers.  The application decomposes the complete simulation space into smaller grids and each grid is run on one node.  During the simulation each node creates an output file independently.  This applicaiton is used to stitch these files together and do some other post processing calculations.
@@ -8,7 +8,7 @@ Turbulent Dynamics specialises in running high-resolution fluid dynamics simulat
 ```
 git clone --recursive https://github.com/TurbulentDynamics/tdQvecPostProcess.git
 
-./td_Qvec_post_process -v -d TD_Rushton_Sample_Output_Qvec/plot_slice.XZplane.V_4.Q_4.step_00000200.cut_70 
+./td_QVec_post_process -v -d TD_Rushton_Sample_Output_QVec/plot_slice.XZplane.V_4.Q_4.step_00000200.cut_70 
 
 #The jupyter notebook in the "python" directory can be used to visualise the file created.
 ```

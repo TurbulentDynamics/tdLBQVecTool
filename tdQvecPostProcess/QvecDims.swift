@@ -1,6 +1,6 @@
 //
-//  QvecDims.swift
-//  TDQvecLib
+//  QVecDims.swift
+//  TDQVecLib
 //
 //  Created by Niall Ó Broin on 08/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct qVecDim: Codable {
+struct QVecDim: Codable {
     //https://app.quicktype.io#
 
     let qDataType: String
@@ -36,9 +36,9 @@ struct qVecDim: Codable {
     }
 }
 
-extension qVecDim {
+extension QVecDim {
     init(data: Data) throws {
-        self = try newJSONDecoder().decode(qVecDim.self, from: data)
+        self = try newJSONDecoder().decode(QVecDim.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -70,8 +70,8 @@ extension qVecDim {
         ngy: Int? = nil,
         ngz: Int? = nil,
         structName: String? = nil
-        ) -> qVecDim {
-        return qVecDim(
+        ) -> QVecDim {
+        return QVecDim(
             qDataType: qDataType ?? self.qDataType,
             qOutputLength: qOutputLength ?? self.qOutputLength,
             binFileSizeInStructs: binFileSizeInStructs ?? self.binFileSizeInStructs,

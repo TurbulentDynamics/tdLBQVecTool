@@ -1,11 +1,15 @@
 
-//  QvecDims.swift
-//  TDQvecLib
+//  QVecDims.swift
+//  TDQVecLib
 //
 //  Created by Niall Ó Broin on 08/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
 //
 import Foundation
+
+import Logging
+let logger = Logger(label: "com.turbulentDynamics.QVecPostProcess.loadBuffer")
+
 
 
 
@@ -24,8 +28,7 @@ import Foundation
 
 
 
-
-class Buffer {
+class loadBuffer {
     //Useful references
     //https://www.raywenderlich.com/780-unsafe-swift-using-pointers-and-interacting-with-c
     //https://academy.realm.io/posts/nate-cook-tryswift-tokyo-unsafe-swift-and-pointer-types/
@@ -33,8 +36,8 @@ class Buffer {
 
     let rootDataDir: URL
 
-    init(withDataDir: URL) {
-        self.rootDataDir = withDataDir
+    init(withDataDirURL: URL) {
+        self.rootDataDir = withDataDirURL
     }
 
 
@@ -47,11 +50,15 @@ class Buffer {
     }
 
 
-    func load(fromDir dir: String, regex: String) throws -> [[[Float32]]] {
-        //https://stackoverflow.com/questions/27721418/getting-list-of-files-in-documents-folder/27722526
-
-
+    func loadFiles(fromDir dir: String, regex: String) throws -> [[[Float32]]] {
         let dirURL = rootDataDir.appendingPathComponent(dir)
+        return try loadFiles(fromDir: dirURL, regex: regex)
+    }
+
+
+
+    func loadFiles(fromDir dirURL: URL, regex: String) throws -> [[[Float32]]] {
+        //https://stackoverflow.com/questions/27721418/getting-list-of-files-in-documents-folder/27722526
 
         let directoryContents = try FileManager.default.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil)
 
@@ -83,7 +90,7 @@ class Buffer {
             let jsonBinURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(binFile + ".json")
 
             logger.info("Loading \(jsonBinURL)")
-            let dim = try qVecDim(jsonBinURL)
+            let dim = try QVecDim(jsonBinURL)
 
             print(dim)
 
@@ -98,9 +105,9 @@ class Buffer {
 
 
 
-            let binFileURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(binFile)
+            let binURL = rootDataDir.appendingPathComponent(dir).appendingPathComponent(binFile)
 
-            let data = try Data(contentsOf: binFileURL)
+            let data = try Data(contentsOf: binURL)
 
             //Pick up length from types (2 for Int, 4 for Float)
             let lenBytesRowCol = 2
