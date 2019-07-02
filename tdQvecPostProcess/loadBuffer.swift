@@ -66,6 +66,8 @@ class loadBuffer {
 
         let filteredBinFileNames = fileNames.filter{ $0.range(of: regex, options:.regularExpression) != nil}
 
+        print(dirURL, directoryContents, fileNames, regex, filteredBinFileNames)
+
         return try loadAndAllocate(dir: dir, fileNames: filteredBinFileNames)
 
     }

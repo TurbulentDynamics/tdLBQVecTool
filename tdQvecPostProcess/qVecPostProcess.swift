@@ -92,14 +92,15 @@ class QVecPostProcess {
             var dir = disk.getDirDeltaURL(delta: 0, fromDir: loadDir)
 
             if layer == 1 {
-                dir = disk.getDirDeltaURL(delta: +1, fromDir: loadDir)
-            } else if layer == 2 {
                 dir = disk.getDirDeltaURL(delta: -1, fromDir: loadDir)
+            } else if layer == 2 {
+                dir = disk.getDirDeltaURL(delta: +1, fromDir: loadDir)
             }
 
-            let QVec = "^QVec.node.*.bin$"
-            let F3 = "^QVec.F3.node.*.bin$"
+            let QVec = #"^Qvec\.node\...*\.bin$"#
+            let F3 = #"Qvec\.F3\.node\...*\.bin$"#
 
+            logger.info("Loading Dir: \(dir!)")
 
             //Dir should change for layers
             let Q4diskBuffer =  try buff.loadFiles(fromDir: dir!, regex: QVec)

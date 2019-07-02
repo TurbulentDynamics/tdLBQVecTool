@@ -153,7 +153,7 @@ class InputFilesV4 {
 
     func getVersion(fromDir dir: String) -> Int? {
 
-        if let result = dir.range(of: #"V_[0-9]"#, options: .regularExpression){
+        if let result = dir.range(of: #"V_([0-9])"#, options: .regularExpression){
             let i = dir[result].index(dir[result].startIndex, offsetBy: 2)
             return Int(dir[result][i...])
         } else {
@@ -163,7 +163,7 @@ class InputFilesV4 {
 
 
     func getQLength(fromDir: String) -> Int? {
-        if let result = dir.range(of: #"Q_[0-9]"#, options: .regularExpression){
+        if let result = dir.range(of: #"Q_([0-9])"#, options: .regularExpression){
             let i = dir[result].index(dir[result].startIndex, offsetBy: 2)
             return Int(dir[result][i...])
         } else {
@@ -173,7 +173,7 @@ class InputFilesV4 {
 
 
     func getStep(fromDir: String) -> Int? {
-        if let result = fromDir.range(of: #"step_[0-9]"#, options: .regularExpression){
+        if let result = fromDir.range(of: #"step_([0-9]*)"#, options: .regularExpression){
             let i = fromDir[result].index(fromDir[result].startIndex, offsetBy: 5)
             return Int(fromDir[result][i...])
         } else {
@@ -182,7 +182,7 @@ class InputFilesV4 {
     }
 
     func getCut(fromDir: String) -> Int? {
-        if let result = fromDir.range(of: #"cut_[0-9]"#, options: .regularExpression){
+        if let result = fromDir.range(of: #"cut_([0-9]*)"#, options: .regularExpression){
             let i = fromDir[result].index(fromDir[result].startIndex, offsetBy: 4)
             return Int(fromDir[result][i...])
         } else {
@@ -192,7 +192,10 @@ class InputFilesV4 {
 
     func getDirDeltaURL(delta: Int, fromDir: String) -> URL? {
         if let cut = getCut(fromDir: dir) {
-            let newDir = fromDir.replacingOccurrences(of: #"cut_([0-9])"#, with: "cut_\(cut)", options: .regularExpression)
+
+            let replace: String = "cut_\(cut + delta)"
+
+            let newDir = fromDir.replacingOccurrences(of: #"cut_[0-9]*"#, with: replace, options: .regularExpression)
 
             let url = dataDirURL.appendingPathComponent(newDir)
             return url
@@ -220,14 +223,6 @@ class InputFilesV4 {
     func getNode000QVecBinURL(dir: String, name: String) -> String {
         return getQVecBinURL(dir: dir, name: name, idi: 0, idj: 0, idk: 0)
     }
-
-
-
-
-
-
-
-
 
 
 
