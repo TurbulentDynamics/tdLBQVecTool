@@ -157,12 +157,12 @@ class QVecPostProcess {
         //------------Write file with border
         let border = 2
 
-        var writeBuffer = Array(repeating: Float32(), count: ((dim.totalWidth - border) * (dim.totalHeight - border)))
+        var writeBuffer = Array(repeating: Float32(), count: ((dim.totalWidth - border * 2) * (dim.totalHeight - border * 2)))
 
         for c in border..<dim.totalHeight - border {
             for r in border..<dim.totalWidth - border {
 
-                writeBuffer[ c * (dim.totalHeight - border) + r ] = vort[c][r]
+                writeBuffer[ (c - border) * (dim.totalHeight - border * 2) + (r - border) ] = vort[c][r]
             }
         }
 
