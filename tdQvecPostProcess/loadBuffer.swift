@@ -66,7 +66,7 @@ class loadBuffer {
 
         let filteredBinFileNames = fileNames.filter{ $0.range(of: regex, options:.regularExpression) != nil}
 
-        print(dirURL, directoryContents, fileNames, regex, filteredBinFileNames)
+//        print(dirURL, directoryContents, fileNames, regex, filteredBinFileNames)
 
         return try loadAndAllocate(dir: dir, fileNames: filteredBinFileNames)
 
@@ -94,8 +94,7 @@ class loadBuffer {
             logger.info("Loading \(jsonBinURL)")
             let dim = try QVecDim(jsonBinURL)
 
-            print(dim)
-
+//            print(dim)
 
             //ERROR in the OUTPUT
             var qOutputLength = dim.qOutputLength
@@ -134,7 +133,7 @@ class loadBuffer {
                         plane[row][col][q] = ptr.load(fromByteOffset: i + lenBytesRowCol * 2 + (q * lenBytesQ), as: Float32.self)
                     }
 
-                    print(col, row, plane[row][col][0], plane[row][col][1], plane[row][col][2])//, plane[row][col][3])
+//                    print(col, row, plane[row][col][0], plane[row][col][1], plane[row][col][2])//, plane[row][col][3])
 
                 }
             }//end of for bytes
