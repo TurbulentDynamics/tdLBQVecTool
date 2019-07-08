@@ -51,7 +51,7 @@ let dir = dirs[0]
 
 //=========================================================
 
-let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/TinyTestData/")
+//let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/TinyTestData/")
 
 
 
@@ -75,8 +75,8 @@ let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/Tiny
 
 
 
-let pp = QVecPostProcess(withDataDirURL: disk.dataDirURL)
-try pp.load(fromDir: dir)
+//let pp = QVecPostProcess(withDataDirURL: disk.dataDirURL)
+//try pp.load(fromDir: dir)
 
 
 
