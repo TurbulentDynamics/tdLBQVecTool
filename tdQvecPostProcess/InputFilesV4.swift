@@ -113,7 +113,7 @@ class InputFilesV4 {
 
 
     func formatDirDelta(delta: Int, fromDir: String) throws -> String {
-        if let cut = getCut(fromDir: dir) {
+        if let cut = getCut(fromDir: fromDir) {
 
             let replace: String = "cut_\(cut + delta)"
 
@@ -125,7 +125,7 @@ class InputFilesV4 {
     }
 
     func formatDirDelta(replaceCut: Int, fromDir: String) throws -> String {
-        if let _ = getCut(fromDir: dir) {
+        if let _ = getCut(fromDir: fromDir) {
 
             let replace: String = "cut_\(replaceCut)"
 
@@ -172,9 +172,9 @@ class InputFilesV4 {
     }
 
     func getQLength(fromDir: String) -> Int? {
-        if let result = dir.range(of: #"Q_([0-9]*)\."#, options: .regularExpression){
-            let i = dir[result].index(dir[result].startIndex, offsetBy: 2)
-            return Int(dir[result][i...])
+        if let result = fromDir.range(of: #"Q_([0-9]*)\."#, options: .regularExpression){
+            let i = fromDir[result].index(fromDir[result].startIndex, offsetBy: 2)
+            return Int(fromDir[result][i...])
         } else {
             return nil
         }

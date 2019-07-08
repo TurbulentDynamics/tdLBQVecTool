@@ -50,16 +50,35 @@ extension ppDim {
         self = try newJSONDecoder().decode(ppDim.self, from: data)
     }
 
-    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+    init(url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    init(json: String, using encoding: String.Encoding = .utf8) throws {
         guard let data = json.data(using: encoding) else {
             throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
         }
         try self.init(data: data)
     }
 
-    init(_ url: URL) throws {
-        try self.init(data: try Data(contentsOf: url))
+
+    init(dir: URL) throws {
+        var jsonURL = dir
+        jsonURL.appendPathComponent("Post_Processing_Dims_dims.0.0.0.V4.json")
+//        logger.info("Loading Post Process Dimension File: \(jsonURL)")
+        try self.init(data: try Data(contentsOf: jsonURL))
     }
+
+
+    init(dir: String) throws {
+        let json = dir + "/Post_Processing_Dims_dims.0.0.0.V4.json"
+//        logger.info("Loading Post Process Dimension File: \(json)")
+        try self.init(json: json)
+    }
+
+
+
+
 
     func with(
         qOutputLength: Int? = nil,

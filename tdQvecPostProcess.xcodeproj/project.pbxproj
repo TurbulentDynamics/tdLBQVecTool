@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2236022B22C2B8F6006C179D /* qVecPostProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022A22C2B8F6006C179D /* qVecPostProcess.swift */; };
-		2236022F22C3BFCE006C179D /* loadBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022E22C3BFCE006C179D /* loadBuffer.swift */; };
+		2236022F22C3BFCE006C179D /* diskBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022E22C3BFCE006C179D /* diskBuffer.swift */; };
 		2236024922C4FB72006C179D /* testLoadBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236024722C4F4F6006C179D /* testLoadBuffer.c */; };
 		2236024B22C4FB8C006C179D /* cTestData.text in Resources */ = {isa = PBXBuildFile; fileRef = 2236024A22C4FB8C006C179D /* cTestData.text */; };
 		2236025122C62F57006C179D /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 2236025022C62F57006C179D /* Logging */; };
@@ -88,7 +88,7 @@
 
 /* Begin PBXFileReference section */
 		2236022A22C2B8F6006C179D /* qVecPostProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qVecPostProcess.swift; sourceTree = "<group>"; };
-		2236022E22C3BFCE006C179D /* loadBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loadBuffer.swift; sourceTree = "<group>"; };
+		2236022E22C3BFCE006C179D /* diskBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = diskBuffer.swift; sourceTree = "<group>"; };
 		2236024722C4F4F6006C179D /* testLoadBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = testLoadBuffer.c; sourceTree = "<group>"; };
 		2236024A22C4FB8C006C179D /* cTestData.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = cTestData.text; path = tdQvecPostProcessTests/cTestData.text; sourceTree = SOURCE_ROOT; };
 		226E7B4722BA5AF400F26D9D /* contour_Q4.ipynb */ = {isa = PBXFileReference; lastKnownFileType = text; path = contour_Q4.ipynb; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 				229EBECC22B927220008AD43 /* QvecDims.swift */,
 				229EBECE22B927220008AD43 /* InputFilesV4.swift */,
 				2236022A22C2B8F6006C179D /* qVecPostProcess.swift */,
-				2236022E22C3BFCE006C179D /* loadBuffer.swift */,
+				2236022E22C3BFCE006C179D /* diskBuffer.swift */,
 				229EBEC522B926BC0008AD43 /* main.swift */,
 			);
 			path = tdQvecPostProcess;
@@ -378,7 +378,7 @@
 				};
 			};
 			buildConfigurationList = 229EBEBD22B926BC0008AD43 /* Build configuration list for PBXProject "tdQvecPostProcess" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -473,7 +473,7 @@
 				2236022B22C2B8F6006C179D /* qVecPostProcess.swift in Sources */,
 				229EBED622B927220008AD43 /* typeAlias.swift in Sources */,
 				229EBED522B927220008AD43 /* InputFilesV4.swift in Sources */,
-				2236022F22C3BFCE006C179D /* loadBuffer.swift in Sources */,
+				2236022F22C3BFCE006C179D /* diskBuffer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

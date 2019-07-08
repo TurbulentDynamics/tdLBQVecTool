@@ -47,6 +47,18 @@ final class TDQVecPostProcessTests: XCTestCase {
 }
 
 
+func testScoreIsComputed() {
+    // 1. given
+    let guess = sut.targetValue + 5
+
+    // 2. when
+    sut.check(guess: guess)
+
+    // 3. then
+    XCTAssertEqual(sut.scoreRound, 95, "Score computed from guess is wrong")
+}
+
+
 
 let jsonString = """
 {
@@ -71,6 +83,7 @@ let jsonString = """
 """
 let dim = try QVecDim(fromJSON: jsonString)
 print(dim)
+
 
 
 

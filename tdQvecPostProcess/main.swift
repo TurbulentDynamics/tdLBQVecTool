@@ -33,7 +33,7 @@ let vort: Bool = CommandLine.arguments.contains("-v")
 
 
 
-let calcs = ["ux": uxuyuz, "uy": uxuyuz, "uz": uxuyuz, "vorticity": vort]
+//let calcs = ["ux": uxuyuz, "uy": uxuyuz, "uz": uxuyuz, "vorticity": vort]
 
 
 
@@ -45,13 +45,16 @@ for d in CommandLine.arguments.dropFirst() {
 }
 
 
+//dirs = ["plot_vertical_axis.XYplane.V_4.Q_4.step_00000050.cut_21"]
 dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29"]
-let dir = dirs[0]
+//dirs = ["plot_axis.YZplane.V_4.Q_4.step_00000050.cut_21"]
 
+//dirs = ["plot_slice.XZplane.V_4.Q_4.step_00002000.cut_133"]
 
 //=========================================================
 
-//let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/TinyTestData/")
+let dir = dirs[0]
+let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/TinyTestData/")
 
 
 
@@ -75,8 +78,8 @@ let dir = dirs[0]
 
 
 
-//let pp = QVecPostProcess(withDataDirURL: disk.dataDirURL)
-//try pp.load(fromDir: dir)
+let pp = try QVecPostProcess(withDataDir: disk.dataDirURL)
+try pp.load(fromDir: dir)
 
 
 
