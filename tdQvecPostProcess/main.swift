@@ -54,7 +54,7 @@ dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29"]
 //=========================================================
 
 let dir = dirs[0]
-let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/TinyTestData/")
+let dataDir = "Workspace/xcode/tdQVecPostProcess/TinyTestData/"
 
 
 
@@ -78,9 +78,10 @@ let disk = try InputFilesV4(withDataDir: "Workspace/xcode/tdQVecPostProcess/Tiny
 
 
 
-let pp = try QVecPostProcess(withDataDir: disk.dataDirURL)
-try pp.load(fromDir: dir)
-
+let pp = try QVecPostProcess(withDataDir: dataDir, loadDir: dir)
+try pp.loadAndCalcVelocityXZ()
+pp.calcVortXZ()
+pp.writeVortXZ()
 
 
 

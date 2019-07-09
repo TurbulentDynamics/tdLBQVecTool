@@ -67,44 +67,44 @@ class InputFilesV4 {
         return String(format: "%08d", step)
     }
 
-    private func formatDirRoot(name: String = "plot", type: dirType, QLength: Int, step: Int) -> String {
+    private func formatDirRoot(name: String = "plot", type: DirType, QLength: Int, step: Int) -> String {
         return "\(name).\(type).V_\(version).Q_\(QLength).step_\(format(step: step))"
     }
 
 
     func formatXYPlaneDir(name: String = "plot_vertical_axis", QLength: Int, step: Int, atK: Int) -> String {
 
-        let root = formatDirRoot(name: name, type: dirType.XYplane, QLength: QLength, step: step)
+        let root = formatDirRoot(name: name, type: DirType.XYplane, QLength: QLength, step: step)
         return "\(root).cut_\(atK)"
     }
 
 
     func formatXZPlaneDir(name: String = "plot_slice", QLength: Int, step: Int, atJ:Int) -> String{
 
-        let root = formatDirRoot(name: name, type: dirType.XZplane, QLength: QLength, step: step)
+        let root = formatDirRoot(name: name, type: DirType.XZplane, QLength: QLength, step: step)
         return "\(root).cut_\(atJ)"
     }
 
     func formatYZPlaneDir(name: String = "plot_axis", QLength: Int, step: Int, atI:Int) -> String {
 
-        let root = formatDirRoot(name: name, type: dirType.YZplane, QLength: QLength, step: step)
+        let root = formatDirRoot(name: name, type: DirType.YZplane, QLength: QLength, step: step)
         return "\(root).cut_\(atI)"
     }
 
     func formatVolumeDir(name: String = "volume", QLength: Int, step: Int) -> String {
 
-        return formatDirRoot(name: name, type: dirType.volume, QLength: QLength, step: step)
+        return formatDirRoot(name: name, type: DirType.volume, QLength: QLength, step: step)
     }
 
     func formatCaptureAtBladeAngleDir(name: String="plot", step: Int, angle: Int, bladeId: Int, QLength: Int) -> String {
 
-        let root = formatDirRoot(name: name, type: dirType.rotational, QLength: QLength, step: step)
+        let root = formatDirRoot(name: name, type: DirType.rotational, QLength: QLength, step: step)
         return "\(root).angle_\(angle).blade_id_\(bladeId)"
     }
 
     func formatAxisWhenBladeAngleDir(name: String="plot", step: Int, angle: Int, QLength: Int) -> String {
 
-        let root = formatDirRoot(name: name, type: dirType.YZplane, QLength: QLength, step: step)
+        let root = formatDirRoot(name: name, type: DirType.YZplane, QLength: QLength, step: step)
         return "\(root).angle_\(angle)"
     }
 
@@ -148,13 +148,13 @@ class InputFilesV4 {
         return dir.components(separatedBy: ".")[0]
     }
 
-    func getDirType(fromDir dir: String) -> dirType? {
+    func getDirType(fromDir dir: String) -> DirType? {
 
         if dir.contains("XYplane") {return .XYplane}
-        else if dir.contains("XZplane") {return dirType.XZplane}
-        else if dir.contains("YZplane") {return dirType.YZplane}
-        else if dir.contains("volume") {return dirType.volume}
-        else if dir.contains("XYplane") {return dirType.rotational}
+        else if dir.contains("XZplane") {return .XZplane}
+        else if dir.contains("YZplane") {return .YZplane}
+        else if dir.contains("volume") {return .volume}
+        else if dir.contains("XYplane") {return .rotational}
             //            else if dir.contains("sector") {return dirType.sector}
         else {
             return nil
