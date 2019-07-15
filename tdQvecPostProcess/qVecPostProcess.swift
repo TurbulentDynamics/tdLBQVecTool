@@ -43,16 +43,6 @@ struct Velocity {
     }
 }
 
-enum DirType {
-    case XYplane
-    case XZplane
-    case YZplane
-    case rotational
-    case volume
-}
-
-
-
 
 
 
@@ -123,6 +113,14 @@ class QVecPostProcess {
 
 
     }
+
+
+
+        func getSparse(binURL: URL) throws -> [tDisk] {
+            let cl = try diskSparseBuffer(binURL: binURL)
+            return try cl.getSparseFromDisk()
+
+        }
 
 
 
@@ -201,26 +199,6 @@ class QVecPostProcess {
         }
     }
 
-
-    func loadAndCalcVelocityRotation() throws {
-
-        for p in 0...5 {
-
-
-            Q4diskBuffer = try buff.loadQVecFilesRotation(fromDir: dir, planeNum: p)
-            F3diskBuffer = try buff.loadF3FilesRotation(fromDir: dir, planeNum: p)
-
-            for j in 0..<size.y {
-                for k in 0..<size.z {
-//                    u[p][j][k] = calcVelocity(Q4diskBuffer, F3diskBuffer, j, k)
-                }
-            }
-
-
-        }
-
-
-    }
 
 
 

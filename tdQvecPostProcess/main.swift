@@ -55,7 +55,6 @@ dirs = ["plot_rotational_capture.rotational_capture.V_4.Q_4.step_00000050.angle_
 
 
 
-let disk = try InputFilesV4(withDataDir: dataDir)
 
 //disk.analyse(dirs: dirs)
 //disk.analyse_blob("*.step_*.")

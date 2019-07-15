@@ -28,171 +28,306 @@ let logger = Logger(label: "com.turbulentDynamics.QVecPostProcess.loadBuffer")
 
 
 
+
+struct tDiskBytesIndexNum {
+
+    let colRowBytes = 2
+    let gridBytes = 2
+    let qBytes = 4
+
+    var colRowNum: Int = 0
+    var gridNum: Int = 0
+    var qNum: Int = 0
+
+    var colRowIndex: Int = 0
+    var gridIndex: Int = 0
+    var qIndex: Int = 0
+
+    var structTotalBytes: Int
+
+
+
+    init(structName: String) {
+
+
+        switch structName {
+        case "tDisk_colrow_Q3_V4":
+            colRowNum = 2
+            qNum = 3
+            qIndex = colRowNum * colRowBytes
+
+        case "tDisk_colrow_Q4_V4":
+            colRowNum = 2
+            qNum = 4
+            qIndex = colRowNum * colRowBytes
+
+        case "tDisk_grid_colrow_Q3_V4":
+            colRowNum = 2
+            gridNum = 3
+            qNum = 3
+            gridIndex = colRowNum * colRowBytes
+            qIndex = gridIndex + gridNum * gridBytes
+
+        case "tDisk_grid_colrow_Q4_V4":
+            colRowNum = 2
+            gridNum = 3
+            qNum = 4
+            gridIndex = colRowNum * colRowBytes
+            qIndex = gridIndex + gridNum * gridBytes
+
+        default:
+            print("Hello")
+
+        }
+
+        structTotalBytes = qIndex + qNum * qBytes
+
+    }
+
+}
+
+struct tDisk {
+    var col: Int = -1
+    var row: Int = -1
+    var i: Int = -1
+    var j: Int = -1
+    var k: Int = -1
+    var q = [Float32]()
+
+    func calcPartialVelocity() -> Velocity {
+        //Needs to include forcing data here also, however there is much less forcing
+        //data, so it might be faster to finish the calc with sparse forcing data later
+        //v.ux = (q[1] + 0.5 * forcing.x) / q[0]
+
+        var v = Velocity()
+        v.rho = q[0]
+
+        v.ux = q[1] / v.rho
+        v.uy = q[2] / v.rho
+        v.uz = q[3] / v.rho
+        return v
+    }
+
+}
+
+
+
+extension Data {
+
+    //Need an iterator
+    func  getCell(){
+
+    }
+}
+
+
 class diskSparseBuffer {
     //Useful references
     //https://www.raywenderlich.com/780-unsafe-swift-using-pointers-and-interacting-with-c
     //https://academy.realm.io/posts/nate-cook-tryswift-tokyo-unsafe-swift-and-pointer-types/
     //https://stackoverflow.com/questions/38983277/how-to-get-bytes-out-of-an-unsafemutablerawpointer
 
-    let dataDirURL: URL
+    let binURL: URL
+    let data: Data
 
-    let qVecBinRegex = "^Qvec\\.node\\..*\\.bin$"
-    let F3BinRegex = "^Qvec\\.F3\\.node\\..*\\.bin$"
+    let jsonBinURL: URL
+    let dim: QVecDim
+    let bytes: tDiskBytesIndexNum
+
+    init(binURL: URL) throws {
+
+        self.binURL = binURL
+
+        let url:URL = binURL.deletingLastPathComponent()
+        self.jsonBinURL = url.appendingPathComponent(binURL.lastPathComponent + ".json")
 
 
-    //Example Qvec.F3.km1.node.0.1.0.V4.bin
-    let qVecRotationBinRegex = [".", ".im1.", ".ip1.", ".km1.", ".kp1."].map{"^Qvec\($0)node\\..*\\.bin$"}
-    let F3RotationBinRegex = [".", ".im1.", ".ip1.", ".km1.", ".kp1."].map{"^Qvec\\.F3\($0)node\\..*\\.bin$"}
+        self.dim = try QVecDim(jsonBinURL)
+        self.bytes = tDiskBytesIndexNum(structName: dim.structName)
 
-
-
-
-
-    init(withDataDir: String) throws {
-        let home = FileManager.default.homeDirectoryForCurrentUser
-
-        //TODO Check if exists
-        self.dataDirURL = home.appendingPathComponent(withDataDir)
-
-    }
-
-    init(withDataDir: URL) throws {
-        self.dataDirURL = withDataDir
+        self.data = try Data(contentsOf: binURL)
     }
 
 
+    //    fileprivate func getItem(_ ptr: UnsafeRawBufferPointer, _ i: Int,
+    //                             _ bytes: tDiskBytesIndexNum, _ hasColRowCoords: Bool, _ hasGridCoords: Bool) -> tDisk {
+    //
+    //        var item = tDisk()
+    //
+    //        if hasColRowCoords {
+    //            item.col = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex, as: UInt16.self))
+    //            item.row = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex + bytes.colRowBytes, as: UInt16.self))
+    //        }
+    //
+    //        if hasGridCoords {
+    //            item.i = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+    //            item.j = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+    //            item.k = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+    //
+    //        }
+    //
+    //        for q in 0..<bytes.qNum {
+    //            item.q.append(ptr.load(fromByteOffset: i + bytes.qIndex + (q * bytes.qBytes), as: Float32.self))
+    //        }
+    //        return item
+    //    }
+    //
+    //
+    //    func getSparseFromDiskDEBUG() throws -> [tDisk] {
+    //
+    //        var items = [tDisk]()
+    //
+    //        data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
+    //            for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {
+    //
+    //                let item = getItem(ptr, i, bytes, dim.hasColRowCoords, dim.hasGridCoords)
+    //                items.append(item)
+    //
+    //            }
+    //        }
+    //        return items
+    //    }
 
 
 
-    func load(fromDir dir: String, file: String) throws -> [[[Float32]]] {
-        let dirURL = dataDirURL.appendingPathComponent(dir)
-        return try loadAndAllocate(dirURL: dirURL, fileNames: [file])
-    }
+    func getSparseFromDisk() throws -> [tDisk] {
 
+        var items = [tDisk]()
 
-    func loadFiles(fromDir dir: String, regex: String) throws -> [[[Float32]]] {
-        let dirURL = dataDirURL.appendingPathComponent(dir)
-        return try loadFiles(fromDir: dirURL, regex: regex)
-    }
+        data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
+            for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {
 
+                var item = tDisk()
 
-
-    func loadFiles(fromDir dirURL: URL, regex: String) throws -> [[[Float32]]] {
-        //https://stackoverflow.com/questions/27721418/getting-list-of-files-in-documents-folder/27722526
-
-        let directoryContents = try FileManager.default.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil)
-
-        let fileNames = directoryContents.map{ $0.lastPathComponent }
-
-        let filteredBinFileNames = fileNames.filter{ $0.range(of: regex, options:.regularExpression) != nil}
-
-        //        print(dirURL, directoryContents, fileNames, regex, filteredBinFileNames)
-
-        return try loadAndAllocate(dirURL: dirURL, fileNames: filteredBinFileNames)
-
-    }
-
-
-
-
-    func loadQVecFiles(fromDir dirURL: URL) throws -> [[[Float32]]] {
-        return try loadFiles(fromDir: dirURL, regex: qVecBinRegex)
-    }
-
-    func loadQVecFiles(fromDir dir: String) throws -> [[[Float32]]] {
-        return try loadFiles(fromDir: dir, regex: qVecBinRegex)
-    }
-
-    func loadF3Files(fromDir dirURL: URL) throws -> [[[Float32]]] {
-        return try loadFiles(fromDir: dirURL, regex: F3BinRegex)
-    }
-
-    func loadF3Files(fromDir dir: String) throws -> [[[Float32]]] {
-        return try loadFiles(fromDir: dir, regex: F3BinRegex)
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    fileprivate func loadAndAllocate(dirURL: URL, fileNames: [String]) throws -> [[[Float32]]] {
-
-
-        let dirDim = try ppDim(dir: dirURL)
-
-        let nColg = dirDim.totalHeight
-        let nRowg = dirDim.totalWidth
-
-        var plane = Array(repeating: Array(repeating: Array(repeating: Float32(0.0), count: dirDim.qOutputLength), count: nRowg), count: nColg)
-
-
-        //TODO Dispatch to GCD??
-        for binFile in fileNames {
-
-            let jsonBinURL = dirURL.appendingPathComponent(binFile + ".json")
-
-            //            logger.info("Loading json File loadAndAllocate \(jsonBinURL)")
-            let dim = try QVecDim(jsonBinURL)
-
-            //            print(dim)
-
-            //ERROR in the OUTPUT
-            var qOutputLength = dim.qOutputLength
-
-
-            switch dim.structName {
-
-            case "tDisk_colrow_Q3_V4":
-                qOutputLength = 3
-            case "tDisk_colrow_Q4_V4":
-                qOutputLength = 4
-//            case "tDisk_grid_colrow_Q3_V4":
-//                qOutputLength = 3
-//            case "tDisk_grid_colrow_Q4_V4":
-//                qOutputLength = 4
-            default:
-                print("ERROR")
-            }
-
-
-
-            let binURL = dirURL.appendingPathComponent(binFile)
-
-            //            logger.info("Loading bin file with func loadAndAllocate \(binURL)")
-            let data = try Data(contentsOf: binURL)
-
-            //Pick up length from types (2 for Int, 4 for Float)
-            let lenBytesRowCol = 2
-            let lenBytesQ = 4
-            let lenBytesStruct = lenBytesRowCol + lenBytesRowCol + qOutputLength * lenBytesQ
-
-
-            data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
-
-                for i in stride(from: 0, to: dim.binFileSizeInStructs * lenBytesStruct, by: lenBytesStruct)  {
-
-                    let col = Int(ptr.load(fromByteOffset: i, as: UInt16.self))
-                    let row = Int(ptr.load(fromByteOffset: i + lenBytesRowCol, as: UInt16.self))
-
-                    for q in 0..<qOutputLength {
-                        plane[row][col][q] = ptr.load(fromByteOffset: i + lenBytesRowCol * 2 + (q * lenBytesQ), as: Float32.self)
-                    }
-
-                    //                    print(col, row, plane[row][col][0], plane[row][col][1], plane[row][col][2], plane[row][col][3])
-
+                if dim.hasColRowCoords {
+                    item.col = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex, as: UInt16.self))
+                    item.row = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex + bytes.colRowBytes, as: UInt16.self))
                 }
-            }//end of for bytes
-        }
 
-        return plane
+                if dim.hasGridCoords {
+                    item.i = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    item.j = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    item.k = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                }
+
+                for q in 0..<bytes.qNum {
+                    item.q.append(ptr.load(fromByteOffset: i + bytes.qIndex + (q * bytes.qBytes), as: Float32.self))
+                }
+                items.append(item)
+            }
+        }
+        return items
     }
+
+
+
+
+
+    func getPlaneFromDisk(plane: inout [[[Float32]]]) {
+
+        data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
+            for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {
+
+                var col = 0
+                var row = 0
+
+                if dim.hasColRowCoords {
+                    col = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex, as: UInt16.self))
+                    row = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex + bytes.colRowBytes, as: UInt16.self))
+                }
+
+                if dim.hasGridCoords {
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                }
+
+                for q in 0..<bytes.qNum {
+
+                    let s = ptr.load(fromByteOffset: i + bytes.qIndex + (q * bytes.qBytes), as: Float32.self)
+
+                    plane[col][row][q] = s
+                }
+            }
+        }
+    }
+
+
+
+    func getVelocityFromDisk(binFile: String, velocity: inout [[Velocity]]) {
+
+        data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
+            for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {
+
+                var col = 0
+                var row = 0
+
+                if dim.hasColRowCoords {
+                    col = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex, as: UInt16.self))
+                    row = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex + bytes.colRowBytes, as: UInt16.self))
+                }
+
+                if dim.hasGridCoords {
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                }
+
+                velocity[col][row].rho = ptr.load(fromByteOffset: i + bytes.qIndex + (0 * bytes.qBytes), as: Float32.self)
+                velocity[col][row].ux = ptr.load(fromByteOffset: i + bytes.qIndex + (1 * bytes.qBytes), as: Float32.self)
+                velocity[col][row].uy = ptr.load(fromByteOffset: i + bytes.qIndex + (2 * bytes.qBytes), as: Float32.self)
+                velocity[col][row].uz = ptr.load(fromByteOffset: i + bytes.qIndex + (3 * bytes.qBytes), as: Float32.self)
+
+
+                for q in 4..<bytes.qNum {
+                    let _ = ptr.load(fromByteOffset: i + bytes.qIndex + (q * bytes.qBytes), as: Float32.self)
+                }
+
+
+            }
+        }
+    }
+
+
+    func addForcingToPartialVelocity(binFile: String, velocity: inout [[Velocity]]) {
+
+        data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
+            for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {
+
+                var col = 0
+                var row = 0
+
+                if dim.hasColRowCoords {
+                    col = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex, as: UInt16.self))
+                    row = Int(ptr.load(fromByteOffset: i + bytes.colRowIndex + bytes.colRowBytes, as: UInt16.self))
+                }
+
+                if dim.hasGridCoords {
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                    _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
+                }
+
+
+                let fx = ptr.load(fromByteOffset: i + bytes.qIndex + (0 * bytes.qBytes), as: Float32.self)
+                let fy = ptr.load(fromByteOffset: i + bytes.qIndex + (1 * bytes.qBytes), as: Float32.self)
+                let fz = ptr.load(fromByteOffset: i + bytes.qIndex + (2 * bytes.qBytes), as: Float32.self)
+
+                for q in 3..<bytes.qNum {
+                    let _ = ptr.load(fromByteOffset: i + bytes.qIndex + (q * bytes.qBytes), as: Float32.self)
+                }
+
+
+                //v.ux = (q[1] + 0.5 * forcing.x) / q[0]
+                velocity[col][row].ux += fx / velocity[col][row].rho
+                velocity[col][row].uy += fy / velocity[col][row].rho
+                velocity[col][row].uz += fz / velocity[col][row].rho
+
+            }
+        }
+    }
+
+
 
 
 
