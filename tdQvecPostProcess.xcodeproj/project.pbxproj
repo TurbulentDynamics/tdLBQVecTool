@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2236022B22C2B8F6006C179D /* qVecPostProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022A22C2B8F6006C179D /* qVecPostProcess.swift */; };
-		2236022F22C3BFCE006C179D /* diskBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022E22C3BFCE006C179D /* diskBuffer.swift */; };
+		2236022F22C3BFCE006C179D /* diskSparseBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236022E22C3BFCE006C179D /* diskSparseBuffer.swift */; };
 		2236024922C4FB72006C179D /* testLoadBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2236024722C4F4F6006C179D /* testLoadBuffer.c */; };
 		2236024B22C4FB8C006C179D /* cTestData.text in Resources */ = {isa = PBXBuildFile; fileRef = 2236024A22C4FB8C006C179D /* cTestData.text */; };
 		2236025122C62F57006C179D /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 2236025022C62F57006C179D /* Logging */; };
@@ -72,7 +72,6 @@
 		229EBF5822B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2522B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */; };
 		229EBF5922B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2622B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */; };
 		229EBF5A22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2722B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */; };
-		22AC015C22D3E1B900C3D99B /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AC015B22D3E1B900C3D99B /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,7 +88,7 @@
 
 /* Begin PBXFileReference section */
 		2236022A22C2B8F6006C179D /* qVecPostProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qVecPostProcess.swift; sourceTree = "<group>"; };
-		2236022E22C3BFCE006C179D /* diskBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = diskBuffer.swift; sourceTree = "<group>"; };
+		2236022E22C3BFCE006C179D /* diskSparseBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = diskSparseBuffer.swift; sourceTree = "<group>"; };
 		2236024722C4F4F6006C179D /* testLoadBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = testLoadBuffer.c; sourceTree = "<group>"; };
 		2236024A22C4FB8C006C179D /* cTestData.text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = cTestData.text; path = tdQvecPostProcessTests/cTestData.text; sourceTree = SOURCE_ROOT; };
 		226E7B4722BA5AF400F26D9D /* contour_Q4.ipynb */ = {isa = PBXFileReference; lastKnownFileType = text; path = contour_Q4.ipynb; sourceTree = "<group>"; };
@@ -158,7 +157,6 @@
 		229EBF2522B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.1.V4.bin; sourceTree = "<group>"; };
 		229EBF2622B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
 		229EBF2722B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
-		22AC015B22D3E1B900C3D99B /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,8 +217,7 @@
 				229EBECC22B927220008AD43 /* QvecDims.swift */,
 				229EBECE22B927220008AD43 /* InputFilesV4.swift */,
 				2236022A22C2B8F6006C179D /* qVecPostProcess.swift */,
-				22AC015B22D3E1B900C3D99B /* File.swift */,
-				2236022E22C3BFCE006C179D /* diskBuffer.swift */,
+				2236022E22C3BFCE006C179D /* diskSparseBuffer.swift */,
 				229EBEC522B926BC0008AD43 /* main.swift */,
 			);
 			path = tdQvecPostProcess;
@@ -476,8 +473,7 @@
 				2236022B22C2B8F6006C179D /* qVecPostProcess.swift in Sources */,
 				229EBED622B927220008AD43 /* typeAlias.swift in Sources */,
 				229EBED522B927220008AD43 /* InputFilesV4.swift in Sources */,
-				22AC015C22D3E1B900C3D99B /* File.swift in Sources */,
-				2236022F22C3BFCE006C179D /* diskBuffer.swift in Sources */,
+				2236022F22C3BFCE006C179D /* diskSparseBuffer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

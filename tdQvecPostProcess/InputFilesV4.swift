@@ -150,12 +150,12 @@ class InputFilesV4 {
 
     func getDirType(fromDir dir: String) -> DirType? {
 
-        if dir.contains("XYplane") {return .XYplane}
-        else if dir.contains("XZplane") {return .XZplane}
-        else if dir.contains("YZplane") {return .YZplane}
-        else if dir.contains("volume") {return .volume}
-        else if dir.contains("XYplane") {return .rotational}
-            //            else if dir.contains("sector") {return dirType.sector}
+        if dir.contains(".XYplane.") {return .XYplane}
+        else if dir.contains(".XZplane.") {return .XZplane}
+        else if dir.contains(".YZplane.") {return .YZplane}
+        else if dir.contains(".volume.") {return .volume}
+        else if dir.contains(".rotational_capture.") {return .rotational}
+            //            else if dir.contains(".sector.") {return dirType.sector}
         else {
             return nil
         }
@@ -163,7 +163,7 @@ class InputFilesV4 {
 
     func getVersion(fromDir dir: String) -> Int? {
 
-        if let result = dir.range(of: #"V_([0-9]*)\."#, options: .regularExpression){
+        if let result = dir.range(of: #"V_([0-9]*)"#, options: .regularExpression){
             let i = dir[result].index(dir[result].startIndex, offsetBy: 2)
             return Int(dir[result][i...])
         } else {
@@ -172,7 +172,7 @@ class InputFilesV4 {
     }
 
     func getQLength(fromDir: String) -> Int? {
-        if let result = fromDir.range(of: #"Q_([0-9]*)\."#, options: .regularExpression){
+        if let result = fromDir.range(of: #"Q_([0-9]*)"#, options: .regularExpression){
             let i = fromDir[result].index(fromDir[result].startIndex, offsetBy: 2)
             return Int(fromDir[result][i...])
         } else {
@@ -181,13 +181,18 @@ class InputFilesV4 {
     }
 
     func getStep(fromDir: String) -> Int? {
-        if let result = fromDir.range(of: #"step_([0-9]*)\."#, options: .regularExpression){
+        if let result = fromDir.range(of: #"step_([0-9]*)"#, options: .regularExpression){
             let i = fromDir[result].index(fromDir[result].startIndex, offsetBy: 5)
             return Int(fromDir[result][i...])
         } else {
             return nil
         }
     }
+
+    func getStep(fromDir: URL) -> Int? {
+        return getStep(fromDir: fromDir.lastPathComponent)
+    }
+
 
     func getCut(fromDir: String) -> Int? {
         if let result = fromDir.range(of: #"cut_([0-9]*)"#, options: .regularExpression){
@@ -215,6 +220,65 @@ class InputFilesV4 {
     func formatNode000QVecBin(name: String) -> String {
         return formatQVecBin(name: name, idi: 0, idj: 0, idk: 0)
     }
+
+
+    //---------------------------------------
+
+
+    func printSizes(){
+
+        //        print("\(Float32.Stride)")
+
+    }
+
+
+
+    func analyse(dirs: [String]){
+//        //        print(dirs)
+//
+//        var result = [Int: [DirType: Int]]()
+//
+//        for dir in dirs {
+//
+////            let url = dataDirURL.appendingPathComponent(dir)
+//
+//            if let step = disk.getStep(fromDir: dir) {
+//                if let s = result[step] {
+//                    result[s] = [DirType: Int()]
+//
+//                print(step)
+//            }
+//
+//
+////                for (airportCode, airportName) in airports {
+////                    print("\(airportCode): \(airportName)")
+////                }
+//
+//
+////            if let t = disk.getDirType(fromDir: dir) {
+////                print(t, url)
+////                if let i = types[t] {
+////                    types[t] = i + 1
+////                } else {
+////                    types[t] = 1
+////                }
+////            }
+////        }
+//
+//
+//
+////        print(types)
+////        for t in types {
+////            print("Table: \(t): \(types[t])")
+////        }
+//
+//
+
+    }
+
+
+
+
 
 
 

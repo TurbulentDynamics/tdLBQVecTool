@@ -1,0 +1,19 @@
+{
+	"Q_data_type" : "float",
+	"Q_output_length" : 4,
+	"bin_file_size_in_structs" : 418,
+	"coords_type" : "int16",
+	"grid_x" : 44,
+	"grid_y" : 44,
+	"grid_z" : 44,
+	"has_col_row_coords" : false,
+	"has_grid_coords" : true,
+	"idi" : 0,
+	"idj" : 0,
+	"idk" : 0,
+	"name" : "Qvec_Dims",
+	"ngx" : 2,
+	"ngy" : 2,
+	"ngz" : 2,
+	"struct_name" : "tDisk_grid_colrow_Q4_V4"
+}

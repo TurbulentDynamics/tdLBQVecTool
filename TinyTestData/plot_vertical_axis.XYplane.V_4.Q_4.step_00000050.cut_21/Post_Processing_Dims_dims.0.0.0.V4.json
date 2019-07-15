@@ -1,0 +1,23 @@
+{
+	"Q_output_length" : 4,
+	"cut_at" : 21,
+	"dirname" : "plot_output_np8_gridx44//plot_vertical_axis.XYplane.V_4.Q_4.step_00000050.cut_21",
+	"file_height" : 22,
+	"file_width" : 22,
+	"function" : "plot_XY_Qvec_buffer",
+	"grid_x" : 44,
+	"grid_y" : 44,
+	"grid_z" : 44,
+	"initial_rho" : 8.0,
+	"name" : "Post_Processing_Dims",
+	"ngx" : 2,
+	"ngy" : 2,
+	"ngz" : 2,
+	"note" : "",
+	"re_m_nondimensional" : 7300.0,
+	"step" : 50,
+	"teta" : 0.71428614854812622,
+	"total_height" : 44,
+	"total_width" : 44,
+	"uav" : 0.10000000149011612
+}
