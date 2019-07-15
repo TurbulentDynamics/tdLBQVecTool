@@ -83,10 +83,6 @@ class QVecPostProcess {
     var vortYZ: [[Float32]]
 
 
-//    var uRotation: [[[Velocity]]]
-    var vortRotation: [[Float32]]
-
-
     init(withDataDir: String, loadDir: String) throws {
         let home = FileManager.default.homeDirectoryForCurrentUser
         self.dataDirURL = home.appendingPathComponent(withDataDir)
@@ -124,8 +120,6 @@ class QVecPostProcess {
         vortXY = Array(repeating: Array(repeating: Float(0.0), count: size.y), count: size.x)
         vortXZ = Array(repeating: Array(repeating: Float(0.0), count: size.z), count: size.x)
         vortYZ = Array(repeating: Array(repeating: Float(0.0), count: size.z), count: size.y)
-
-        vortRotation = Array(repeating: Array(repeating: Float(0.0), count: size.z), count: size.y)
 
 
     }

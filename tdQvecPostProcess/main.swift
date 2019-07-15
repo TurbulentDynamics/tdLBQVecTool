@@ -60,10 +60,6 @@ let disk = try InputFilesV4(withDataDir: dataDir)
 //disk.analyse(dirs: dirs)
 //disk.analyse_blob("*.step_*.")
 
-let dir = dirs[0]
-let pp = try QVecPostProcess(withDataDir: dataDir, loadDir: dir)
-try pp.loadAndCalcVelocityRotation()
-
 
 //try pp.loadAndCalcVelocityXZ()
 //try pp.loadAndCalcVelocityXZ()
