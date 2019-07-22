@@ -1,6 +1,6 @@
 
 //  QVecDims.swift
-//  TDQVecLib
+//  tdQVecPostProcess
 //
 //  Created by Niall Ó Broin on 08/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
@@ -252,9 +252,10 @@ class diskSparseBuffer {
         }
     }
 
-
-
-    func getVelocityFromDisk(binFile: String, velocity: inout [[Velocity]]) {
+    
+//    func readPartialFileIntoLargerVelocity3DMatrix(velocity: inout [[[Velocity]]]) {
+//    func readPartialFileIntoLargerVelocity2DMatrix(velocity: inout [[Velocity]]) {
+    func getVelocityFromDisk(velocity: inout OrthoVelocity2DPlane) {
 
         data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
             for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {
@@ -273,12 +274,13 @@ class diskSparseBuffer {
                     _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
                 }
 
-                velocity[col][row].rho = ptr.load(fromByteOffset: i + bytes.qIndex + (0 * bytes.qBytes), as: Float32.self)
-                velocity[col][row].ux = ptr.load(fromByteOffset: i + bytes.qIndex + (1 * bytes.qBytes), as: Float32.self)
-                velocity[col][row].uy = ptr.load(fromByteOffset: i + bytes.qIndex + (2 * bytes.qBytes), as: Float32.self)
-                velocity[col][row].uz = ptr.load(fromByteOffset: i + bytes.qIndex + (3 * bytes.qBytes), as: Float32.self)
+                velocity[col, row].rho = ptr.load(fromByteOffset: i + bytes.qIndex + (0 * bytes.qBytes), as: Float32.self)
+                velocity[col, row].ux = ptr.load(fromByteOffset: i + bytes.qIndex + (1 * bytes.qBytes), as: Float32.self)
+                velocity[col, row].uy = ptr.load(fromByteOffset: i + bytes.qIndex + (2 * bytes.qBytes), as: Float32.self)
+                velocity[col, row].uz = ptr.load(fromByteOffset: i + bytes.qIndex + (3 * bytes.qBytes), as: Float32.self)
 
 
+                //Skip the rest of the q matrix
                 for q in 4..<bytes.qNum {
                     let _ = ptr.load(fromByteOffset: i + bytes.qIndex + (q * bytes.qBytes), as: Float32.self)
                 }
@@ -289,7 +291,7 @@ class diskSparseBuffer {
     }
 
 
-    func addForcingToPartialVelocity(binFile: String, velocity: inout [[Velocity]]) {
+    func addForcingToPartialVelocity(velocity: inout [[Velocity]]) {
 
         data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
             for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {

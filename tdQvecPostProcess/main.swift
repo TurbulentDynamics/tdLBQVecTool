@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  TDQVecLib
+//  tdQVecPostProcess
 //
 //  Created by Niall Ó Broin on 30/04/2019.
 //
@@ -50,22 +50,25 @@ dirs = ["plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28", "plot_slice.XZplane.V
 //dirs = ["plot_axis.YZplane.V_4.Q_4.step_00000050.cut_21"]
 //dirs = ["plot_slice.XZplane.V_4.Q_4.step_00002000.cut_133"]
 
-dirs = ["plot_rotational_capture.rotational_capture.V_4.Q_4.step_00000050.angle_15.blade_id_0"]
+//dirs = ["plot_rotational_capture.rotational_capture.V_4.Q_4.step_00000050.angle_15.blade_id_0"]
 //=========================================================
 
 
 
+let home = FileManager.default.homeDirectoryForCurrentUser
+let dataDirURL = home.appendingPathComponent(dataDir)
+
+dataDirURL.processAll(velocity: true, vorticity: true)
+
+
+
+
+
+//let plane2DXY = loadThisDir.loadConsecutivePlanes()
 
 //disk.analyse(dirs: dirs)
 //disk.analyse_blob("*.step_*.")
 
-
-//try pp.loadAndCalcVelocityXZ()
-//try pp.loadAndCalcVelocityXZ()
-//try pp.loadAndCalcVelocityXZ()
-
-//pp.calcVortXZ()
-//pp.writeVortXZ()
 
 
 

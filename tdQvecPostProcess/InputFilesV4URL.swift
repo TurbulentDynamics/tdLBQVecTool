@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  TDQVecLib
+//  tdQVecPostProcess
 //
 //  Created by Niall Ó Broin on 24/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
@@ -45,7 +45,7 @@ extension URL {
 
 
 
-
+    // MARK: Make new directories
 
 
 
@@ -54,7 +54,7 @@ extension URL {
         let root = formatDirRoot(name: name, type: DirType.XYplane, QLength: QLength, step: step)
         return "\(root).cut_\(atK)"
 
-//        FileManager.createDirectory(dir)
+        //        FileManager.createDirectory(dir)
     }
 
 
@@ -125,7 +125,7 @@ extension URL {
 
 
 
-    //----------------------------------------------Query6 directories
+    // MARK: Query Directories
 
 
     func name() -> String? {
@@ -144,6 +144,10 @@ extension URL {
         else {
             return nil
         }
+    }
+
+    func dirType(is type: DirType) -> Bool {
+        return type == dirType()
     }
 
     func version() -> Int? {
@@ -189,7 +193,7 @@ extension URL {
 
 
 
-    //------------------------Working with bin and bin.json files
+    // MARK: Working with bin and bin.json files
 
 
 
@@ -206,28 +210,9 @@ extension URL {
     }
 
 
-    private func qVecBinRegex() -> String {
-        return "^Qvec\\.node\\..*\\.bin$"
-    }
-
-    private func F3BinRegex() -> String {
-        return "^Qvec\\.F3\\.node\\..*\\.bin$"
-    }
-
-    private func qVecRotationBinRegex(planeNum: Int) -> String {
-        let regex = [".", ".im1.", ".ip1.", ".km1.", ".kp1."].map{"^Qvec\($0)node\\..*\\.bin$"}
-        return regex[planeNum]
-    }
-
-    private func F3RotationBinRegex(planeNum: Int) -> String {
-        let regex = [".", ".im1.", ".ip1.", ".km1.", ".kp1."].map{"^Qvec\\.F3\($0)node\\..*\\.bin$"}
-        return regex[planeNum]
-    }
 
 
-
-
-    func getFiles(withRegex regex: String) throws -> [URL] {
+    private func getFiles(withRegex regex: String) throws -> [URL] {
         //https://stackoverflow.com/questions/27721418/getting-list-of-files-in-documents-folder/27722526
 
         let fm = FileManager.default
@@ -244,6 +229,147 @@ extension URL {
         return filteredBinFileURLs
 
     }
+
+
+    private func qVecBinRegex() -> String {
+        return "^Qvec\\.node\\..*\\.bin$"
+    }
+
+    private func F3BinRegex() -> String {
+        return "^Qvec\\.F3\\.node\\..*\\.bin$"
+    }
+
+    private func faceDeltas() -> [String] {
+        return ["im1", "ip1", "jm1", "jp1", "km1", "kp1"]
+    }
+
+    private func qVecRotationBinRegex(delta: String) -> String {
+        assert(faceDeltas().contains(delta))
+        return "^Qvec\\.\(delta)\\.node\\..*\\.bin$"
+    }
+
+    private func F3RotationBinRegex(delta: String) -> String {
+        assert(faceDeltas().contains(delta))
+        return "^Qvec\\.F3\\.\(delta)\\.node\\..*\\.bin$"
+    }
+
+
+
+    func getQvecFiles() throws -> [URL] {
+        return try getFiles(withRegex: qVecBinRegex())
+    }
+
+    func getF3Files() throws -> [URL] {
+        return try getFiles(withRegex: F3BinRegex())
+    }
+
+
+
+
+    func getQvecRotationFiles(faceDelta: String) throws -> [URL] {
+        return try getFiles(withRegex: qVecRotationBinRegex(delta: faceDelta))
+    }
+
+    func getF3RotationFiles(faceDelta: String) throws -> [URL] {
+        return try getFiles(withRegex: F3RotationBinRegex(delta: faceDelta))
+    }
+
+
+
+    // MARK: Working with top level data dir
+
+
+    private func getDirs(withRegex regex: String) -> [URL] {
+        //https://stackoverflow.com/questions/27721418/getting-list-of-files-in-documents-folder/27722526
+
+        let fm = FileManager.default
+        do {
+            let directoryContents = try fm.contentsOfDirectory(at: self, includingPropertiesForKeys: nil)
+
+            let dirNames = directoryContents.map{ $0.lastPathComponent }
+
+            let filteredDirNames = dirNames.filter{ $0.range(of: regex, options:.regularExpression) != nil}
+
+            let filteredDirsURLs = filteredDirNames.map{self.appendingPathComponent($0)}
+
+            //        print(dirURL, directoryContents, fileNames, regex, filteredBinFileNames)
+
+            return filteredDirsURLs
+
+        } catch {
+            return []
+        }
+    }
+
+
+    func processStep(at: Int, velocity: Bool = true, vorticity: Bool = true) {
+        process(dirs: getDirs(withRegex: ".*step_\(format(step: at)).*"), velocity: velocity, vorticity: vorticity)
+    }
+    func processAllXYPlanes(velocity: Bool = true, vorticity: Bool = true) {
+        process(dirs: getDirs(withRegex: ".*XYplane.*"), velocity: velocity, vorticity: vorticity)
+    }
+    func processAllXZPlanes(velocity: Bool = true, vorticity: Bool = true) {
+        process(dirs: getDirs(withRegex: ".*XZplane.*"), velocity: velocity, vorticity: vorticity)
+    }
+    func processAllYZPlanes(velocity: Bool = true, vorticity: Bool = true) {
+        process(dirs: getDirs(withRegex: ".*YZplane.*"), velocity: velocity, vorticity: vorticity)
+    }
+    func processAllVolume(velocity: Bool = true, vorticity: Bool = true) {
+        process(dirs: getDirs(withRegex: ".*volume.*"), velocity: velocity, vorticity: vorticity)
+    }
+    func processAllRotational(velocity: Bool = true, vorticity: Bool = true) {
+        process(dirs: getDirs(withRegex: ".*rotational_capture.*"), velocity: velocity, vorticity: vorticity)
+    }
+    func processAll(velocity: Bool = true, vorticity: Bool = true) {
+        process(dirs: getDirs(withRegex: ".*"), velocity: velocity, vorticity: vorticity)
+    }
+
+
+
+    // MARK: Loading Files
+
+    func getPPDim() -> ppDim? {
+        do {
+            return try ppDim(dir: self)
+        } catch {
+            return nil
+        }
+
+    }
+
+
+    func process(dirs: String, velocity: Bool = true, vorticity: Bool = true) {
+        var dirList = [String]()
+        dirList.append(dirs)
+        process(dirs: dirList, velocity: velocity, vorticity: vorticity)
+    }
+
+    func process(dirs: URL, velocity: Bool = true, vorticity: Bool = true) {
+        var dirList = [URL]()
+        dirList.append(dirs)
+        process(dirs: dirList, velocity: velocity, vorticity: vorticity)
+    }
+
+
+    func process(dirs: [String], velocity: Bool = true, vorticity: Bool = true) {
+        var dirList = [URL]()
+        for d in dirs {
+            dirList.append(self.appendingPathComponent(d))
+        }
+        process(dirs: dirList, velocity: velocity, vorticity: vorticity)
+    }
+
+
+
+
+
+    func process(dirs: [URL], velocity: Bool = true, vorticity: Bool = true){
+
+        let q = qVecPostProcess(dirs: dirs, velocity: velocity, vorticity: vorticity)
+        q.process()
+    }
+
+
 
 
 
