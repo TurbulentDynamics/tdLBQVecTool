@@ -28,51 +28,61 @@ class qVecPostProcess {
         //then break into types,
         //then into position groups.
 
-        var xy = [URL]()
+        var xz = [URL]()
         for d in dirs {
-            if d.dirType(is: .XYplane){
+            if d.dirType(is: .XZplane){
 
                 //TODO: Load consecutive dirs.  Pass consecutive dirs into MultiOrthoVelocity2DPlanesXZ
-                xy.append(d)
+                xz.append(d)
             }
         }
 
-        return xy
+        return xz
     }
 
 
     func process(){
 
-        let xy = analyse()
+        let xz = analyse()
 
-        let dim = xy[0].getPPDim()!
-        var p = MultiOrthoVelocity2DPlanesXY(x:dim.gridX, y:dim.gridY, depth: xy.count)
-        load(p: &p, dirs:xy)
-        print(p.p.keys)
-        calcVorticityAndWrite(p: &p, writeTo: xy[1])
+        let dim = xz[0].getPPDim()!
+        var p = MultiOrthoVelocity2DPlanesXZ(x: dim.gridX, depth: xz.count, z: dim.gridZ)
 
-        writeVelocity(p: &p, at: 20, writeTo: xy[0])
-        writeVelocity(p: &p, at: 21, writeTo: xy[1])
-        writeVelocity(p: &p, at: 22, writeTo: xy[2])
+        load(p: &p, dirs:xz)
+
+
+
+        calcVorticityAndWrite(p: p, writeTo: xz[1])
+
+        //        writeVelocity(p: p, at:  2, writeTo: xz[0])
+        //        writeVelocity(p: p, at: 21, writeTo: xz[1])
+        //        writeVelocity(p: p, at: 22, writeTo: xz[2])
+
+
+        writeVelocity(p: p, at: 28, writeTo: xz[0])
+        writeVelocity(p: p, at: 29, writeTo: xz[1])
+        writeVelocity(p: p, at: 30, writeTo: xz[2])
 
     }
 
 
 
-    func load(p:inout MultiOrthoVelocity2DPlanesXY, dirs: [URL]) {
+    func load(p: inout MultiOrthoVelocity2DPlanesXZ, dirs: [URL]) {
+        
         p.dirs = dirs
+
         for dir in dirs {
             let cutAt = dir.cut()!
+            p.addPlane(atJ: cutAt)
+
             do {
-                for qVec in try dir.getQvecFiles(){
+                for qVec in try dir.getQvecFiles() {
 
-                    print(qVec)
                     let disk = try diskSparseBuffer(binURL: qVec)
-
-                    p.addPlane(atK: cutAt)
 
                     disk.getVelocityFromDisk(velocity: &p.p[cutAt]!)
                 }
+
             } catch {
                 print("binFile error: \(dir)")
             }
@@ -89,12 +99,14 @@ class qVecPostProcess {
 
 
 
-    func calcVorticityAndWrite(p: inout MultiOrthoVelocity2DPlanesXY, writeTo: URL, withSuffix fileName: String = ".vort.bin", withBorder border: Int = 2){
+    func calcVorticityAndWrite(p: MultiOrthoVelocity2DPlanesXZ, writeTo: URL, withSuffix fileName: String = ".vort.bin", withBorder border: Int = 2){
 
 
         var vort = Array(repeating: Array(repeating: Float32(0.0), count: p.cols), count: p.rows)
 
         print(p.iStart, p.iEnd, p.jStart, p.jEnd, p.kStart, p.kEnd, p.kStart + 1, p.kEnd - 1)
+
+
         for i in p.iStart + 1..<p.iEnd - 1 {
             for j in p.jStart + 1..<p.jEnd - 1 {
                 for k in p.kStart + 1..<p.kEnd - 1 {
@@ -115,7 +127,7 @@ class qVecPostProcess {
                     let uzx_uxz = uzx - uxz
                     let uxy_uyx = uxy - uyx
 
-                    vort[i][j] = log(uyz_uzy * uyz_uzy + uzx_uxz * uzx_uxz + uxy_uyx * uxy_uyx)
+                    vort[i][k] = log(uyz_uzy * uyz_uzy + uzx_uxz * uzx_uxz + uxy_uyx * uxy_uyx)
 
                 }}}
 
@@ -124,15 +136,17 @@ class qVecPostProcess {
 
         for col in border..<p.cols - border {
             for row in border..<p.rows - border {
+
                 writeBuffer[ (col - border) * (p.cols - border * 2) + (row - border) ] = vort[col][row]
             }
         }
 
 
+
+
         //TODO Eventually need to pass, height and width to file, or json or something.  Maybe use PPjson?
 
         let url = formatWriteFile(writeTo, withSuffix: fileName)
-        print(url)
         let wData = Data(bytes: &writeBuffer, count: writeBuffer.count * MemoryLayout<Float32>.stride)
         try! wData.write(to: url)
 
@@ -143,7 +157,7 @@ class qVecPostProcess {
 
 
 
-    func writeVelocity(p: inout MultiOrthoVelocity2DPlanesXY, at: Int, writeTo: URL, withSuffix fileName: String = ".velocity", withBorder border: Int = 1){
+    func writeVelocity(p: MultiOrthoVelocity2DPlanesXZ, at: Int, writeTo: URL, withSuffix fileName: String = ".velocity", withBorder border: Int = 1){
 
         var writeBufferRHO = Array(repeating: Float32(), count: ((p.cols - border * 2) * (p.rows - border * 2)))
         var writeBufferUX = Array(repeating: Float32(), count: ((p.cols - border * 2) * (p.rows - border * 2)))
@@ -152,10 +166,17 @@ class qVecPostProcess {
 
         for col in border..<p.cols - border {
             for row in border..<p.rows - border {
-                writeBufferRHO[(col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].rho
-                writeBufferUX[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].ux
-                writeBufferUY[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].uy
-                writeBufferUZ[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].uz
+
+                writeBufferRHO[(col - border) * (p.cols - border * 2) + (row - border) ] = p[col, at, row].rho
+                writeBufferUX[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, at, row].ux
+                writeBufferUY[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, at, row].uy
+                writeBufferUZ[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, at, row].uz
+
+//                writeBufferRHO[(col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].rho
+//                writeBufferUX[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].ux
+//                writeBufferUY[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].uy
+//                writeBufferUZ[ (col - border) * (p.cols - border * 2) + (row - border) ] = p[col, row, at].uz
+
             }
         }
 
@@ -164,7 +185,7 @@ class qVecPostProcess {
 
 
         var url = formatWriteFile(writeTo, withSuffix: fileName + ".rho.bin")
-        var wData = Data(bytes: &writeBufferRHO, count: writeBufferUX.count * MemoryLayout<Float32>.stride)
+        var wData = Data(bytes: &writeBufferRHO, count: writeBufferRHO.count * MemoryLayout<Float32>.stride)
         try! wData.write(to: url)
 
 
@@ -173,11 +194,11 @@ class qVecPostProcess {
         try! wData.write(to: url)
 
         url = formatWriteFile(writeTo, withSuffix: fileName + ".uy.bin")
-        wData = Data(bytes: &writeBufferUY, count: writeBufferUX.count * MemoryLayout<Float32>.stride)
+        wData = Data(bytes: &writeBufferUY, count: writeBufferUY.count * MemoryLayout<Float32>.stride)
         try! wData.write(to: url)
 
         url = formatWriteFile(writeTo, withSuffix: fileName + ".uz.bin")
-        wData = Data(bytes: &writeBufferUZ, count: writeBufferUX.count * MemoryLayout<Float32>.stride)
+        wData = Data(bytes: &writeBufferUZ, count: writeBufferUZ.count * MemoryLayout<Float32>.stride)
         try! wData.write(to: url)
 
 

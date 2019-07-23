@@ -124,11 +124,12 @@ struct MultiOrthoVelocity2DPlanesXY: TwoD  {
 
 
 
-
 struct MultiOrthoVelocity2DPlanesXZ: TwoD {
 
     var cols, rows: Int
     var depth: Int
+    var dirs = [URL]()
+
     var p = [Int: OrthoVelocity2DPlane]()
 
     let iStart: Int = 0
@@ -136,8 +137,7 @@ struct MultiOrthoVelocity2DPlanesXZ: TwoD {
     let kStart: Int = 0
 
     let iEnd, kEnd: Int
-    var jEnd: Int {return p.keys.max()!}
-
+    var jEnd: Int {return p.keys.max()! + 1}
 
     init(x: Int, depth: Int, z: Int){
         self.cols = x + 2
@@ -150,12 +150,14 @@ struct MultiOrthoVelocity2DPlanesXZ: TwoD {
     mutating func addPlane(atJ: Int){
         p[atJ] = OrthoVelocity2DPlane(cols:cols, rows:rows)
     }
-    func startI() -> Int {return 0}
-    func endI() -> Int {return cols}
-    func startJ() -> Int {
-        let a = p.keys
-        return a.min()!
+
+    func getPlane(atJ: Int) -> OrthoVelocity2DPlane {
+        assert(p.keys.contains(atJ))
+
+        return p[atJ]!
     }
+
+
 
     subscript(i: Int, j: Int, k: Int) -> Velocity {
         get {
@@ -181,7 +183,7 @@ struct MultiOrthoVelocity2DPlanesYZ: TwoD {
     let jStart: Int = 0
     let kStart: Int = 0
 
-    var iEnd: Int {return p.keys.max()!}
+    var iEnd: Int {return p.keys.max()! + 1}
     let jEnd, kEnd: Int
 
 
@@ -207,12 +209,6 @@ struct MultiOrthoVelocity2DPlanesYZ: TwoD {
     }
 
 
-    func ppppp(){
-        print(p[0]![7,8])
-//        print(p[0,7,8])  cant reference subscript
-
-
-    }
 
 }
 

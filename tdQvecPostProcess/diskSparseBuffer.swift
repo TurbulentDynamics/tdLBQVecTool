@@ -274,10 +274,14 @@ class diskSparseBuffer {
                     _ = Int(ptr.load(fromByteOffset: i + bytes.gridIndex + bytes.gridBytes, as: UInt16.self))
                 }
 
+
+
                 velocity[col, row].rho = ptr.load(fromByteOffset: i + bytes.qIndex + (0 * bytes.qBytes), as: Float32.self)
                 velocity[col, row].ux = ptr.load(fromByteOffset: i + bytes.qIndex + (1 * bytes.qBytes), as: Float32.self)
                 velocity[col, row].uy = ptr.load(fromByteOffset: i + bytes.qIndex + (2 * bytes.qBytes), as: Float32.self)
                 velocity[col, row].uz = ptr.load(fromByteOffset: i + bytes.qIndex + (3 * bytes.qBytes), as: Float32.self)
+
+//                print(row, col, velocity[col,row].rho, velocity[col,row].ux, velocity[col,row].uy, velocity[col,row].uz)
 
 
                 //Skip the rest of the q matrix
