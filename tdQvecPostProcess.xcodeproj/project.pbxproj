@@ -72,7 +72,7 @@
 		229EBF5822B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2522B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */; };
 		229EBF5922B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2622B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */; };
 		229EBF5A22B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json in Resources */ = {isa = PBXBuildFile; fileRef = 229EBF2722B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */; };
-		22E59DB022E09B8400163022 /* VelocityStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E59DAF22E09B8400163022 /* VelocityStructs.swift */; };
+		2D1A583622F875740066C098 /* VelocityStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A583522F875730066C098 /* VelocityStructs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -158,7 +158,7 @@
 		229EBF2522B92A4D0008AD43 /* Qvec.F3.node.1.1.1.V4.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Qvec.F3.node.1.1.1.V4.bin; sourceTree = "<group>"; };
 		229EBF2622B92A4D0008AD43 /* Qvec.node.1.1.1.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.node.1.1.1.V4.bin.json; sourceTree = "<group>"; };
 		229EBF2722B92A4D0008AD43 /* Qvec.F3.node.0.1.0.V4.bin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Qvec.F3.node.0.1.0.V4.bin.json; sourceTree = "<group>"; };
-		22E59DAF22E09B8400163022 /* VelocityStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VelocityStructs.swift; path = ../../../../../../System/Volumes/Data/Users/nile/Workspace/xcode/tdQvecPostProcess/tdQvecPostProcess/VelocityStructs.swift; sourceTree = "<group>"; };
+		2D1A583522F875730066C098 /* VelocityStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VelocityStructs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,13 +213,13 @@
 		229EBEC422B926BC0008AD43 /* tdQvecPostProcess */ = {
 			isa = PBXGroup;
 			children = (
+				2D1A583522F875730066C098 /* VelocityStructs.swift */,
 				229EBECF22B927220008AD43 /* typeAlias.swift */,
 				229EBED222B927220008AD43 /* HelperFunctions.swift */,
 				229EBED022B927220008AD43 /* PostProcessingDims.swift */,
 				229EBECC22B927220008AD43 /* QvecDims.swift */,
 				223F684C22DCC371009FD555 /* InputFilesV4URL.swift */,
 				2236022E22C3BFCE006C179D /* diskSparseBuffer.swift */,
-				22E59DAF22E09B8400163022 /* VelocityStructs.swift */,
 				2236022A22C2B8F6006C179D /* qVecPostProcess.swift */,
 				229EBEC522B926BC0008AD43 /* main.swift */,
 			);
@@ -471,7 +471,7 @@
 			files = (
 				229EBEC622B926BC0008AD43 /* main.swift in Sources */,
 				229EBED922B927220008AD43 /* HelperFunctions.swift in Sources */,
-				22E59DB022E09B8400163022 /* VelocityStructs.swift in Sources */,
+				2D1A583622F875740066C098 /* VelocityStructs.swift in Sources */,
 				229EBED722B927220008AD43 /* PostProcessingDims.swift in Sources */,
 				223F684D22DCC371009FD555 /* InputFilesV4URL.swift in Sources */,
 				229EBED322B927220008AD43 /* QvecDims.swift in Sources */,

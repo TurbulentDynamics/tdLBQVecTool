@@ -44,6 +44,9 @@ class qVecPostProcess {
     func process(){
 
         let xz = analyse()
+        if xz.count == 0 {
+            return
+        }
 
         let dim = xz[0].getPPDim()!
         var p = MultiOrthoVelocity2DPlanesXZ(x: dim.gridX, depth: xz.count, z: dim.gridZ)
