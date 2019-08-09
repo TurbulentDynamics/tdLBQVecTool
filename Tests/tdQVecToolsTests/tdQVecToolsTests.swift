@@ -1,9 +1,7 @@
 import XCTest
 import class Foundation.Bundle
 
-import InputFilesV4
-
-final class TDQVecPostProcessTests: XCTestCase {
+final class tdQVecToolsTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
@@ -14,7 +12,7 @@ final class TDQVecPostProcessTests: XCTestCase {
             return
         }
 
-        let fooBinary = productsDirectory.appendingPathComponent("TDQVecPostProcess")
+        let fooBinary = productsDirectory.appendingPathComponent("tdQVecTools")
 
         let process = Process()
         process.executableURL = fooBinary
@@ -33,14 +31,14 @@ final class TDQVecPostProcessTests: XCTestCase {
 
     /// Returns path to the built products directory.
     var productsDirectory: URL {
-        #if os(macOS)
+      #if os(macOS)
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
             return bundle.bundleURL.deletingLastPathComponent()
         }
         fatalError("couldn't find the products directory")
-        #else
+      #else
         return Bundle.main.bundleURL
-        #endif
+      #endif
     }
 
     static var allTests = [
@@ -49,16 +47,7 @@ final class TDQVecPostProcessTests: XCTestCase {
 }
 
 
-func testScoreIsComputed() {
-    // 1. given
-    let guess = sut.targetValue + 5
 
-    // 2. when
-    sut.check(guess: guess)
-
-    // 3. then
-    XCTAssertEqual(sut.scoreRound, 95, "Score computed from guess is wrong")
-}
 
 
 func testInputGetStep(){

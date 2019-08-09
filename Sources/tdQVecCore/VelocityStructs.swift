@@ -186,11 +186,10 @@ struct MultiOrthoVelocity2DPlanesYZ: TwoD {
     var iEnd: Int {return p.keys.max()! + 1}
     let jEnd, kEnd: Int
 
-
     init(depth: Int, y: Int, z: Int){
         self.cols = y + 2
         self.rows = z + 2
-        self.depth = dirs.count
+        self.depth = depth
         self.jEnd = self.cols
         self.kEnd = self.rows
     }

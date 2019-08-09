@@ -3,10 +3,7 @@ import XCTest
 #if !canImport(ObjectiveC)
 public func allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(tdQVecPostProcessTests.allTests),
+        testCase(tdQVecToolsTests.allTests),
     ]
 }
 #endif
-
-
-

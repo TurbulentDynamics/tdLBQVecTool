@@ -49,6 +49,9 @@ class qVecPostProcess {
         }
 
         let dim = xz[0].getPPDim()!
+        print(xz[0])
+        print(dim)
+
         var p = MultiOrthoVelocity2DPlanesXZ(x: dim.gridX, depth: xz.count, z: dim.gridZ)
 
         load(p: &p, dirs:xz)

@@ -1,8 +1,7 @@
-
-
-*.bin
-*.bin.json
-
-*.png
-*.jpeg
-
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+.swiftpm/
+Package.resolved
