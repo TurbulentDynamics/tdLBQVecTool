@@ -21,7 +21,7 @@ let package = Package(
             dependencies: ["Logging"]
         ),
         .testTarget(
-            name: "tdQVecToolsTests",
+            name: "tdQVecToolTests",
             dependencies: ["tdQVecCore"]
         )
     ]

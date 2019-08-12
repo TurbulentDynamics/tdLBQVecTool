@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import tdQVecTool
 
 
 
@@ -65,7 +64,7 @@ if !dirs.isEmpty {
     print("Trying \(dataDirURL)")
 
 
-    dataDirURL.processAll(velocity: uxuyuz, vorticity: vort)
+//    dataDirURL.processAll(velocity: uxuyuz, vorticity: vort)
 
 }
 
