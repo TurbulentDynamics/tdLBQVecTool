@@ -49,7 +49,7 @@ extension URL {
 
 
 
-    func mkXYPlane(name: String = "plot_vertical_axis", QLength: Int, step: Int, atK: Int) -> String {
+    func formatXYPlane(name: String = "plot_vertical_axis", QLength: Int, step: Int, atK: Int) -> String {
 
         let root = formatDirRoot(name: name, type: DirType.XYplane, QLength: QLength, step: step)
         return "\(root).cut_\(atK)"
@@ -58,39 +58,39 @@ extension URL {
     }
 
 
-    func mkXZPlane(name: String = "plot_slice", QLength: Int, step: Int, atJ: Int) -> String{
+    func formatXZPlane(name: String = "plot_slice", QLength: Int, step: Int, atJ: Int) -> String{
 
         let root = formatDirRoot(name: name, type: DirType.XZplane, QLength: QLength, step: step)
         return "\(root).cut_\(atJ)"
     }
 
-    func mkYZPlane(name: String = "plot_axis", QLength: Int, step: Int, atI: Int) -> String {
+    func formatYZPlane(name: String = "plot_axis", QLength: Int, step: Int, atI: Int) -> String {
 
         let root = formatDirRoot(name: name, type: DirType.YZplane, QLength: QLength, step: step)
         return "\(root).cut_\(atI)"
     }
 
 
-    func mkVolume(name: String = "volume", QLength: Int, step: Int) -> String {
+    func formatVolume(name: String = "volume", QLength: Int, step: Int) -> String {
 
         return formatDirRoot(name: name, type: DirType.volume, QLength: QLength, step: step)
     }
 
 
 
-    func mkCaptureAtBladeAngle(name: String="plot", step: Int, angle: Int, bladeId: Int, QLength: Int) -> String {
+    func formatCaptureAtBladeAngle(name: String="plot", step: Int, angle: Int, bladeId: Int, QLength: Int) -> String {
 
         let root = formatDirRoot(name: name, type: DirType.rotational, QLength: QLength, step: step)
         return "\(root).angle_\(angle).blade_id_\(bladeId)"
     }
 
-    func mkAxisWhenBladeAngle(name: String="plot", step: Int, angle: Int, QLength: Int) -> String {
+    func formatAxisWhenBladeAngle(name: String="plot", step: Int, angle: Int, QLength: Int) -> String {
 
         let root = formatDirRoot(name: name, type: DirType.YZplane, QLength: QLength, step: step)
         return "\(root).angle_\(angle)"
     }
 
-    func mkRotatingSector(name: String="plot", step: Int, angle: Int, QLength: Int) {
+    func formatRotatingSector(name: String="plot", step: Int, angle: Int, QLength: Int) {
     }
 
 

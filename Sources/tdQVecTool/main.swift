@@ -64,7 +64,8 @@ if !dirs.isEmpty {
     print("Trying \(dataDirURL)")
 
 
-//    dataDirURL.processAll(velocity: uxuyuz, vorticity: vort)
+    //Doesnt work with Xcode 10
+    dataDirURL.processAll(velocity: uxuyuz, vorticity: vort)
 
 }
 
