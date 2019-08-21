@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ppDim: Codable {
+public struct ppDim: Codable {
     //https://app.quicktype.io/#
 
     let qOutputLength, cutAt: Int

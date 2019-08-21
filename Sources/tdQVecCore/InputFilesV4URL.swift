@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum diskErrors: Error {
+public enum diskErrors: Error {
     case fileNotFound
     case directoryNotFound
     case fileNotReadable
@@ -16,7 +16,7 @@ enum diskErrors: Error {
     case OtherDiskError
 }
 
-enum DirType {
+public enum DirType {
     case XYplane
     case XZplane
     case YZplane
@@ -28,7 +28,7 @@ enum DirType {
 
 
 
-extension URL {
+public extension URL {
 
 
     private func selfVersion() -> Int {
@@ -320,6 +320,9 @@ extension URL {
     func processAllRotational(velocity: Bool = true, vorticity: Bool = true) {
         process(dirs: getDirs(withRegex: ".*rotational_capture.*"), velocity: velocity, vorticity: vorticity)
     }
+
+
+    
     func processAll(velocity: Bool = true, vorticity: Bool = true) {
         process(dirs: getDirs(withRegex: ".*"), velocity: velocity, vorticity: vorticity)
     }

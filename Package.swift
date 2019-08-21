@@ -20,10 +20,10 @@ let package = Package(
             name: "tdQVecCore",
             dependencies: ["Logging"]
         ),
-        .testTarget(
-            name: "tdQVecToolTests",
-            dependencies: ["tdQVecCore"]
-        )
+//        .testTarget(
+//            name: "tdQVecToolTests",
+//            dependencies: ["tdQVecCore"]
+//        )
     ]
 )
 

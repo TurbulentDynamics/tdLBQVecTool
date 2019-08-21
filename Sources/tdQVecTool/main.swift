@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import tdQVecCore
 
 
 let help: Bool = CommandLine.arguments.contains("-h")
@@ -48,7 +48,8 @@ for d in CommandLine.arguments.dropFirst() {
 
 
 
-if !dirs.isEmpty {
+
+if dirs.count >= 1 {
     var dir = dirs[0]
 
     let fm = FileManager.default
@@ -60,8 +61,10 @@ if !dirs.isEmpty {
     }
 
 
-    let dataDirURL = URL.init(fileURLWithPath: dir, isDirectory: true)
+    let dataDirURL: URL = URL.init(fileURLWithPath: dir, isDirectory: true)
+
     print("Trying \(dataDirURL)")
+
 
 
     //Doesnt work with Xcode 10
