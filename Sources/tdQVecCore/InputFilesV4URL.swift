@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  tdQVecPostProcess
+//  tdQVecTool
 //
 //  Created by Niall Ó Broin on 24/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
@@ -22,13 +22,24 @@ public enum DirType {
     case YZplane
     case rotational
     case volume
-    case sector
+//    case sector
+    case None
 }
 
 
 
 
+
+
+
 public extension URL {
+
+
+
+    func dirExists(atPath: URL) {
+        
+    }
+
 
 
     private func selfVersion() -> Int {
@@ -132,7 +143,7 @@ public extension URL {
         return self.lastPathComponent.components(separatedBy: ".")[0]
     }
 
-    func dirType() -> DirType? {
+    func dirType() -> DirType {
         let dir = self.lastPathComponent
 
         if dir.contains(".XYplane.") {return .XYplane}
@@ -140,15 +151,26 @@ public extension URL {
         else if dir.contains(".YZplane.") {return .YZplane}
         else if dir.contains(".volume.") {return .volume}
         else if dir.contains(".rotational_capture.") {return .rotational}
-        else if dir.contains(".sector.") {return .sector}
+//        else if dir.contains(".sector.") {return .sector}
         else {
-            return nil
+            return .None
         }
     }
 
     func dirType(is type: DirType) -> Bool {
         return type == dirType()
     }
+
+    func dirType(isOneOf type: [DirType]) -> Bool {
+        var ret = false
+        if type.contains(self.dirType()) {
+            ret = true
+        }
+        return ret
+    }
+
+
+
 
     func version() -> Int? {
         let dir = self.lastPathComponent
@@ -239,17 +261,15 @@ public extension URL {
         return "^Qvec\\.F3\\.node\\..*\\.bin$"
     }
 
-    private func faceDeltas() -> [String] {
-        return ["im1", "ip1", "jm1", "jp1", "km1", "kp1"]
+    private func faceDeltas() -> [facesIJK] {
+        return facesIJK.allCases
     }
 
-    private func qVecRotationBinRegex(delta: String) -> String {
-        assert(faceDeltas().contains(delta))
+    private func qVecRotationBinRegex(delta: facesIJK) -> String {
         return "^Qvec\\.\(delta)\\.node\\..*\\.bin$"
     }
 
-    private func F3RotationBinRegex(delta: String) -> String {
-        assert(faceDeltas().contains(delta))
+    private func F3RotationBinRegex(delta: facesIJK) -> String {
         return "^Qvec\\.F3\\.\(delta)\\.node\\..*\\.bin$"
     }
 
@@ -266,11 +286,11 @@ public extension URL {
 
 
 
-    func getQvecRotationFiles(faceDelta: String) throws -> [URL] {
+    func getQvecRotationFiles(faceDelta: facesIJK) throws -> [URL] {
         return try getFiles(withRegex: qVecRotationBinRegex(delta: faceDelta))
     }
 
-    func getF3RotationFiles(faceDelta: String) throws -> [URL] {
+    func getF3RotationFiles(faceDelta: facesIJK) throws -> [URL] {
         return try getFiles(withRegex: F3RotationBinRegex(delta: faceDelta))
     }
 
@@ -302,29 +322,27 @@ public extension URL {
     }
 
 
-    func processStep(at: Int, velocity: Bool = true, vorticity: Bool = true) {
-        process(dirs: getDirs(withRegex: ".*step_\(format(step: at)).*"), velocity: velocity, vorticity: vorticity)
-    }
-    func processAllXYPlanes(velocity: Bool = true, vorticity: Bool = true) {
-        process(dirs: getDirs(withRegex: ".*XYplane.*"), velocity: velocity, vorticity: vorticity)
-    }
-    func processAllXZPlanes(velocity: Bool = true, vorticity: Bool = true) {
-        process(dirs: getDirs(withRegex: ".*XZplane.*"), velocity: velocity, vorticity: vorticity)
-    }
-    func processAllYZPlanes(velocity: Bool = true, vorticity: Bool = true) {
-        process(dirs: getDirs(withRegex: ".*YZplane.*"), velocity: velocity, vorticity: vorticity)
-    }
-    func processAllVolume(velocity: Bool = true, vorticity: Bool = true) {
-        process(dirs: getDirs(withRegex: ".*volume.*"), velocity: velocity, vorticity: vorticity)
-    }
-    func processAllRotational(velocity: Bool = true, vorticity: Bool = true) {
-        process(dirs: getDirs(withRegex: ".*rotational_capture.*"), velocity: velocity, vorticity: vorticity)
-    }
 
-
-    
-    func processAll(velocity: Bool = true, vorticity: Bool = true) {
-        process(dirs: getDirs(withRegex: ".*"), velocity: velocity, vorticity: vorticity)
+    func subDirsStep(at: Int) -> [URL] {
+        return getDirs(withRegex: ".*step_\(format(step: at)).*")
+    }
+    func subDirsAllXYPlanes() -> [URL]  {
+        return getDirs(withRegex: ".*XYplane.*")
+    }
+    func subDirsAllXZPlanes() -> [URL]  {
+        return getDirs(withRegex: ".*XZplane.*")
+    }
+    func subDirsAllYZPlanes() -> [URL]  {
+        return getDirs(withRegex: ".*YZplane.*")
+    }
+    func subDirsAllVolume() -> [URL]  {
+        return getDirs(withRegex: ".*volume.*")
+    }
+    func subDirsAllRotational() -> [URL]  {
+        return getDirs(withRegex: ".*rotational_capture.*")
+    }
+    func subDirsAll()  -> [URL] {
+        return getDirs(withRegex: ".*")
     }
 
 
@@ -337,46 +355,7 @@ public extension URL {
         } catch {
             return nil
         }
-
     }
-
-
-    func process(dirs: String, velocity: Bool = true, vorticity: Bool = true) {
-        var dirList = [String]()
-        dirList.append(dirs)
-        process(dirs: dirList, velocity: velocity, vorticity: vorticity)
-    }
-
-    func process(dirs: URL, velocity: Bool = true, vorticity: Bool = true) {
-        var dirList = [URL]()
-        dirList.append(dirs)
-        process(dirs: dirList, velocity: velocity, vorticity: vorticity)
-    }
-
-
-    func process(dirs: [String], velocity: Bool = true, vorticity: Bool = true) {
-        var dirList = [URL]()
-        for d in dirs {
-            dirList.append(self.appendingPathComponent(d))
-        }
-        process(dirs: dirList, velocity: velocity, vorticity: vorticity)
-    }
-
-
-
-
-
-    func process(dirs: [URL], velocity: Bool = true, vorticity: Bool = true){
-
-        let q = qVecPostProcess(dirs: dirs, velocity: velocity, vorticity: vorticity)
-        q.process()
-    }
-
-
-
-
-
-
 
 
 

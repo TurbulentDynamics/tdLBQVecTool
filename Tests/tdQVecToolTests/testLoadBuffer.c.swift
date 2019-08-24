@@ -1,6 +1,6 @@
 //
 //  testLoadBuffer.c
-//  tdQVecPostProcess
+//  tdQVecTool
 //
 //  Created by Nile Ó Broin on 27/06/2019.
 //  Copyright © 2019 Turbulent Dynamics. All rights reserved.

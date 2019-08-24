@@ -1,6 +1,6 @@
 
 //  QVecDims.swift
-//  tdQVecPostProcess
+//  tdQVecTool
 //
 //  Created by Niall Ó Broin on 08/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
@@ -255,7 +255,7 @@ class diskSparseBuffer {
     
 //    func readPartialFileIntoLargerVelocity3DMatrix(velocity: inout [[[Velocity]]]) {
 //    func readPartialFileIntoLargerVelocity2DMatrix(velocity: inout [[Velocity]]) {
-    func getVelocityFromDisk(velocity: inout OrthoVelocity2DPlane) {
+    func getVelocityFromDisk(addIntoPlane: inout OrthoVelocity2DPlane) {
 
         data.withUnsafeBytes{ (ptr: UnsafeRawBufferPointer) in
             for i in stride(from: 0, to: dim.binFileSizeInStructs * bytes.structTotalBytes, by: bytes.structTotalBytes) {
@@ -275,13 +275,14 @@ class diskSparseBuffer {
                 }
 
 
+//                print(col, row)
 
-                velocity[col, row].rho = ptr.load(fromByteOffset: i + bytes.qIndex + (0 * bytes.qBytes), as: Float32.self)
-                velocity[col, row].ux = ptr.load(fromByteOffset: i + bytes.qIndex + (1 * bytes.qBytes), as: Float32.self)
-                velocity[col, row].uy = ptr.load(fromByteOffset: i + bytes.qIndex + (2 * bytes.qBytes), as: Float32.self)
-                velocity[col, row].uz = ptr.load(fromByteOffset: i + bytes.qIndex + (3 * bytes.qBytes), as: Float32.self)
+                addIntoPlane[col, row].rho = ptr.load(fromByteOffset: i + bytes.qIndex + (0 * bytes.qBytes), as: Float32.self)
+                addIntoPlane[col, row].ux = ptr.load(fromByteOffset: i + bytes.qIndex + (1 * bytes.qBytes), as: Float32.self)
+                addIntoPlane[col, row].uy = ptr.load(fromByteOffset: i + bytes.qIndex + (2 * bytes.qBytes), as: Float32.self)
+                addIntoPlane[col, row].uz = ptr.load(fromByteOffset: i + bytes.qIndex + (3 * bytes.qBytes), as: Float32.self)
 
-//                print(row, col, velocity[col,row].rho, velocity[col,row].ux, velocity[col,row].uy, velocity[col,row].uz)
+//                print(row, col, addIntoPlane[col,row].rho, addIntoPlane[col,row].ux, addIntoPlane[col,row].uy, addIntoPlane[col,row].uz)
 
 
                 //Skip the rest of the q matrix

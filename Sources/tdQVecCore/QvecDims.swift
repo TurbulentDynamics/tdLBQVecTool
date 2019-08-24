@@ -1,6 +1,6 @@
 //
 //  QVecDims.swift
-//  tdQVecPostProcess
+//  tdQVecTool
 //
 //  Created by Niall Ó Broin on 08/01/2019.
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.

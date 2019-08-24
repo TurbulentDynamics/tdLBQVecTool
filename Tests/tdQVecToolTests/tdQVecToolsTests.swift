@@ -93,7 +93,7 @@ func testJsonLoad() {
 
     let home = FileManager.default.homeDirectoryForCurrentUser
 
-    let dataPath = "Workspace/xcode/tdQVecPostProcess/TinyTestData/"
+    let dataPath = "Workspace/xcode/tdQVecTool/TinyTestData/"
     let dataUrl = home.appendingPathComponent(dataPath)
 
     let jsonFile = "/plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28/QVec.F3.node.1.1.1.V4.bin.json"

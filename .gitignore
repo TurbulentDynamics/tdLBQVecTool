@@ -5,3 +5,10 @@
 xcuserdata/
 .swiftpm/
 Package.resolved
+
+*.rho.bin
+*.ux.bin
+*.uy.bin
+*.uz.bin
+*.vorticity.bin
+*.png

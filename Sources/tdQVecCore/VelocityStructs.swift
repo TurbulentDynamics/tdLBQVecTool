@@ -1,6 +1,6 @@
 //
 //  mQVecPostProcess.swift
-//  tdQVecPostProcess
+//  tdQVecTool
 //
 //  Created by Niall Ó Broin on 23/06/2019.
 //
@@ -24,8 +24,6 @@ struct Size2d {
 struct Pos2d {
     var c, r: Int
 }
-
-
 
 
 
@@ -62,6 +60,15 @@ struct OrthoVelocity2DPlane {
         self.p = Array(repeating: Array(repeating: Velocity(), count: cols), count: rows)
     }
 
+    func cols() -> Int {
+        return p[0].count
+    }
+
+    func rows() -> Int {
+        return p.count
+    }
+
+
     subscript(c: Int, r: Int) -> Velocity {
         get {
             return p[c][r]
@@ -70,197 +77,77 @@ struct OrthoVelocity2DPlane {
             p[c][r] = newValue
         }
     }
-}
 
 
 
 
-protocol TwoD {
-    var cols: Int {get}
-    var rows: Int {get}
-    var depth: Int {get}
-    var p: [Int: OrthoVelocity2DPlane] {get set}
 
-}
+    func formatWriteFileName(writeTo dir: URL, withSuffix: String) -> URL {
 
-
-
-struct MultiOrthoVelocity2DPlanesXY: TwoD  {
-
-    var cols, rows: Int
-    var depth: Int
-    var dirs = [URL]()
-    var p = [Int: OrthoVelocity2DPlane]()
-
-    let iStart: Int = 0
-    let jStart: Int = 0
-    var kStart: Int {return p.keys.min()!}
-
-    let iEnd, jEnd: Int
-    var kEnd: Int {return p.keys.max()! + 1}
-
-    init(x: Int, y: Int, depth: Int){
-        self.cols = x + 2
-        self.rows = y + 2
-        self.depth = dirs.count
-        self.iEnd = self.cols
-        self.jEnd = self.rows
+        let fileName: String = dir.lastPathComponent + withSuffix
+        var modURL: URL = dir.deletingLastPathComponent()
+        modURL.appendPathComponent(fileName)
+        return modURL
     }
 
-    mutating func addPlane(atK: Int){
-        p[atK] = OrthoVelocity2DPlane(cols:cols, rows:rows)
-    }
 
-    subscript(i: Int, j: Int, k: Int) -> Velocity {
-        get {
-            return p[k]![i, j]
+    func writeVelocity(to fileName: URL, withBorder border: Int = 1){
+
+        var writeBufferRHO = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
+        var writeBufferUX = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
+        var writeBufferUY = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
+        var writeBufferUZ = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
+
+        for col in border..<cols() - border {
+            for row in border..<rows() - border {
+
+                writeBufferRHO[(col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].rho
+                writeBufferUX[ (col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].ux
+                writeBufferUY[ (col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].uy
+                writeBufferUZ[ (col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].uz
+
+            }
         }
-        set(newValue) {
-            p[k]![i, j] = newValue
-        }
-    }
-
-}
 
 
+        //TODO Eventually need to pass, height and width to file, or json or something.  Maybe use PPjson?
 
-struct MultiOrthoVelocity2DPlanesXZ: TwoD {
 
-    var cols, rows: Int
-    var depth: Int
-    var dirs = [URL]()
-
-    var p = [Int: OrthoVelocity2DPlane]()
-
-    let iStart: Int = 0
-    var jStart: Int {return p.keys.min()!}
-    let kStart: Int = 0
-
-    let iEnd, kEnd: Int
-    var jEnd: Int {return p.keys.max()! + 1}
-
-    init(x: Int, depth: Int, z: Int){
-        self.cols = x + 2
-        self.rows = z + 2
-        self.depth = depth
-        self.iEnd = self.cols
-        self.kEnd = self.rows
-    }
-
-    mutating func addPlane(atJ: Int){
-        p[atJ] = OrthoVelocity2DPlane(cols:cols, rows:rows)
-    }
-
-    func getPlane(atJ: Int) -> OrthoVelocity2DPlane {
-        assert(p.keys.contains(atJ))
-
-        return p[atJ]!
-    }
+        var wData = Data(bytes: &writeBufferRHO, count: writeBufferRHO.count * MemoryLayout<Float32>.stride)
+        var url = formatWriteFileName(writeTo: fileName, withSuffix: ".rho.bin")
+        try! wData.write(to: url)
 
 
 
-    subscript(i: Int, j: Int, k: Int) -> Velocity {
-        get {
-            return p[j]![i, k]
-        }
-        set(newValue) {
-            p[j]![i, k] = newValue
-        }
+        wData = Data(bytes: &writeBufferUX, count: writeBufferUX.count * MemoryLayout<Float32>.stride)
+        url = formatWriteFileName(writeTo: fileName, withSuffix: ".ux.bin")
+        try! wData.write(to: url)
+
+        wData = Data(bytes: &writeBufferUY, count: writeBufferUY.count * MemoryLayout<Float32>.stride)
+        url = formatWriteFileName(writeTo: fileName, withSuffix: ".uy.bin")
+        try! wData.write(to: url)
+
+        wData = Data(bytes: &writeBufferUZ, count: writeBufferUZ.count * MemoryLayout<Float32>.stride)
+        url = formatWriteFileName(writeTo: fileName, withSuffix: ".uz.bin")
+        try! wData.write(to: url)
+
+
+        print(url)
+
+
+
     }
 
 }
 
 
 
-
-struct MultiOrthoVelocity2DPlanesYZ: TwoD {
-
-    var cols, rows: Int
-    var depth: Int
-    var p = [Int: OrthoVelocity2DPlane]()
-
-    var iStart: Int {return p.keys.min()!}
-    let jStart: Int = 0
-    let kStart: Int = 0
-
-    var iEnd: Int {return p.keys.max()! + 1}
-    let jEnd, kEnd: Int
-
-    init(depth: Int, y: Int, z: Int){
-        self.cols = y + 2
-        self.rows = z + 2
-        self.depth = depth
-        self.jEnd = self.cols
-        self.kEnd = self.rows
-    }
-
-    mutating func addPlane(atI: Int){
-        p[atI] = OrthoVelocity2DPlane(cols:cols, rows:rows)
-    }
-
-    subscript(i: Int, j: Int, k: Int) -> Velocity {
-        get {
-            return p[i]![j, k]
-        }
-        set(newValue) {
-            p[i]![j, k] = newValue
-        }
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-//struct AxisVelocity2DPlane {
-//
-//    //".im1.", ".ip1.", ".km1.", ".kp1."
-//
-//    init(col: Int, row: Int){
-//        self.init(col: col, row: row, depth: 5)
-//    }
-//
-//
-//    func loadPlanes(at dirs: [URL]) {
-//        let numPlanes = dirs.count()
-//
-//        //TOFIX Assumes all dirs have same shape
-//        let dim = ppDim(dir: dirs[0])
-//
-//        var planes = Plane2DXY(numPlanes: numPlanes, dim.totalHeight, dim.totalWidth)
-//
-//        for d in dirs{
-//
-//
-//        }
-//
-//    }
-//
-//
-//
-//}
-
-
-
-
-
-
-struct OrthoVelocity3DGrid {
+struct Velocity3DGrid {
 
     var g: [[[Velocity]]]
 
-    init(x:Int, y: Int, z: Int){
-        self.g = Array(repeating: Array(repeating: Array(repeating: Velocity(), count: z), count: y), count: x)
+    init(x: Int, y: Int, z: Int){
+        self.g = Array(repeating: Array(repeating: Array(repeating: Velocity(), count: z + 2), count: y + 2), count: x + 2)
     }
 
     subscript(i: Int, j: Int, k: Int) -> Velocity {
@@ -271,5 +158,15 @@ struct OrthoVelocity3DGrid {
             g[i][j][k] = newValue
         }
     }
+
+
 }
+
+
+
+
+
+
+
+
 
