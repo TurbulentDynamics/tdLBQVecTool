@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "tdQvecTool",
+    name: "tdQVecTool",
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-log.git",

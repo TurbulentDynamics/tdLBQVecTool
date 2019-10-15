@@ -93,18 +93,21 @@ struct OrthoVelocity2DPlane {
 
     func writeVelocity(to fileName: URL, withBorder border: Int = 1){
 
-        var writeBufferRHO = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
-        var writeBufferUX = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
-        var writeBufferUY = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
-        var writeBufferUZ = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
+        let height = cols() - border * 2
+        let width = rows() - border * 2
+
+        var writeBufferRHO = Array(repeating: Float32(), count: height * width)
+        var writeBufferUX = Array(repeating: Float32(), count: height * width)
+        var writeBufferUY = Array(repeating: Float32(), count: height * width)
+        var writeBufferUZ = Array(repeating: Float32(), count: height * width)
 
         for col in border..<cols() - border {
             for row in border..<rows() - border {
 
-                writeBufferRHO[(col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].rho
-                writeBufferUX[ (col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].ux
-                writeBufferUY[ (col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].uy
-                writeBufferUZ[ (col - border) * (cols() - border * 2) + (row - border) ] = p[col][row].uz
+                writeBufferRHO[(col - border) * height + (row - border) ] = p[col][row].rho
+                writeBufferUX[ (col - border) * height + (row - border) ] = p[col][row].ux
+                writeBufferUY[ (col - border) * height + (row - border) ] = p[col][row].uy
+                writeBufferUZ[ (col - border) * height + (row - border) ] = p[col][row].uz
 
             }
         }

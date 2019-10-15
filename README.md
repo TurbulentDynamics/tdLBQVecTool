@@ -13,7 +13,7 @@ cd tdQVecTool && swift build
 ./tdQVecTool -v TD_Rushton_Sample_Output_QVec/plot_slice.XZplane.V_4.Q_4.step_00000200.cut_70 
 ./tdQVecTool *
 
-There is limit to number of arguments on LInux systems so the following can also be used
+There is limit to number of arguments on Linux systems so the following can also be used
 ./tdQVecTool -a /path/to/rootdir
 ./tdQVecTool --blob "rootdir/*.XZplane*"
 ./tdQVecTool --xzplane rootdir

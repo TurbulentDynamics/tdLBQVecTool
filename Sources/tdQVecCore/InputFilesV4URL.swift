@@ -28,7 +28,9 @@ public enum DirType {
 
 
 
-
+func XXformatQVecFileRoot(_ name: String, _ idi: Int, _ idj: Int, _ idk: Int) -> String {
+    return "\(name).node.\(idi).\(idj).\(idk).V4"
+}
 
 
 

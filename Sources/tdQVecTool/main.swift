@@ -43,8 +43,8 @@ let argData = [
 if CommandLine.arguments.contains("-h") || CommandLine.arguments.contains("--help") {
     print("USAGE: tdQVecTool [options] <directories>")
 
-    for o in argData {
-        print("\t -\(o.0) --\(o.1) \t \(o.2)")
+    for arg in argData {
+        print("\t -\(arg.0) --\(arg.1) \t \(arg.2)")
     }
     exit(0)
 }
@@ -55,39 +55,35 @@ extension String {
     func dropFirst(_ at: Int) -> String {
         let start = self.index(self.startIndex, offsetBy: at)
         return String(self[start...]).lowercased()
-}
+    }
 }
 
 
 var verifiedArgs = [String]()
 var dirs = [String]()
 
-for a in CommandLine.arguments.dropFirst() {
+for arg in CommandLine.arguments.dropFirst() {
 
-    if a.hasPrefix("--") {
-        for o in argData {
-            if o.1 == a.dropFirst(2) {
-
-            verifiedArgs.append(o.1)
+    if arg.hasPrefix("--") {
+        for opt in argData {
+            if opt.1 == arg.dropFirst(2) {
+                    verifiedArgs.append(opt.1)
             }
-            }
-
-        } else if a.hasPrefix("-") {
-
-        for m in Array(a.dropFirst(1)) {
-
-        for o in argData {
-
-            if String(m) == o.0 {
-                  verifiedArgs.append(o.1)
-            }
-
         }
+
+    } else if arg.hasPrefix("-") {
+
+        for m in Array(arg.dropFirst(1)) {
+            for opt in argData {
+                if String(m) == opt.0 {
+                      verifiedArgs.append(opt.1)
+                }
+            }
         }
     } else {
-            dirs.append(a)
-        }
+            dirs.append(arg)
     }
+}
 
 
 
@@ -133,7 +129,7 @@ for v in verifiedArgs {
 
 
 
-if verifiedArgs.contains("all")  && processDirTypes.count > 5 {
+if verifiedArgs.contains("all") && processDirTypes.count > 5 {
     print("Args contain all and another dir type")
     exit(1)
 }
