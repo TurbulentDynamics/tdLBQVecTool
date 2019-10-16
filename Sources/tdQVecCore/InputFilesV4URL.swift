@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  InputFilesV4URL.swift
 //  tdQVecTool
 //
 //  Created by Niall Ó Broin on 24/01/2019.
@@ -24,12 +24,6 @@ public enum DirType {
     case volume
 //    case sector
     case None
-}
-
-
-
-func XXformatQVecFileRoot(_ name: String, _ idi: Int, _ idj: Int, _ idk: Int) -> String {
-    return "\(name).node.\(idi).\(idj).\(idk).V4"
 }
 
 
