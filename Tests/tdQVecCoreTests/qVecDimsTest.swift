@@ -2,7 +2,7 @@
 //  File.swift
 //  
 //
-//  Created by Nile Ó Broin on 15/10/2019.
+//  Created by Niall Ó Broin on 15/10/2019.
 //
 
 import XCTest

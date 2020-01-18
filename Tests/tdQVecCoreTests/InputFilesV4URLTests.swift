@@ -24,14 +24,14 @@ class tryingTest: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
 
-        let testDir = URL.init(fileURLWithPath: "hello", isDirectory: true)
+        let testURL = URL.init(fileURLWithPath: "testDirectory", isDirectory: true)
 
 
-        let s = testDir.formatXYPlane(QLength:4, step:1000, atK:5)
-        XCTAssertEqual(s, "plot_vertical_axis.XYplane.V_4.Q_4.step_00001000.cut_5")
+        var testResult = testURL.formatXYPlane(QLength:4, step:1000, atK:5)
+        XCTAssertEqual(testResult, "plot_vertical_axis.XYplane.V_4.Q_4.step_00001000.cut_5")
 
-        let result = testDir.formatQVecBin(name: "test", idi: 1, idj: 1, idk: 1)
-        XCTAssertEqual(result, "test.node.1.1.1.V4.bin")
+        testResult = testURL.formatQVecBin(name: "test", idi: 1, idj: 1, idk: 1)
+        XCTAssertEqual(testResult, "test.node.1.1.1.V4.bin")
 
 
     }
