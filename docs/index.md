@@ -54,6 +54,6 @@ The length of vectors is found from either the bin.json or the directory name.
 
 ## Axes and XYZ Output Planes
 The axes and direction are defined with X positive to the right, Y positive downwards and Z positive to the back.  The following image shows the axes and the name of the output planes that cut throught the simulation space.
-![XYZ Planes](XYZ_planes.jpg)
+![XYZ Planes](../XYZ_planes.jpg)
 
 
