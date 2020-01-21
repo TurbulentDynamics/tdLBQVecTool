@@ -25,5 +25,5 @@ There is limit to number of arguments on Linux systems so the following can also
 ```
 
 
-![Impeller Vorticity](Impeller_Vorticity.jpg)
+![Impeller Vorticity](docs/Impeller_Vorticity.jpg)
 

@@ -30,12 +30,12 @@ There is limit to number of arguments on Linux systems so the following can also
 #The jupyter notebook in the "python" directory can be used to visualise the file created.
 ```
 
-![Impeller Vorticity](../Impeller_Vorticity.jpg)
+![Impeller Vorticity](Impeller_Vorticity.jpg)
 
 
 ## Axes and XYZ Output Planes
 The axes and direction are defined with X positive to the right, Y positive downwards and Z positive to the back.  The following image shows the axes and the name of the output planes that cut throught the simulation space.
-![XYZ Planes](../XYZ_planes.jpg)
+![XYZ Planes](XYZ_planes.jpg)
 
 
 
