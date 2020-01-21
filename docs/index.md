@@ -5,8 +5,8 @@ Turbulent Dynamics specialises in running high-resolution fluid dynamics simulat
 
 
 1. Axes and Output planes
-2. [QVec Format](QVec_format.md)
-3. [Directory naming convention](Directory_Naming_Convention.md)
+2. [QVec Format](tdQVec_format.md)
+3. [Directory naming convention](Directory_naming_convention.md)
 4. 2D Vector output
 5. 3D Vector output
 6. Other plots, eg Vorticity
