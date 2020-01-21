@@ -30,6 +30,7 @@ There is limit to number of arguments on Linux systems so the following can also
 #The jupyter notebook in the "python" directory can be used to visualise the file created.
 ```
 
+![Impeller Vorticity](../Impeller_Vorticity.jpg)
 
 
 ## Axes and XYZ Output Planes
