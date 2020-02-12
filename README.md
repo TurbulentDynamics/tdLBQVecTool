@@ -20,6 +20,13 @@ There is limit to number of arguments on Linux systems so the following can also
 ./tdQVecTool --blob "rootdir/*.XZplane*"
 ./tdQVecTool --xzplane rootdir
 
+Larger Sample data is in the git-lfs repo here https://github.com/TurbulentDynamics/tdQVecRushtonTurbineSampleOutput.git
+ 46M	plot_output_np64_gridx160
+131M	plot_output_np8_gridx268
+3.4M	plot_output_np8_gridx44
+181M	total
+
+
 
 #The jupyter notebook in the "python" directory can be used to visualise the file created.
 ```

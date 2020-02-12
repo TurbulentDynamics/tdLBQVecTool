@@ -4,8 +4,8 @@
 Turbulent Dynamics specialises in running high-resolution fluid dynamics simulations on supercomputers. The application decomposes the complete simulation space into smaller grids and each grid is run on one node. During the simulation each node creates output files independently. This application is used to stitch these files together and do some other post processing calculations.
 
 
-1. Axes and Output planes
-2. [QVec Format](tdQVec_format.md)
+1. [Axes and output planes](Axes_and_output_planes.md)
+2. [QVec format](tdQVec_format.md)
 3. [Directory naming convention](Directory_naming_convention.md)
 4. 2D Vector output
 5. 3D Vector output
