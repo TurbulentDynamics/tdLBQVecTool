@@ -6,6 +6,9 @@ xcuserdata/
 .swiftpm/
 Package.resolved
 
+plot_*
+
+*.bin
 *.rho.bin
 *.ux.bin
 *.uy.bin
