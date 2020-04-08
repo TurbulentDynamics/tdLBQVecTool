@@ -15,3 +15,7 @@ plot_*
 *.uz.bin
 *.vorticity.bin
 *.png
+
+
+python/get-pip.py
+python/.ipynb_checkpoints/
