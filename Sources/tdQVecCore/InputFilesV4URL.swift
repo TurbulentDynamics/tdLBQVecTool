@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import tdLBApi
+
 
 public enum diskErrors: Error {
     case fileNotFound

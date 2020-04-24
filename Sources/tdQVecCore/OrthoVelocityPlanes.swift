@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import tdLBApi
 //import simd
 
 
@@ -76,7 +77,7 @@ extension MultiOrthoVelocity2DPlane {
 
 
     func getPlane(at: Int) -> OrthoVelocity2DPlane {
-        assert(p.keys.contains(at))
+        precondition(p.keys.contains(at))
         return p[at]!
     }
 
@@ -111,7 +112,7 @@ extension MultiOrthoVelocity2DPlane {
     mutating func loadManyPlanes(withDirs dirs: [URL]) {
 
         for dir in dirs {
-            //TODO Check all dirs have same sze of dim
+            //TODO Check all dirs have same size of dim
             loadPlane(withDir: dir)
         }
     }
@@ -150,8 +151,8 @@ struct MultiOrthoVelocity2DPlanesXY: MultiOrthoVelocity2DPlane  {
 
     func calcVorticity(at: Int) -> Vorticity {
 
-        assert(p[at - 1] != nil)
-        assert(p[at + 1] != nil)
+        precondition(p[at - 1] != nil)
+        precondition(p[at + 1] != nil)
 
         var vort = Vorticity(cols: cols(), rows: rows())
 
@@ -202,8 +203,8 @@ struct MultiOrthoVelocity2DPlanesXZ: MultiOrthoVelocity2DPlane {
 
         func calcVorticity(at: Int) -> Vorticity {
 
-            assert(p[at - 1] != nil)
-            assert(p[at + 1] != nil)
+            precondition(p[at - 1] != nil)
+            precondition(p[at + 1] != nil)
 
             var vort = Vorticity(cols: cols(), rows: rows())
 
@@ -258,8 +259,8 @@ struct MultiOrthoVelocity2DPlanesYZ: MultiOrthoVelocity2DPlane {
 
     func calcVorticity(at: Int) -> Vorticity {
 
-        assert(p[at - 1] != nil)
-        assert(p[at + 1] != nil)
+        precondition(p[at - 1] != nil)
+        precondition(p[at + 1] != nil)
 
         var vort = Vorticity(cols: cols(), rows: rows())
 

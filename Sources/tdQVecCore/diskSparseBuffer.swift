@@ -6,7 +6,7 @@
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
 //
 import Foundation
-
+import tdLBApi
 import Logging
 let logger = Logger(label: "com.turbulentDynamics.QVecPostProcess.loadBuffer")
 

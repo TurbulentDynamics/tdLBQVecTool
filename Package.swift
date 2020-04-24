@@ -15,20 +15,22 @@ let package = Package(
             targets: ["tdQVecTool"])
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/apple/swift-log.git",
-            from: "1.0.0"
-        )
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.1"),
+        .package(url: "https://github.com/turbulentdynamics/tdLBApi.git", from: "0.0.1")
     ],
     targets: [
         .target(
             name: "tdQVecTool",
-            dependencies: ["tdQVecCore"]
+            dependencies: [
+                "tdQVecCore",
+            .product(name: "ArgumentParser", package: "swift-argument-parser")]
         ),
         .target(
             name: "tdQVecCore",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
+                .product(name: "tdLBApi", package: "tdLBApi")
         ]),
         .testTarget(
             name: "tdQVecCoreTests",
