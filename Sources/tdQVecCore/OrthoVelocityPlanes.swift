@@ -26,28 +26,28 @@ struct Vorticity {
             vort[c][r] = newValue
         }
     }
-    func cols() -> Int {
+    var cols: Int {
         return vort[0].count
     }
 
-    func rows() -> Int {
+
+    var rows: Int {
         return vort.count
     }
 
     func writeVorticity(to url: URL, withBorder border: Int = 1){
 
-        var buffer = Array(repeating: Float32(), count: ((cols() - border * 2) * (rows() - border * 2)))
+        var buffer = Array(repeating: Float32(), count: ((cols - border * 2) * (rows - border * 2)))
 
-        for col in border..<cols() - border {
-            for row in border..<rows() - border {
+        for col in border..<cols - border {
+            for row in border..<rows - border {
 
-                buffer[(col - border) * (cols() - border * 2) + (row - border) ] = vort[col][row]
+                buffer[(col - border) * (cols - border * 2) + (row - border) ] = vort[col][row]
 
             }
         }
 
-
-
+        
         let wData = Data(bytes: &buffer, count: buffer.count * MemoryLayout<Float32>.stride)
 
         let fileName = url.lastPathComponent + ".vorticity.bin"
@@ -81,7 +81,7 @@ extension MultiOrthoVelocity2DPlane {
         return p[at]!
     }
 
-    mutating func loadPlane(withDir dir: URL) {
+    mutating func loadPlane(withDir dir: PlotDir) {
 
         let cutAt = dir.cut()!
 
@@ -92,15 +92,13 @@ extension MultiOrthoVelocity2DPlane {
         p[cutAt] = OrthoVelocity2DPlane(cols: dim.totalHeight + 2, rows: dim.totalWidth + 2)
 
         do {
-            for qVec in try dir.getQvecFiles() {
+            for qVec in dir.getQvecFiles() {
 
                 print("Loading \(qVec)")
 
                 let disk = try diskSparseBuffer(binURL: qVec)
 
                 disk.getVelocityFromDisk(addIntoPlane: &p[cutAt]!)
-
-
 
             }
         } catch {
@@ -117,11 +115,11 @@ extension MultiOrthoVelocity2DPlane {
         }
     }
 
-    func cols() -> Int {
+    var cols: Int {
         return p.first!.value.cols()
     }
 
-    func rows() -> Int {
+    var rows: Int {
         return p.first!.value.rows()
     }
 
@@ -154,11 +152,11 @@ struct MultiOrthoVelocity2DPlanesXY: MultiOrthoVelocity2DPlane  {
         precondition(p[at - 1] != nil)
         precondition(p[at + 1] != nil)
 
-        var vort = Vorticity(cols: cols(), rows: rows())
+        var vort = Vorticity(cols: cols, rows: rows)
 
         let k = at
-        for i in 1..<cols() - 1 {
-            for j in 1..<rows() - 1 {
+        for i in 1..<cols - 1 {
+            for j in 1..<rows - 1 {
 
 
 //              let uxy = 0.5 * (p[k  ]![i+1, j  ].ux - p[k  ]![i-1, j  ].ux)
@@ -206,11 +204,11 @@ struct MultiOrthoVelocity2DPlanesXZ: MultiOrthoVelocity2DPlane {
             precondition(p[at - 1] != nil)
             precondition(p[at + 1] != nil)
 
-            var vort = Vorticity(cols: cols(), rows: rows())
+            var vort = Vorticity(cols: cols, rows: rows)
 
             let j = at
-                for i in 1..<cols() - 1 {
-                    for k in 1..<rows() - 1 {
+                for i in 1..<cols - 1 {
+                    for k in 1..<rows - 1 {
 
 
 //                      let uxy = 0.5 * (p[j  ]![i+1, k  ].ux - p[j  ]![i-1, k  ].ux)
@@ -262,11 +260,11 @@ struct MultiOrthoVelocity2DPlanesYZ: MultiOrthoVelocity2DPlane {
         precondition(p[at - 1] != nil)
         precondition(p[at + 1] != nil)
 
-        var vort = Vorticity(cols: cols(), rows: rows())
+        var vort = Vorticity(cols: cols, rows: rows)
 
         let i = at
-            for j in 1..<cols() - 1 {
-                for k in 1..<rows() - 1 {
+            for j in 1..<cols - 1 {
+                for k in 1..<rows - 1 {
 
 
 //                  let uxy = 0.5 * (p[i+1]![j  , k  ].ux - p[i-1]![j  , k  ].ux)

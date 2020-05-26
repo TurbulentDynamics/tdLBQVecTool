@@ -1,11 +1,12 @@
 //
-//  mQVecPostProcess.swift
+//  Process.swift
 //  tdQVecTool
 //
 //  Created by Niall Ó Broin on 23/06/2019.
 //
 
 import Foundation
+import tdLBApi
 
 
 public enum Options {
@@ -18,9 +19,11 @@ public enum Options {
 
 
 
-public class QVecProcess {
-    var dirs = [URL]()
-    var types = [DirType]()
+
+public struct QVecProcess {
+
+    var plotDirByStep = [Int: [PlotDir]]()
+
 
     var xy = MultiOrthoVelocity2DPlanesXY()
     var xz = MultiOrthoVelocity2DPlanesXZ()
@@ -28,159 +31,208 @@ public class QVecProcess {
 
 
 
-    public init(dirs dirStrings: [String], dirTypes: [DirType]){
-
-        self.dirs = getValidDirs(from: dirStrings, with:dirTypes)
-
-        if dirTypes.contains(.None) || dirs.count == 0 {
-            print("Incorrect Initialisaion")
-            return
-        }
-
-        self.types = dirTypes
-
-        print(types)
-        print(dirs)
-
-    }
-
-
-    func directoryExistsAtPath(_ path: String) -> Bool {
+    public init(plotDirs dirs: [PlotDir]) {
+        let fm = FileManager.default
         var isDirectory = ObjCBool(true)
-        let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
-        return exists && isDirectory.boolValue
-    }
 
-    public func getValidDirs(from dirStrings: [String], with types: [DirType]) -> [URL] {
+        var root: URL?
 
-        var validDirs = [URL]()
-        for dir in dirStrings {
+        var validatedDirs = [PlotDir]()
+        for d in dirs {
+            if !fm.fileExists(atPath: d.absoluteString, isDirectory: &isDirectory) {
+                print("Dir do not exist")
+                fatalError()
+            }
 
-            if directoryExistsAtPath(dir) {
-
-                let validDir = URL.init(fileURLWithPath: dir, isDirectory: true)
-
-                if validDir.dirType(isOneOf: types) {
-
-                    validDirs.append(validDir)
-
-                } else {
-                    print("Directory at \(dir) does not confirm to one of \(types)")
-                }
-
+            if root == nil {
+                root = d.deletingLastPathComponent()
+                validatedDirs.append(d)
+            } else if root != d.deletingLastPathComponent() {
+                print("Ignoring Plot Dirs \(d)")
+            } else {
+                validatedDirs.append(d)
             }
         }
 
-        return validDirs
+        groupByStep(plotDirs: validatedDirs)
     }
 
 
 
 
+
+    public init(rootDir: URL, kind: [PlotDirKind]) throws {
+
+        let O: OutputDir
+
+        do {
+            O = try OutputDir(rootDir: rootDir)
+        } catch diskErrors.PlotDir {
+            print("Fail. init with root dir and options")
+            fatalError()
+        }
+
+        var validatedDirs = [PlotDir]()
+        for k in kind {
+            validatedDirs.append(contentsOf: O.plotDirs(withKind: k))
+        }
+
+        groupByStep(plotDirs: validatedDirs)
+
+    }
+
+
+
+    private mutating func groupByStep(plotDirs: [PlotDir]) {
+
+
+        for p in plotDirs {
+            if plotDirByStep.keys.contains(p.step()!) {
+                plotDirByStep[p.step()!]?.append(p)
+            } else {
+                plotDirByStep[p.step()!] = [p]
+
+            }
+
+        }
+    }
+
+
+
+    /// Function to estimate the amount of time to process the files.  There could be 1000's
     public func analyse(){
 
+
+        //DEBUG
+        for (step, plotDirs) in plotDirByStep {
+            for p in plotDirs {
+                print(step, p)
+            }
+        }
+
+
     }
 
 
 
-    public func process(opts: [Options])
-    {
+    public mutating func process(opts: [Options]) {
 
-        //for each step only
-        for d in dirs {
-            switch d.dirType(){
-                case .XYplane:
-                    xy.loadPlane(withDir: d)
-                    print(opts)
-                    if opts.contains(.velocities) {
-                        xy.writeVelocity(to: d, at:d.cut()!)
-                }
-                case .XZplane:
-                    xz.loadPlane(withDir: d)
-                    if opts.contains(.velocities) {
-                        xz.writeVelocity(to: d, at:d.cut()!)
-                }
-                case .YZplane:
-                    yz.loadPlane(withDir: d)
-                    if opts.contains(.velocities) {
-                        yz.writeVelocity(to: d, at:d.cut()!)
-                }
-                default:
+
+        for (_, plotDirs) in plotDirByStep {
+
+            for plotDir in plotDirs {
+
+                switch plotDir.dirType() {
+                    case .XYplane:
+                        xy.loadPlane(withDir: plotDir)
+                        if opts.contains(.velocities) {xy.writeVelocity(to: plotDir, at: plotDir.cut()!)}
+                    case .XZplane:
+                        xz.loadPlane(withDir: plotDir)
+                        if opts.contains(.velocities) {xz.writeVelocity(to: plotDir, at: plotDir.cut()!)}
+                    case .YZplane:
+                        yz.loadPlane(withDir: plotDir)
+                        if opts.contains(.velocities) {yz.writeVelocity(to: plotDir, at: plotDir.cut()!)}
+
+                    case .rotational:
+                        continue
+                    //                        yz.loadPlane(withDir: plotDir)
+                    case .volume:
+                        continue
+                    //                        yz.loadPlane(withDir: plotDir)
+                    case .none:
                     continue
-            }
+                }
+
+
+
+
+                if (opts.contains(.vorticity)){
+
+
+                    var keys = xy.p.keys
+                    for k in keys {
+                        if !(keys.contains(k-1)) {
+                            try! xy.loadPlane(withDir: plotDir.formatCutDelta(delta: -1))
+                        }
+                        if !(keys.contains(k+1)){
+                            try! xy.loadPlane(withDir: plotDir.formatCutDelta(delta: +1))
+                        }
+
+                        let vort = xy.calcVorticity(at: k)
+                        vort.writeVorticity(to: plotDir)
+                    }
+
+
+
+                    keys = xz.p.keys
+                    for k in keys {
+                        if !(keys.contains(k-1)) {
+                            try! xz.loadPlane(withDir: plotDir.formatCutDelta(delta: -1))
+                        }
+                        if !(keys.contains(k+1)){
+                            try! xz.loadPlane(withDir: plotDir.formatCutDelta(delta: +1))
+                        }
+                        let vort = xz.calcVorticity(at: k)
+                        vort.writeVorticity(to: plotDir)
+                    }
+
+
+
+                    keys = yz.p.keys
+                    for k in keys {
+                        if !(keys.contains(k-1)) {
+                            try! yz.loadPlane(withDir: plotDir.formatCutDelta(delta: -1))
+                        }
+                        if !(keys.contains(k+1)){
+                            try! yz.loadPlane(withDir: plotDir.formatCutDelta(delta: +1))
+                        }
+                        let vort = yz.calcVorticity(at: k)
+//                        let v = URL.init(fileURLWithPath: self.root[1].absoluteString + "/" + root[1].lastPathComponent)
+                        vort.writeVorticity(to: plotDir)
+                    }
+                }//end of if opts.vorticity
+
+            }//end of for plotDir in steps
+
+
         }
 
 
-        var keys = xy.p.keys
-        for k in keys {
-            if keys.contains(k-1) && keys.contains(k+1){
-                let vort = xy.calcVorticity(at: k)
-                let v = URL.init(fileURLWithPath: dirs[1].absoluteString + "/" + dirs[1].lastPathComponent)
-                vort.writeVorticity(to: v)
-            }
-        }
+        //    func analyseRotation() -> [URL] {
+        //        //TODO
+        //        //Break into steps,
+        //        //then break into types,
+        //        //then into position groups.
+        //
+        //        var rotation = [URL]()
+        //        for d in dirs {
+        //            if d.dirType(is: .rotational){
+        //
+        //                //TODO: Load consecutive dirs.  Pass consecutive dirs into MultiOrthoVelocity2DPlanesXZ
+        //                rotation.append(d)
+        //            }
+        //        }
+        //
+        //        return rotation
+        //    }
 
 
-        keys = xz.p.keys
-        for k in keys {
-            if keys.contains(k-1) && keys.contains(k+1){
-                let vort = xz.calcVorticity(at: k)
-                let v = URL.init(fileURLWithPath: dirs[1].absoluteString + "/" + dirs[1].lastPathComponent)
-                vort.writeVorticity(to: v)
-            }
-        }
-
-
-        keys = yz.p.keys
-        for k in keys {
-            if keys.contains(k-1) && keys.contains(k+1){
-                let vort = yz.calcVorticity(at: k)
-                let v = URL.init(fileURLWithPath: dirs[1].absoluteString + "/" + dirs[1].lastPathComponent)
-                vort.writeVorticity(to: v)
-            }
-        }
-
-
-
-
-    }
-
-
-    //    func analyseRotation() -> [URL] {
-    //        //TODO
-    //        //Break into steps,
-    //        //then break into types,
-    //        //then into position groups.
-    //
-    //        var rotation = [URL]()
-    //        for d in dirs {
-    //            if d.dirType(is: .rotational){
-    //
-    //                //TODO: Load consecutive dirs.  Pass consecutive dirs into MultiOrthoVelocity2DPlanesXZ
-    //                rotation.append(d)
-    //            }
-    //        }
-    //
-    //        return rotation
-    //    }
-
-
-    //        let rot = analyseRotation()
-    //        if rot.count == 0 {
-    //            return
-    //        }
-    //
-    //        let dim = rot[0].getPPDim()!
-    //        var p = AngleVelocity2DPlaneIK(cols: dim.fileHeight, rows: dim.fileWidth)
-    //
-    //        load(p: &p, dirs: rot)
+        //        let rot = analyseRotation()
+        //        if rot.count == 0 {
+        //            return
+        //        }
+        //
+        //        let dim = rot[0].getPPDim()!
+        //        var p = AngleVelocity2DPlaneIK(cols: dim.fileHeight, rows: dim.fileWidth)
+        //
+        //        load(p: &p, dirs: rot)
 
 
 
+
+
+}//end of struct
 
 
 }
-
-
-
 

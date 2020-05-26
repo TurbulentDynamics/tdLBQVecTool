@@ -135,7 +135,7 @@ struct OrthoVelocity2DPlane {
         try! wData.write(to: url)
 
 
-        print(url)
+//        print(url)
 
 
 
