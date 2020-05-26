@@ -7,7 +7,7 @@
 
 import Foundation
 import ArgumentParser
-import tdQVecCore
+import tdQVecLib
 import tdLBApi
 
 

@@ -11,8 +11,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "tdQVecLibrary",
-            targets: ["tdQVecCore"]),
+            name: "tdQVecLib",
+            targets: ["tdQVecLib"]),
         .executable(
             name: "tdQVecTool",
             targets: ["tdQVecTool"])
@@ -26,18 +26,18 @@ let package = Package(
         .target(
             name: "tdQVecTool",
             dependencies: [
-                "tdQVecCore",
+                "tdQVecLib",
             .product(name: "ArgumentParser", package: "swift-argument-parser")]
         ),
         .target(
-            name: "tdQVecCore",
+            name: "tdQVecLib",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "tdLBApi", package: "tdLBApi")
         ]),
         .testTarget(
-            name: "tdQVecCoreTests",
-            dependencies: ["tdQVecCore"]
+            name: "tdQVecLibTests",
+            dependencies: ["tdQVecLib"]
         )
     ]
 )
