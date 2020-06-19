@@ -14,7 +14,7 @@ let package = Package(
             name: "tdQVecLib",
             targets: ["tdQVecLib"]),
         .executable(
-            name: "tdQVecTool",
+            name: "tdQVec",
             targets: ["tdQVecTool"])
     ],
     dependencies: [
