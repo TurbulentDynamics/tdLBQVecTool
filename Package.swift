@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "tdQVecTool",
     platforms: [
-        .macOS(.v10_15),
+        .macOS(.v10_15)
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
@@ -14,12 +14,16 @@ let package = Package(
             name: "tdQVecLib",
             targets: ["tdQVecLib"]),
         .executable(
-            name: "tdQVec",
-            targets: ["tdQVecTool"])
+            name: "tdQVecTool",
+            targets: ["tdQVecTool"]),
+        .executable(
+            name: "lsQVec",
+            targets: ["lsQVec"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.1"),
+        .package(url: "https://github.com/apple/swift-numerics", from: "0.0.5"),
         .package(url: "https://github.com/turbulentdynamics/tdLBApi.git", from: "0.0.1")
     ],
     targets: [
@@ -27,20 +31,24 @@ let package = Package(
             name: "tdQVecTool",
             dependencies: [
                 "tdQVecLib",
-            .product(name: "ArgumentParser", package: "swift-argument-parser")]
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Numerics", package: "swift-numerics")]
+        ),
+        .target(
+            name: "lsQVec",
+            dependencies: [
+                "tdQVecLib",
+                .product(name: "ArgumentParser", package: "swift-argument-parser")]
         ),
         .target(
             name: "tdQVecLib",
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "tdLBApi", package: "tdLBApi")
-        ]),
+            ]),
         .testTarget(
             name: "tdQVecLibTests",
             dependencies: ["tdQVecLib"]
         )
     ]
 )
-
-
-

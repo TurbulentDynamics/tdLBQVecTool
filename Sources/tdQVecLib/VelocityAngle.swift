@@ -8,10 +8,8 @@
 import Foundation
 //import simd
 
-
-
-
-public enum facesIJK: CaseIterable {
+/// Grid coordiates and every neighbouring ortho (face) position
+enum FacesIJK: CaseIterable {
     case im1
     case ip1
     case jm1
@@ -20,8 +18,8 @@ public enum facesIJK: CaseIterable {
     case kp1
 }
 
-
-public enum facesIK: CaseIterable {
+/// Grid Coordinates for a Vertical Angled slice through the grid [see](docs/Yrotation.png)
+enum FacesIK: CaseIterable {
     case ik0
     case im1
     case ip1
@@ -29,26 +27,25 @@ public enum facesIK: CaseIterable {
     case kp1
 }
 
+/// The Angled Plane is represented either by 2D indexing, or 3D indexing, and can be rotated around any axes.
+/// - note: Only the Vertical axis, `J` is implemented
+struct Velocity2DPlaneAngled_AxisOfRotationJ<T: BinaryFloatingPoint> {
 
+    var p = [FacesIK: Velocity2DPlaneOrtho<T>]()
 
-struct AngleVelocityAxisOfRotationJ {
-
-    var p = [facesIK: OrthoVelocity2DPlane]()
-
-    func cols() -> Int {
-        return p.first!.value.cols()
+    var cols: Int {
+        return p.first!.value.cols
     }
 
-    func rows() -> Int {
+    var rows: Int {
         if let firstElem = p.first {
-            return p[firstElem.key]!.rows()
+            return p[firstElem.key]!.rows
         } else {
             return 0
-    }
+        }
     }
 
-
-    subscript(face: facesIK, col: Int, row: Int) -> Velocity {
+    subscript(face: FacesIK, col: Int, row: Int) -> Velocity<T> {
         get {
             return p[face]![col, row]
         }
@@ -56,55 +53,47 @@ struct AngleVelocityAxisOfRotationJ {
             p[face]![col, row] = newValue
         }
     }
-}
-
-
-
-extension AngleVelocityAxisOfRotationJ {
-
 
     func load(dir: URL) {
 
-
-//        for offset in dir.offsets() {
-//
-//            p[offset] = OrthoVelocity2DPlane(cols:cols, rows:rows)
-//
-//
-//
-//            p.addPlane(face: facesIK.im1)
-//            p.addPlane(face: facesIK.ip1)
-//            p.addPlane(face: facesIK.km1)
-//            p.addPlane(face: facesIK.kp1)
-//
-//
-//            do {
-//                for qVec in try dir.getQvecFiles() {
-//
-//                    let disk = try diskSparseBuffer(binURL: qVec)
-//
-//                    disk.getVelocityFromDisk(addIntoPlane: &p[.im1]!)
-//                }
-//
-//            } catch {
-//                print("binFile error: \(dir)")
-//            }
-//        }
+        //        for offset in dir.offsets() {
+        //
+        //            p[offset] = OrthoVelocity2DPlane(cols:cols, rows:rows)
+        //
+        //
+        //
+        //            p.addPlane(face: facesIK.im1)
+        //            p.addPlane(face: facesIK.ip1)
+        //            p.addPlane(face: facesIK.km1)
+        //            p.addPlane(face: facesIK.kp1)
+        //
+        //
+        //            do {
+        //                for qVec in try dir.getQvecFiles() {
+        //
+        //                    let disk = try diskSparseBuffer(binURL: qVec)
+        //
+        //                    disk.getVelocityFromDisk(addIntoPlane: &p[.im1]!)
+        //                }
+        //
+        //            } catch {
+        //                print("binFile error: \(dir)")
+        //            }
+        //        }
     }
 
+    func calcVorticity() -> [[T]] {
 
+        // Offsets
+        //      | kp1 |
+        //| im1 | c,r | ip1 |
+        //      | km1 |
 
+        //OLD C CODE
 
-    func calcVorticity() -> [[Float32]] {
-
-    // Offsets
-    //      | kp1 |
-    //| im1 | c,r | ip1 |
-    //      | km1 |
-
-
-
-        //inline void calc_ROTATIONAL_vorticity(tNi c, tNi r, tNi h, tQvec **ux, tQvec **uy, tQvec **uz, tQvec *uxyz_log_vort, tQvec &uxx, tQvec &uxy, tQvec &uxz, tQvec &uyx, tQvec &uyy, tQvec &uyz, tQvec &uzx, tQvec &uzy, tQvec &uzz) {
+        //inline void calc_ROTATIONAL_vorticity(tNi c, tNi r, tNi h, tQvec
+        //**ux, tQvec **uy, tQvec **uz, tQvec *uxyz_log_vort, tQvec &uxx, tQvec &uxy, tQvec &uxz,
+        //tQvec &uyx, tQvec &uyy, tQvec &uyz, tQvec &uzx, tQvec &uzy, tQvec &uzz) {
         //
         //
         ////col is i
@@ -138,32 +127,28 @@ extension AngleVelocityAxisOfRotationJ {
         //}
         //
 
+        var vort = Array(repeating: Array(repeating: T.zero, count: cols), count: rows)
 
+        for c in 1..<cols - 1 {
+            for r in 1..<rows - 1 {
 
-        
+                //                let uxx = 0.5 * (p[.ip1]![r+1, c].ux - p[.im1]![r-1, c].ux)
+                let uxy = 0.5 * (p[.ik0]![r, c].ux - p[.ik0]![r, c].ux)
+                let uxz = 0.5 * (p[.kp1]![r, c].ux - p[.km1]![r, c].ux)
 
-        var vort = Array(repeating: Array(repeating: Float32(0.0), count: cols()), count: rows())
+                let uyx = 0.5 * (p[.ip1]![r, c].uy - p[.im1]![r, c].uy)
+                //                let uyy = 0.5 * (p[.ik0]![r+1, c].uy - p[.ik0]![r-1, c].uy)
+                let uyz = 0.5 * (p[.kp1]![r, c].uy - p[.km1]![r, c].uy)
 
-        for c in 1..<cols() - 1 {
-            for r in 1..<rows() - 1 {
-
-//                let uxx = 0.5 * (p[.ip1]![r+1, c].ux - p[.im1]![r-1, c].ux)
-                let uxy = 0.5 * (p[.ik0]![r  , c].ux - p[.ik0]![r  , c].ux)
-                let uxz = 0.5 * (p[.kp1]![r  , c].ux - p[.km1]![r  , c].ux)
-
-                let uyx = 0.5 * (p[.ip1]![r  , c].uy - p[.im1]![r  , c].uy)
-//                let uyy = 0.5 * (p[.ik0]![r+1, c].uy - p[.ik0]![r-1, c].uy)
-                let uyz = 0.5 * (p[.kp1]![r  , c].uy - p[.km1]![r  , c].uy)
-
-                let uzx = 0.5 * (p[.ip1]![r  , c].uz - p[.im1]![r  , c].uz)
-                let uzy = 0.5 * (p[.ik0]![r  , c].uz - p[.ik0]![r  , c].uz)
-//                let uzz = 0.5 * (p[.kp1]![r+1, c].uz - p[.km1]![r-1, c].uz)
+                let uzx = 0.5 * (p[.ip1]![r, c].uz - p[.im1]![r, c].uz)
+                let uzy = 0.5 * (p[.ik0]![r, c].uz - p[.ik0]![r, c].uz)
+                //                let uzz = 0.5 * (p[.kp1]![r+1, c].uz - p[.km1]![r-1, c].uz)
 
                 let uyz_uzy = uyz - uzy
                 let uzx_uxz = uzx - uxz
                 let uxy_uyx = uxy - uyx
 
-                vort[c][r] = log(uyz_uzy * uyz_uzy + uzx_uxz * uzx_uxz + uxy_uyx * uxy_uyx)
+                vort[c][r] = T(log(Double(uyz_uzy * uyz_uzy + uzx_uxz * uzx_uxz + uxy_uyx * uxy_uyx)))
 
             }
         }
@@ -171,18 +156,4 @@ extension AngleVelocityAxisOfRotationJ {
         return vort
     }
 
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-

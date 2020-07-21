@@ -1,10 +1,11 @@
 .DS_Store
-/.build
-/Packages
-/*.xcodeproj
-xcuserdata/
-.swiftpm/
+.build/*
+Packages
+.swiftpm
 Package.resolved
+
+tdQVecTool
+.build/x86_64-apple-macosx/debug/tdQVecTool
 
 plot_*
 

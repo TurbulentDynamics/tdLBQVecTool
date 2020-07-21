@@ -1,7 +1,7 @@
 import XCTest
 
-import tdQVecLibTests
+import tdQVecToolTests
 
 var tests = [XCTestCaseEntry]()
-tests += tdQVecLibTests.allTests()
+tests += tdQVecToolTests.allTests()
 XCTMain(tests)
