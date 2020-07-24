@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import tdLBApi
+
 
 /// This struct reads the json file that holds various information on the PlotDir folder.
 ///

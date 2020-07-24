@@ -8,7 +8,7 @@
 import Foundation
 import ArgumentParser
 import tdQVecLib
-import tdLBApi
+
 
 //Examples:
 //./tdQVecTool -v *

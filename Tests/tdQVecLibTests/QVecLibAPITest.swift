@@ -7,7 +7,6 @@
 
 import XCTest
 @testable import tdQVecLib
-@testable import tdLBApi
 
 class ProcessTest: XCTestCase {
 

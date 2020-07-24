@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import tdLBApi
+
 
 struct Vorticity2D<T: BinaryFloatingPoint> {
 

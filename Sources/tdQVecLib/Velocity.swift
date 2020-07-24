@@ -5,7 +5,7 @@
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
 //
 import Foundation
-import tdLBApi
+
 
 /// Three component Velocity type with an extra value for Density rho (ρ)
 ///

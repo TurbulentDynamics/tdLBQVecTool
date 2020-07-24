@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import tdLBApi
+
 //import simd
 
 /// A dense 2D plane of Velocity types, these are square or orthogonal to the axes (see also `Velocity2DPlaneAngled_AxisOfRotationJ`

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Niall Ó Broin. All rights reserved.
 //
 import Foundation
-import tdLBApi
+
 
 //struct tdQVecLib {
 //    var text = "Hello, World!"
