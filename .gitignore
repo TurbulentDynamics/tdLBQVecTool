@@ -4,10 +4,12 @@ Packages
 .swiftpm
 Package.resolved
 
-tdQVecTool
+tdLBQVecTool
 .build/x86_64-apple-macosx/debug/tdQVecTool
 
+
 plot_*
+tdLBQVecRushtonTurbineSampleOutput
 
 *.bin
 *.rho.bin

@@ -7,7 +7,7 @@
 
 import Foundation
 import ArgumentParser
-import tdQVecLib
+import tdLBOutput
 
 struct LSQVec: ParsableCommand {
 
@@ -18,7 +18,7 @@ struct LSQVec: ParsableCommand {
 
     //lsQVec --rmglob "glob"
     @Flag(name: .short, help: "Removes all files with the glob")
-    var rmglob: Bool
+    var rmglob: Bool = false
 
     //lsQVec --check_step_integrety "glob"
     //shows:
@@ -27,11 +27,11 @@ struct LSQVec: ParsableCommand {
     //Files present : [200000,200040-222800]
     //Files missing : [200020]
     @Flag(name: .shortAndLong, help: "Check if there are any gaps in the steps")
-    var check_step_integrety: Bool
+    var check_step_integrety: Bool = false
 
     //lsQVec --break_step "plot_XY*" 20 #Quotes are necessary
     @Flag(name: .shortAndLong, help: "Moves files into subfolders based on step group")
-    var break_step: Bool
+    var break_step: Bool = false
 
     func run() throws {
 
