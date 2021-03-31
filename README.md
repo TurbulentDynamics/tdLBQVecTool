@@ -12,7 +12,7 @@ Turbulent Dynamics specialises in running high-resolution fluid dynamics simulat
 git clone https://github.com/TurbulentDynamics/tdLBQVecTool.git
 cd tdLBQVecTool && swift build
 ./tdLBQVecTool --vorticity --all SmallSampleDataFromLBCpp 
-./tdLBQVecTool --vorticity SmallSampleDataFromLBCpp/plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29 
+./tdLBQVecTool --vorticity SmallSampleDataFromLBCpp/plot_slice.XZplane.V5.step_00000050.cut_29 
 ./tdLBQVecTool *
 ```
 

@@ -13,7 +13,7 @@ import QVecLib
 //Examples:
 //./tdQVecTool -v *
 //./tdQVecTool -va Tests/TinyTestData
-//./tdQVecTool -vp TD_Rushton_Sample_Output_QVec/plot_slice.XZplane.V_4.Q_4.step_00000200.cut_70
+//./tdQVecTool -vp TD_Rushton_Sample_Output_QVec/plot_slice.XZplane.V5.step_00000200.cut_70
 //./tdQVecTool -a /path/to/outputdir
 //./tdQVecTool --xzplane outputdir
 
@@ -74,7 +74,7 @@ struct QVecTool: ParsableCommand {
     func run() throws {
 
         var processPlotDirs = [PlotDirKind]()
-        var processOptions = [Options]()
+        var processOptions = [OutputOptions]()
 
         if xyplane {processPlotDirs.append(.XYplane)}
         if xzplane {processPlotDirs.append(.XZplane)}
@@ -83,7 +83,8 @@ struct QVecTool: ParsableCommand {
         if volume {processPlotDirs.append(.volume)}
 
         if all {
-            processPlotDirs = [.XYplane, .XZplane, .YZplane, .rotational, .volume]
+            processPlotDirs = [.XYplane, .XZplane, .YZplane, .rotational]
+//            processPlotDirs = PlotDirKind.allCases
         }
 
         if overwrite {processOptions.append(.overwrite)}

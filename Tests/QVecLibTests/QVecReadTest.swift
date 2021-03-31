@@ -130,7 +130,7 @@ final class tdQVecToolTests: XCTestCase {
         //Copy tests to temp directory
         let TinyTestDataFromC = URL(fileURLWithPath: #file).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("TinyTestDataFromC")
 
-        let urlLOAD = TinyTestDataFromC.appendingPathComponent("plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29/Qvec.node.0.1.1.V4.bin")
+        let urlLOAD = TinyTestDataFromC.appendingPathComponent("plot_slice.XZplane.V5.step_00000050.cut_29/Qvec.node.0.1.1.V4.bin")
 
         let qv = try! QVecRead<Float32>(binURL: urlLOAD)
 

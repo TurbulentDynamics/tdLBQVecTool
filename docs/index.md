@@ -18,7 +18,7 @@ Turbulent Dynamics specialises in running high-resolution fluid dynamics simulat
 git clone --recursive https://github.com/TurbulentDynamics/tdQVecTool.git
 cd tdQVecTool && swift build
 ./tdQVecTool -va Tests/TinyTestData
-./tdQVecTool -v TD_Rushton_Sample_Output_QVec/plot_slice.XZplane.V_4.Q_4.step_00000200.cut_70
+./tdQVecTool -v TD_Rushton_Sample_Output_QVec/plot_slice.XZplane.V5.step_00000200.cut_70
 ./tdQVecTool *
 
 There is limit to number of arguments on Linux systems so the following can also be used

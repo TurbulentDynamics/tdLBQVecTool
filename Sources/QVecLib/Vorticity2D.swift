@@ -85,8 +85,8 @@ struct Vorticity2D<T: BinaryFloatingPoint> {
         for col in border..<cols - border {
             for row in border..<rows - border {
                 
-                
                 let val = UInt8((vort[col][row]) / step * -1)
+                
                 image[col*2, row*2] = RGB(red:val, green:val, blue:val)
                 image[col*2, row*2+1] = RGB(red:val, green:val, blue:val)
                 image[col*2+1, row*2] = RGB(red:val, green:val, blue:val)

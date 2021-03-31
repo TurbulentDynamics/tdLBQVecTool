@@ -17,17 +17,17 @@ class ProcessTest: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let testDirStrings = ["plot_full.volume.V_4.Q_4.step_00000050",
-                        "plot_rotational_capture.rotational_capture.V_4.Q_4.step_00000050.angle_15.blade_id_0",
-                        "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_28",
-                        "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_29",
-                        "plot_slice.XZplane.V_4.Q_4.step_00000050.cut_30",
-                        "plot_vertical_axis.XYplane.V_4.Q_4.step_00001000.cut_20",
-                        "plot_vertical_axis.XYplane.V_4.Q_4.step_00001000.cut_21",
-                        "plot_vertical_axis.XYplane.V_4.Q_4.step_00001000.cut_22",
-                        "plot_vertical_axis.XYplane.V_4.Q_4.step_00000050.cut_20",
-                        "plot_vertical_axis.XYplane.V_4.Q_4.step_00000050.cut_21",
-                        "plot_vertical_axis.XYplane.V_4.Q_4.step_00000050.cut_22"]
+        let testDirStrings = ["plot_full.volume.V5.step_00000050",
+                        "plot_rotational_capture.rotational_capture.V5.step_00000050.angle_15.blade_id_0",
+                        "plot_slice.XZplane.V5.step_00000050.cut_28",
+                        "plot_slice.XZplane.V5.step_00000050.cut_29",
+                        "plot_slice.XZplane.V5.step_00000050.cut_30",
+                        "plot_vertical_axis.XYplane.V5.step_00001000.cut_20",
+                        "plot_vertical_axis.XYplane.V5.step_00001000.cut_21",
+                        "plot_vertical_axis.XYplane.V5.step_00001000.cut_22",
+                        "plot_vertical_axis.XYplane.V5.step_00000050.cut_20",
+                        "plot_vertical_axis.XYplane.V5.step_00000050.cut_21",
+                        "plot_vertical_axis.XYplane.V5.step_00000050.cut_22"]
 
         let fm = FileManager.default
         testRootDir = fm.temporaryDirectory.appendingPathComponent("testRootDirProcessTest", isDirectory: true)

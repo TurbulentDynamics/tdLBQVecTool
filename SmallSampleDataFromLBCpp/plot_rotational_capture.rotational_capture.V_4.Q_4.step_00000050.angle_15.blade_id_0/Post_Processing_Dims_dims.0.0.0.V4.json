@@ -1,7 +1,7 @@
 {
 	"Q_output_length" : 4,
 	"cut_at" : 0,
-	"dirname" : "plot_output_np8_gridx44//plot_rotational_capture.rotational_capture.V_4.Q_4.step_00000050.angle_15.blade_id_0",
+	"dirname" : "plot_output_np8_gridx44//plot_rotational_capture.rotational_capture.V5.step_00000050.angle_15.blade_id_0",
 	"file_height" : 22,
 	"file_width" : 22,
 	"function" : "plot_angle_Qvec_buffer",

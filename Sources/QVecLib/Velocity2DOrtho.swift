@@ -45,7 +45,7 @@ struct Velocity2DPlaneOrtho<T: BinaryFloatingPoint> {
     ///
     /// - parameters
     ///   - plotDir The plotDir where the decomposed binary data was read from
-    func writeVelocity(to dir: PlotDir, overwrite: Bool = false, withBorder border: Int = 1) {
+    func writeVelocities(to dir: PlotDir, overwrite: Bool = false, withBorder border: Int = 1) {
 
 //        let height = cols - border * 2
 //        let width = rows - border * 2
@@ -99,20 +99,50 @@ extension Velocity2DPlaneOrthoMulti {
         precondition(p.keys.contains(at))
         return p[at]!
     }
+    
+    mutating func loadPlane(withDir dir: PlotDir, withDeltas: Array<Int>) {
 
+        loadPlane(withDir: dir)
+        
+        for delta in withDeltas {
+            
+            if let deltaDir = dir.formatCutDelta(delta: delta) {
+                loadPlane(withDir: deltaDir)
+            } else {
+                print("Loading a filename \(dir) with cut delta of \(delta).")
+            }
+        }
+    }
+    
+    
     mutating func loadPlane(withDir dir: PlotDir) {
 
         guard let cutAt = dir.cut() else {
             return
         }
 
-        guard let dim = try? PlotDirMeta(url: dir.plotDirMetaURL) else {
-            return
+//        guard let dim = try? PlotDirMeta(url: dir.plotDirMetaURL) else {
+//            print("Cannot find meta file \(dir.plotDirMetaURL)")
+//            return
+//        }
+
+        var gridX, gridY = 0
+        for binJsonURL in dir.getQvecJsonFiles() {
+            let dim = try QVecBinMeta(binJsonURL)
+//            if gridX < dim.fileHeight {
+//                gridX = dim.fileHeight
+//            }
+//            if gridY < dim.fileWidth {
+//                gridY = dim.fileWidth
+//            }
         }
 
-        //The + 2 (+2) is due to some data on disk written with a halo.
-        p[cutAt] = Velocity2DPlaneOrtho<T>(cols: dim.gridY + 2, rows: dim.gridX + 2)
 
+        //The + 2 (+2) is due to some data on disk written with a halo.
+        p[cutAt] = Velocity2DPlaneOrtho<T>(cols: gridY + 2, rows: gridX + 2)
+
+        
+        
         for qVecURL in dir.getQvecFiles() {
 
             if let qvr = try? QVecRead<T>(binURL: qVecURL) {
@@ -144,9 +174,17 @@ extension Velocity2DPlaneOrthoMulti {
         return p.first!.value.rows
     }
 
-    func writeVelocity(to: URL, at: Int, overwrite: Bool = false) {
-        p[at]!.writeVelocity(to: to, overwrite: overwrite)
+    func writeVelocities(to: URL, at: Int, overwrite: Bool = false) {
 
+        if p.keys.contains(at) {
+            
+            p[at]!.writeVelocities(to: to, overwrite: overwrite)
+            
+        } else {
+            print("Cut \(at) not loaded so cannot calculate Velocity in \(to.path)")
+        }
+        
+        
     }
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 import tdLBOutput
 
-public enum Options {
+public enum OutputOptions {
     case velocities
     case vorticity
     case overwrite
@@ -85,32 +85,30 @@ public struct QVecLib<T: BinaryFloatingPoint> {
         for (step, plotDirs) in plotDirByStep {
             for p in plotDirs {
 
-                print("Analysing: step \(step), dir \(p.path)")
+                print("TODO: Analysing: step \(step), dir \(p.path)")
             }
         }
     }
 
-    public mutating func process(opts: [Options]) {
+    public mutating func process(opts: [OutputOptions]) {
 
         for (_, plotDirs) in plotDirByStep {
 
+            //Load all files by Step
             for plotDir in plotDirs {
 
                 switch plotDir.dirType() {
                     case .XYplane:
-                        xy.loadPlane(withDir: plotDir)
-                        if opts.contains(.velocities) {
-                            xy.writeVelocity(to: plotDir, at: plotDir.cut()!, overwrite: opts.contains(.overwrite))
-                        }
+                        xy.loadPlane(withDir: plotDir, withDeltas: [+1, -1])
                     case .XZplane:
                         xz.loadPlane(withDir: plotDir)
                         if opts.contains(.velocities) {
-                            xz.writeVelocity(to: plotDir, at: plotDir.cut()!, overwrite: opts.contains(.overwrite))
+                            xz.writeVelocities(to: plotDir, at: plotDir.cut()!, overwrite: opts.contains(.overwrite))
                         }
                     case .YZplane:
                         yz.loadPlane(withDir: plotDir)
                         if opts.contains(.velocities) {
-                            yz.writeVelocity(to: plotDir, at: plotDir.cut()!, overwrite: opts.contains(.overwrite))
+                            yz.writeVelocities(to: plotDir, at: plotDir.cut()!, overwrite: opts.contains(.overwrite))
                         }
                     case .rotational:
                         continue
@@ -119,64 +117,118 @@ public struct QVecLib<T: BinaryFloatingPoint> {
                     case .none:
                         continue
                 }
-
+            }
+            
+            //Process all files by Step
+            for plotDir in plotDirs {
+                if opts.contains(.velocities) {
+                    xy.writeVelocities(to: plotDir, at: plotDir.cut()!,  overwrite: opts.contains(.overwrite))
+                    xz.writeVelocities(to: plotDir, at: plotDir.cut()!,  overwrite: opts.contains(.overwrite))
+                    yz.writeVelocities(to: plotDir, at: plotDir.cut()!,  overwrite: opts.contains(.overwrite))
+                }
                 if opts.contains(.vorticity) {
-
-                    var keys = xy.p.keys
-                    for k in keys {
-                        if !(keys.contains(k-1)) {
-                            xy.loadPlane(withDir: plotDir.formatCutDelta(delta: -1)!)
-                        }
-                        if !(keys.contains(k+1)) {
-                            xy.loadPlane(withDir: plotDir.formatCutDelta(delta: +1)!)
-                        }
-
+                    let k = plotDir.cut()!
+                    if xy.p.keys.contains(k-1) && xy.p.keys.contains(k+1) {
                         if let vort = xy.calcVorticity(at: k) {
                             vort.writeVorticity(to: plotDir, overwrite: opts.contains(.overwrite))
-                            
-//                            vort.writeGrayscaleImage(to: plotDir)
-                            
-                            
-                            
-                            
                         } else {
                             print("Cannot call Vort")
                         }
                     }
-
-                    keys = xz.p.keys
-                    for k in keys {
-                        if !(keys.contains(k-1)) {
-                            xz.loadPlane(withDir: plotDir.formatCutDelta(delta: -1)!)
-                        }
-                        if !(keys.contains(k+1)) {
-                            xz.loadPlane(withDir: plotDir.formatCutDelta(delta: +1)!)
-                        }
-
-                        if let vort = xz.calcVorticity(at: k) {
+                    
+                    let j = plotDir.cut()!
+                    if xz.p.keys.contains(j-1) && xz.p.keys.contains(j+1) {
+                        if let vort = xy.calcVorticity(at: j) {
                             vort.writeVorticity(to: plotDir, overwrite: opts.contains(.overwrite))
                         } else {
                             print("Cannot call Vort")
                         }
                     }
-
-                    keys = yz.p.keys
-                    for k in keys {
-                        if !(keys.contains(k-1)) {
-                            yz.loadPlane(withDir: plotDir.formatCutDelta(delta: -1)!)
-                        }
-                        if !(keys.contains(k+1)) {
-                            yz.loadPlane(withDir: plotDir.formatCutDelta(delta: +1)!)
-                        }
-
-                        if let vort = yz.calcVorticity(at: k) {
+                    
+                    let i = plotDir.cut()!
+                    if yz.p.keys.contains(i-1) && yz.p.keys.contains(i+1) {
+                        if let vort = yz.calcVorticity(at: i) {
                             vort.writeVorticity(to: plotDir, overwrite: opts.contains(.overwrite))
                         } else {
                             print("Cannot call Vort")
                         }
                     }
-
-                }//end of if opts.vorticity
+                    
+            }
+            
+            
+//
+//            //                        if opts.contains(.velocities) {
+////            xy.writeVelocities(to: plotDir, at: plotDir.cut()!,  overwrite: opts.contains(.overwrite))
+//            //                        }
+//
+//
+//                if opts.contains(.vorticity) {
+//
+//
+//                    var keys = xy.p.keys
+//                    for k in keys {
+//                        if !(keys.contains(k-1)) {
+//
+//                            if let dir = plotDir.formatCutDelta(delta: -1) {
+//                                xy.loadPlane(withDir: dir)
+//                            } else {
+//                                print("Loading a filename without cut value.  Cant do Vorticity")
+//                            }
+//                        }
+//
+//
+//                        if !(keys.contains(k+1)) {
+//                            if let dir = plotDir.formatCutDelta(delta: +1) {
+//                                xy.loadPlane(withDir: dir)
+//                            } else {
+//                                print("Loading a filename without cut value.  Cant do Vorticity")
+//                            }
+//
+//                            }
+//
+//                        if let vort = xy.calcVorticity(at: k) {
+//                            vort.writeVorticity(to: plotDir, overwrite: opts.contains(.overwrite))
+//
+//
+//                        } else {
+//                            print("Cannot call Vort")
+//                        }
+//                    }
+//
+//                    keys = xz.p.keys
+//                    for k in keys {
+//                        if !(keys.contains(k-1)) {
+//                            xz.loadPlane(withDir: plotDir.formatCutDelta(delta: -1)!)
+//                        }
+//                        if !(keys.contains(k+1)) {
+//                            xz.loadPlane(withDir: plotDir.formatCutDelta(delta: +1)!)
+//                        }
+//
+//                        if let vort = xz.calcVorticity(at: k) {
+//                            vort.writeVorticity(to: plotDir, overwrite: opts.contains(.overwrite))
+//                        } else {
+//                            print("Cannot call Vort")
+//                        }
+//                    }
+//
+//                    keys = yz.p.keys
+//                    for k in keys {
+//                        if !(keys.contains(k-1)) {
+//                            yz.loadPlane(withDir: plotDir.formatCutDelta(delta: -1)!)
+//                        }
+//                        if !(keys.contains(k+1)) {
+//                            yz.loadPlane(withDir: plotDir.formatCutDelta(delta: +1)!)
+//                        }
+//
+//                        if let vort = yz.calcVorticity(at: k) {
+//                            vort.writeVorticity(to: plotDir, overwrite: opts.contains(.overwrite))
+//                        } else {
+//                            print("Cannot call Vort")
+//                        }
+//                    }
+//
+//                }//end of if opts.vorticity
 
             }//end of for plotDir in steps
         }
