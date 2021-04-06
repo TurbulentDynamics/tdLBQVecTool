@@ -6,6 +6,8 @@
 //
 import Foundation
 
+
+
 /// Three component Velocity type with an extra value for Density rho (ρ)
 ///
 struct Velocity<T: BinaryFloatingPoint> {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import tdLBOutput
+import tdLB
 
 extension Data {
 

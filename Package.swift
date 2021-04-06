@@ -23,7 +23,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.4.1"),
-        .package(url: "https://github.com/turbulentdynamics/tdLBApi", from: "0.0.4"),
+        .package(url: "https://github.com/turbulentdynamics/tdLBSwiftApi", from: "0.0.5"),
         .package(name: "SwiftImage", url: "https://github.com/koher/swift-image.git", from: "0.7.0")
 //        .package(url: "https://github.com/apple/swift-numerics", from: "0.0.5"),
     ],
@@ -33,7 +33,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "SwiftImage", package: "SwiftImage"),
-                .product(name: "tdLBApi", package: "tdLBApi")
+                .product(name: "tdLBSwiftApi", package: "tdLBSwiftApi")
 //                .product(name: "Numerics", package: "swift-numerics")
             ]),
         .target(

@@ -7,7 +7,7 @@
 
 import Foundation
 import ArgumentParser
-import tdLBOutput
+import tdLB
 import QVecLib
 
 //Examples:

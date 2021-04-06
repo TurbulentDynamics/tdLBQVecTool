@@ -6,74 +6,75 @@
 //
 
 import Foundation
-import tdLBOutput
+import tdLB
 import SwiftImage
 
 
 struct Vorticity2D<T: BinaryFloatingPoint> {
 
-    var vort: [[T]]
+    var vort: [T]
 
+    var cols: Int
+    var rows: Int
+    
     var min: T = 0
     var max: T = 0
     
     init(cols: Int, rows: Int) {
-        self.vort = Array(repeating: [T](repeating: 0, count: cols), count: rows)
+        self.cols = cols
+        self.rows = rows
+        self.vort = Array(repeating: 0.0, count: cols *  rows)
     }
 
+    @inline(__always) func indexPos(col: Int, row:Int) -> Int {
+        return row * self.rows + col
+    }
+    
     subscript(c: Int, r: Int) -> T {
         get {
-            return vort[c][r]
+            //precondition
+            return vort[r * self.rows + c]
         }
         set(newValue) {
-            if newValue != 0.0 {
             if newValue.isFinite {
                 
                 
                 if newValue < min {min = newValue}
                 if newValue > max {max = newValue}
 
-                vort[c][r] = newValue
-                
-            }
-            
+                vort[indexPos(col:c, row:r)] = newValue
         }
     }
     }
-    var cols: Int {
-        return vort[0].count
-    }
 
-    var rows: Int {
-        return vort.count
-    }
+    
+    
+    func writeVorticity(to file: URL, overwrite: Bool = false, withBorder border: Int = 2) {
 
-    func writeVorticity(to dir: PlotDir, overwrite: Bool = false, withBorder border: Int = 2) {
-
+            
         var writeBuffer = Data()
 
         for col in border..<cols - border {
             for row in border..<rows - border {
 
-                writeBuffer.append(withUnsafeBytes(of: vort[col][row]) { Data($0) })
+                writeBuffer.append(withUnsafeBytes(of: vort[indexPos(col:col, row:row)]) { Data($0) })
             }
         }
 
         do {
-            if !(overwrite == false && dir.vorticityURL().exists()) {
-                try writeBuffer.write(to: dir.vorticityURL())
-            }
+                try writeBuffer.write(to: file)
+            
         } catch {
-            print("Cannot write to file \(dir.vorticityURL().path)")
+            print("Cannot write to file \(file.path)")
         }
         
         
-        writeGrayscaleImage(to: dir)
+        writeGrayscaleImage(to: file)
         
     }
 
     
-    func writeGrayscaleImage(to dir: PlotDir, withBorder border: Int = 2){
+    func writeGrayscaleImage(to file: URL, withBorder border: Int = 2){
 
         let steps:T = 256
         let step = (max - min) / (steps - 1)
@@ -85,7 +86,7 @@ struct Vorticity2D<T: BinaryFloatingPoint> {
         for col in border..<cols - border {
             for row in border..<rows - border {
                 
-                let val = UInt8((vort[col][row]) / step * -1)
+                let val = UInt8((vort[indexPos(col:col, row:row)]) / step * -1)
                 
                 image[col*2, row*2] = RGB(red:val, green:val, blue:val)
                 image[col*2, row*2+1] = RGB(red:val, green:val, blue:val)
@@ -96,10 +97,9 @@ struct Vorticity2D<T: BinaryFloatingPoint> {
         }
         
         
-        var fileName:URL = dir.vorticityURL()
-        fileName.appendPathExtension("png")
+        let pngFilename = file.appendingPathExtension("png")
         do{
-            try image.write(to: fileName, atomically: true, format: .png)
+            try image.write(to: pngFilename, atomically: true, format: .png)
         } catch {
             
         }

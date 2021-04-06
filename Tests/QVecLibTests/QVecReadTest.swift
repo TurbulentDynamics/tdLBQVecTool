@@ -6,14 +6,11 @@ import XCTest
 final class tdQVecToolTests: XCTestCase {
 
     var fileURL: URL!
+    var outputTree = try! DiskOutputTree(diskDir: ".", rootDir: "tdLBQVecToolTestOutputDir")
 
     override func setUp() {
         super.setUp()
-
-        let fileManager = FileManager.default
-        let directory = fileManager.temporaryDirectory
-        fileURL = directory.appendingPathComponent("testLBwrite.bin")
-
+        
     }
 
     func testQinit() {
@@ -31,14 +28,15 @@ final class tdQVecToolTests: XCTestCase {
 
     func testLBsetup() {
 
-        var lb0 = ComputeUnit<Float32>(x: 3, y: 3, z: 3, qLen: .q27)
+        
+        var lb0 = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q27)
         lb0.setPositionalDataForTesting()
 
         XCTAssertEqual(lb0.Q[0][0][0].q[0], 0.0)
         XCTAssertEqual(lb0.Q[0][0][0].q.count, 27)
         XCTAssert((lb0.Q[0][0][0].q[1] as Any) is Float32)
 
-        var lb1 = ComputeUnit<Double>(x: 3, y: 3, z: 3, qLen: .q19)
+        var lb1 = ComputeUnit<Double>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q19)
         lb1.setPositionalDataForTesting()
 
         XCTAssertEqual(lb1.Q[0][0][0].q[1], 0.1)
@@ -48,7 +46,7 @@ final class tdQVecToolTests: XCTestCase {
 
     func testGetSparseFromDisk() {
 
-        var lb = ComputeUnit<Float32>(x: 3, y: 3, z: 3, qLen: .q19)
+        var lb = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q19)
         lb.setPositionalDataForTesting()
 
         lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 19, tCoordType: UInt16.self, QVecType: Float32.self)
@@ -72,7 +70,7 @@ final class tdQVecToolTests: XCTestCase {
         QVecLibType: QVecLibType.Type
     ) {
 
-        let lb = ComputeUnit<LBType>(x: 3, y: 3, z: 3, qLen: .q27)
+        let lb = ComputeUnit<LBType>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q27)
 
         lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: SaveCoordType.self, QVecType: SaveQType.self)
 
@@ -99,7 +97,7 @@ final class tdQVecToolTests: XCTestCase {
 
     func testGetVelocityFromDisk() {
 
-        let lb = ComputeUnit<Float32>(x: 3, y: 3, z: 3, qLen: .q7)
+        let lb = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q7)
 
         lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: UInt16.self, QVecType: Float32.self)
 
@@ -113,7 +111,7 @@ final class tdQVecToolTests: XCTestCase {
 
     func testAddForcingToPartialVelocity() {
 
-        let lb = ComputeUnit<Float32>(x: 3, y: 3, z: 3, qLen: .q7)
+        let lb = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q7)
 
         lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: UInt16.self, QVecType: Float32.self)
 
