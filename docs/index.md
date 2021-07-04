@@ -15,23 +15,28 @@ Turbulent Dynamics specialises in running high-resolution fluid dynamics simulat
 
 ## Getting Started
 ```
-git clone --recursive https://github.com/TurbulentDynamics/tdQVecTool.git
-cd tdQVecTool && swift build
-./tdQVecTool -va Tests/TinyTestData
-./tdQVecTool -v TD_Rushton_Sample_Output_QVec/plot_slice.XZplane.V5.step_00000200.cut_70
-./tdQVecTool *
-
-There is limit to number of arguments on Linux systems so the following can also be used
-./tdQVecTool -a /path/to/rootdir
-./tdQVecTool --blob "rootdir/*.XZplane*"
-./tdQVecTool --xzplane rootdir
-
-
-#The jupyter notebook in the "python" directory can be used to visualise the file created.
+git clone https://github.com/TurbulentDynamics/tdLBQVecTool.git
+cd tdLBQVecTool && swift build
+./tdLBQVecTool --vorticity --all SmallSampleData
+./tdLBQVecTool --vorticity SmallSampleData/plot_slice.XZplane.V5.step_00000050.cut_29 
+./tdLBQVecTool *
 ```
 
-![Impeller Vorticity](Impeller_Vorticity.jpg)
+There is limit to number of arguments on Linux systems so the following can also be used
+```./tdLBQVecTool --all /path/to/rootdir
+./tdLBQVecTool --blob "rootdir/*.XZplane*"
+./tdLBQVecTool --xzplane rootdir
+```
+Larger Sample data available in a git-lfs repo 
+`git clone https://github.com/TurbulentDynamics/tdQVecRushtonTurbineSampleOutput.git`
+```
+46M    plot_output_np64_gridx160
+131M    plot_output_np8_gridx268
+3.4M    plot_output_np8_gridx44
+181M    total
+```
 
+![Impeller Vorticity](docs/Impeller_Vorticity.jpg)
 
 ## Axes and XYZ Output Planes
 The axes and direction are defined with X positive to the right, Y positive downwards and Z positive to the back.  The following image shows the axes and the name of the output planes that cut throught the simulation space.

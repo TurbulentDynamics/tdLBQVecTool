@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "tdLBQVecTool",
     platforms: [
-        .macOS(.v10_15)
+        .macOS(.v11)
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
@@ -36,13 +36,13 @@ let package = Package(
                 .product(name: "tdLBSwiftApi", package: "tdLBSwiftApi")
 //                .product(name: "Numerics", package: "swift-numerics")
             ]),
-        .target(
+        .executableTarget(
             name: "QVecTool",
             dependencies: [
                 "QVecLib",
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ]),
-        .target(
+        .executableTarget(
             name: "lsQVec",
             dependencies: [
                 "QVecLib",

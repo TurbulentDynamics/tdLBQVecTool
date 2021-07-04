@@ -1,6 +1,6 @@
 //
 //  graphics.swift
-//  tdQVecTool
+//  tdLBQVecTool
 //
 //  Created by Niall Ó Broin on 30/04/2019.
 //

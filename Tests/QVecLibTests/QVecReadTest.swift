@@ -1,16 +1,15 @@
 import XCTest
 @testable import QVecLib
 @testable import tdLB
-@testable import tdLBOutput
 
-final class tdQVecToolTests: XCTestCase {
+final class tdLBQVecToolTests: XCTestCase {
 
     var fileURL: URL!
     var outputTree = try! DiskOutputTree(diskDir: ".", rootDir: "tdLBQVecToolTestOutputDir")
 
     override func setUp() {
         super.setUp()
-        
+
     }
 
     func testQinit() {
@@ -28,7 +27,6 @@ final class tdQVecToolTests: XCTestCase {
 
     func testLBsetup() {
 
-        
         var lb0 = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q27)
         lb0.setPositionalDataForTesting()
 
@@ -49,13 +47,13 @@ final class tdQVecToolTests: XCTestCase {
         var lb = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q19)
         lb.setPositionalDataForTesting()
 
-        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 19, tCoordType: UInt16.self, QVecType: Float32.self)
-
-        let qv = try! QVecRead<Float32>(binURL: fileURL)
-
-        let sparse = qv.readSparseFromDisk()
-
-        print("TheSparse", sparse)
+//        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 19, tCoordType: UInt16.self, QVecType: Float32.self)
+//
+//        let qv = try! QVecBinFileRead<Float32>(binURL: fileURL)
+//
+//        let sparse = qv.readSparseFromDisk()
+//
+//        print("TheSparse", sparse)
 
     }
 
@@ -72,13 +70,13 @@ final class tdQVecToolTests: XCTestCase {
 
         let lb = ComputeUnit<LBType>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q27)
 
-        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: SaveCoordType.self, QVecType: SaveQType.self)
-
-        let qv = try! QVecRead<QVecLibType>(binURL: fileURL)
-
-        var plane = Array(repeating: Array(repeating: Array<QVecLibType>(repeating: 0, count: qv.dim.qOutputLength), count: qv.dim.gridY), count: qv.dim.gridX)
-
-        qv.getPlaneFromDisk(plane: &plane)
+//        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: SaveCoordType.self, QVecType: SaveQType.self)
+//
+//        let qv = try! QVecBinFileRead<QVecLibType>(binURL: fileURL)
+//
+//        var plane = Array(repeating: Array(repeating: Array<QVecLibType>(repeating: 0, count: qv.dim.qOutputLength), count: qv.dim.gridY), count: qv.dim.gridX)
+//
+//        qv.getPlaneFromDisk(plane: &plane)
     }
 
     func testGetPlaneFromDisk() {
@@ -95,17 +93,17 @@ final class tdQVecToolTests: XCTestCase {
 
     }
 
-    func testGetVelocityFromDisk() {
+    func testloadVelocityFromData() {
 
         let lb = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q7)
 
-        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: UInt16.self, QVecType: Float32.self)
-
-        let qv = try! QVecRead<Float32>(binURL: fileURL)
-
-        var plane = Velocity2DPlaneOrtho<Float32>(cols: qv.dim.gridX, rows: qv.dim.gridY)
-
-        qv.getVelocityFromDisk(addIntoPlane: &plane)
+//        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: UInt16.self, QVecType: Float32.self)
+//
+//        let qv = try! QVecBinFileRead<Float32>(binURL: fileURL)
+//
+//        var plane = Velocity2DPlaneOrtho<Float32>(cols: qv.dim.gridX, rows: qv.dim.gridY)
+//
+//        qv.loadVelocityFromData(addIntoPlane: &plane)
 
     }
 
@@ -113,13 +111,13 @@ final class tdQVecToolTests: XCTestCase {
 
         let lb = ComputeUnit<Float32>(outputTree: outputTree, with: 0.0, x: 3, y: 3, z: 3, qLen: .q7)
 
-        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: UInt16.self, QVecType: Float32.self)
-
-        let qv = try! QVecRead<Float32>(binURL: fileURL)
-
-        var plane = Velocity2DPlaneOrtho<Float32>(cols: qv.dim.gridX, rows: qv.dim.gridY)
-
-        qv.getVelocityFromDisk(addIntoPlane: &plane)
+//        lb.writeSparse2DPlaneXY(to: fileURL, at: 2, qOutputLength: 4, tCoordType: UInt16.self, QVecType: Float32.self)
+//
+//        let qv = try! QVecBinFileRead<Float32>(binURL: fileURL)
+//
+//        var plane = Velocity2DPlaneOrtho<Float32>(cols: qv.dim.gridX, rows: qv.dim.gridY)
+//
+//        qv.loadVelocityFromData(addIntoPlane: &plane)
 
     }
 
@@ -130,15 +128,15 @@ final class tdQVecToolTests: XCTestCase {
 
         let urlLOAD = TinyTestDataFromC.appendingPathComponent("plot_slice.XZplane.V5.step_00000050.cut_29/Qvec.node.0.1.1.V4.bin")
 
-        let qv = try! QVecRead<Float32>(binURL: urlLOAD)
+        let qv = try! QVecBinFileRead<Float32>(binURL: urlLOAD)
 
-        //All the C++ Test data was written as C floats
-        if qv.dim.qDataType == "float" {
-            var plane = Array(repeating: Array(repeating: [Float32](repeating: 0, count: qv.dim.qOutputLength), count: qv.dim.gridX), count: qv.dim.gridZ)
-            qv.getPlaneFromDisk(plane: &plane)
-        } else {
-            XCTFail()
-        }
+//        //All the C++ Test data was written as C floats
+//        if qv.dim.qDataType == "float" {
+//            var plane = Array(repeating: Array(repeating: [Float32](repeating: 0, count: qv.dim.qOutputLength), count: qv.dim.gridX), count: qv.dim.gridZ)
+//            qv.getPlaneFromDisk(plane: &plane)
+//        } else {
+//            XCTFail()
+//        }
 
     }
 

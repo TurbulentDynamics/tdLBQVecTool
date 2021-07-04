@@ -27,7 +27,7 @@ These contain a 2D cut off axis but through a center axis
 QVec contains the vectors from Lattice Boltzmann cells, of length 5, 9, 19 or 27, and QVec.F3 always contains 3 "Forcing" vectors along the major axes.  Each .bin file has a corresponding .bin.json file containing metadata.
 
 ### File naming convention
-Qvec.node.X.Y.Z.V4.bin or Qvec.F3.node.X.Y.Z.V4.bin
+Qvec.node.X.Y.Z.V5.bin or Qvec.F3.node.X.Y.Z.V4.bin
 node.X.Y.Z is the output from the node with cartesian coordinates X, Y, Z
 V4: Version 4
 The length of vectors is found from either the bin.json or the directory name.

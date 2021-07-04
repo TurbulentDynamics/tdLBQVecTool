@@ -1,13 +1,13 @@
 //
 //  InputFilesV4URLTests.swift
-//  tdQVecTool
+//  tdLBQVecTool
 //
 //  Created by Niall Ó Broin on 15/10/2019.
 //
 
 import XCTest
 @testable import QVecLib
-@testable import tdLBOutput
+@testable import tdLB
 
 class ProcessTest: XCTestCase {
 
@@ -48,37 +48,14 @@ class ProcessTest: XCTestCase {
 
     }
 
-    func testInitPlotDirs() {
-
-        let q = QVecLib<Float32>(plotDirs: testDirURLs)
-
-        print(q.plotDirByStep)
-        XCTAssertEqual(q.plotDirByStep.map { $0.key }.sorted(), [50, 1000])
-        XCTAssertEqual(q.plotDirByStep[50]?.count, 8)
-        XCTAssertEqual(q.plotDirByStep[1000]?.count, 3)
-
-    }
-
     func testInitOutputKind() {
 
-        let o = try! OutputDir(rootDir: testRootDir)
-        var q = QVecLib<Float32>(rootDir: o, kind: [.XYplane])
-
-        XCTAssertEqual(q.plotDirByStep.map { $0.key }.sorted(), [50, 1000])
-        XCTAssertEqual(q.plotDirByStep[50]?.count, 3)
-        XCTAssertEqual(q.plotDirByStep[1000]?.count, 3)
-
-        q = QVecLib<Float32>(rootDir: o, kind: [.rotational])
-        XCTAssertEqual(q.plotDirByStep.map { $0.key }.sorted(), [50])
-        XCTAssertEqual(q.plotDirByStep[50]?.count, 1)
-
-        q = QVecLib<Float32>(rootDir: o, kind: [.XZplane])
-        XCTAssertEqual(q.plotDirByStep.map { $0.key }.sorted(), [50])
-        XCTAssertEqual(q.plotDirByStep[50]?.count, 3)
-
-        q = QVecLib<Float32>(rootDir: o, kind: [.YZplane])
-        XCTAssertEqual(q.plotDirByStep.map { $0.key }.sorted(), [])
-        XCTAssertEqual(q.plotDirByStep[50]?.count, nil)
+//        let o = try! OutputDir(rootDir: testRootDir)
+//        var q = QVecLib<Float32>(rootDir: o, kind: [.XYplane])
+//
+//        XCTAssertEqual(q.plotDirByStep.map { $0.key }.sorted(), [50, 1000])
+//        XCTAssertEqual(q.plotDirByStep[50]?.count, 3)
+//        XCTAssertEqual(q.plotDirByStep[1000]?.count, 3)
 
     }
 

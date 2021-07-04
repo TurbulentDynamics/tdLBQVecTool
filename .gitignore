@@ -8,8 +8,9 @@ tdLBQVecTool
 .build/x86_64-apple-macosx/debug/tdQVecTool
 
 
+output_debug/
 plot_*
-tdLBQVecRushtonTurbineSampleOutput
+tdLBQVecRushtonTurbineSampleOutput/
 
 *.bin
 *.rho.bin

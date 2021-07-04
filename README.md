@@ -4,15 +4,15 @@
 Turbulent Dynamics specialises in running high-resolution fluid dynamics simulations on supercomputers.  The application decomposes the complete simulation space into smaller grids and each grid is run on one node.  During the simulation each node creates output files independently.  This applicaiton is used to stitch these files together and do some other post processing calculations.
 
 ## Documentation
-[Documentation](https://turbulentdynamics.github.io/tdQVecTool/)
+[Documentation](https://turbulentdynamics.github.io/tdLBQVecTool/)
 
 
 ## Getting Started
 ```
 git clone https://github.com/TurbulentDynamics/tdLBQVecTool.git
 cd tdLBQVecTool && swift build
-./tdLBQVecTool --vorticity --all SmallSampleDataFromLBCpp 
-./tdLBQVecTool --vorticity SmallSampleDataFromLBCpp/plot_slice.XZplane.V5.step_00000050.cut_29 
+./tdLBQVecTool --vorticity --all SmallSampleData/plot_output_np1_gridx44
+./tdLBQVecTool --vorticity -u SmallSampleData/plot_output_np1_gridx44/plot.XZplane.V5.step_00000020 
 ./tdLBQVecTool *
 ```
 
@@ -32,7 +32,7 @@ Larger Sample data available in a git-lfs repo
 
 
 #The jupyter notebook in the "python" directory can be used to visualise the file created.
-```
+
 
 
 ![Impeller Vorticity](docs/Impeller_Vorticity.jpg)
